@@ -1,2 +1,3 @@
 import Link from "./link.svelte";
-export { Link };
+import LinkIcon from "./link-icon.svelte";
+export { Link, LinkIcon };
