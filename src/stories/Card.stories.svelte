@@ -2,14 +2,13 @@
   import { defineMeta } from "@storybook/addon-svelte-csf";
   import {
     Card,
-    CardContent,
     CardDescription,
     CardHeader,
     CardTitle,
     Link,
+    LinkIcon,
+    CardFooter,
   } from "$lib";
-  import CardFooter from "$lib/card/card-footer.svelte";
-  import LinkIcon from "$lib/link/link-icon.svelte";
   import CircleDollarIcon from "$lib/icons/circle-dollar-icon.svelte";
 
   const { Story } = defineMeta({

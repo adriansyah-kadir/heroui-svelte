@@ -2,7 +2,7 @@
 	"name": "heroui-svelte",
 	"version": "0.0.1",
 	"scripts": {
-		"dev": "vite dev",
+		"dev": "bun storybook",
 		"build": "vite build && npm run prepack",
 		"preview": "vite preview",
 		"prepare": "npm run prepack",
