@@ -1,5 +1,5 @@
 @import "@heroui/styles";
-@source "./**/*.svelte"
+@source "./**/*.svelte";
 
 :root {
   --visual-viewport-height: 100vh;
