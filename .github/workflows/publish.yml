@@ -18,11 +18,7 @@ permissions:
   id-token: write
 
 jobs:
-  # Single deploy job since we're just deploying
-  build:
-    runs-on: ubuntu-latest
-    
-  deploy:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
