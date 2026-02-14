@@ -40,9 +40,6 @@ jobs:
       - name: Build
         run: bun run build
 
-      - name: Publish JSR
-        run: bunx jsr publish
-
       - name: Build storybook
         run: bun run build-storybook
         
