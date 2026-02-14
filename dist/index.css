@@ -3,3 +3,7 @@
 :root {
   --visual-viewport-height: 100vh;
 }
+
+html {
+  background-color: var(--color-background);
+}
