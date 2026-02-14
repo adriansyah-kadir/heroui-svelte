@@ -30,7 +30,9 @@
 		}
 	},
 	"peerDependencies": {
-		"svelte": "^5.0.0"
+		"@heroui/styles": "^3.0.0-beta.6",
+		"svelte": "^5.0.0",
+		"tailwindcss": "^4.1.18"
 	},
 	"devDependencies": {
 		"@chromatic-com/storybook": "^5.0.1",
@@ -43,6 +45,7 @@
 		"@sveltejs/kit": "^2.50.2",
 		"@sveltejs/package": "^2.5.7",
 		"@sveltejs/vite-plugin-svelte": "^6.2.4",
+		"@tailwindcss/vite": "^4.1.18",
 		"@types/node": "^24",
 		"@vitest/browser-playwright": "^4.0.18",
 		"@vitest/coverage-v8": "^4.0.18",
@@ -51,11 +54,16 @@
 		"storybook": "^10.2.8",
 		"svelte": "^5.49.2",
 		"svelte-check": "^4.3.6",
+		"tailwind-merge": "^3.4.0",
 		"typescript": "^5.9.3",
 		"vite": "^7.3.1",
 		"vitest": "^4.0.18"
 	},
 	"keywords": [
 		"svelte"
-	]
+	],
+	"dependencies": {
+		"bits-ui": "^2.15.5",
+		"runed": "^0.37.1"
+	}
 }

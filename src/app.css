@@ -1,0 +1,10 @@
+@import "tailwindcss";
+@import "@heroui/styles";
+
+:root {
+  --visual-viewport-height: 100vh;
+}
+
+html {
+  @apply bg-background;
+}

@@ -1,0 +1,48 @@
+import { Meta, Story, Source } from '@storybook/addon-docs/blocks';
+import * as DialogStories from './Dialog.stories.svelte';
+
+<Meta of={DialogStories} />
+
+# Usage
+
+<Story  />
+<Source code={`
+<script>
+  import {
+    Button,
+    Dialog,
+    DialogBackdrop,
+    DialogBody,
+    DialogCloseTrigger,
+    DialogContainer,
+    DialogDialog,
+    DialogFooter,
+    DialogHeader,
+    DialogHeading,
+    DialogIcon,
+    DialogTrigger,
+  } from "$lib";
+</script>
+
+<Dialog>
+  <DialogTrigger>Open a dialog</DialogTrigger>
+  <DialogBackdrop>
+    <DialogContainer>
+      <DialogDialog>
+        <DialogCloseTrigger />
+        <DialogHeader>
+          <DialogIcon />
+          <DialogHeading>Dialog</DialogHeading>
+        </DialogHeader>
+        <DialogBody
+          >Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis,
+          autem!</DialogBody
+        >
+        <DialogFooter>
+          <Button>Save</Button>
+        </DialogFooter>
+      </DialogDialog>
+    </DialogContainer>
+  </DialogBackdrop>
+</Dialog>
+`}/>
