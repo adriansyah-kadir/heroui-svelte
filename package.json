@@ -54,7 +54,6 @@
 		"storybook": "^10.2.8",
 		"svelte": "^5.49.2",
 		"svelte-check": "^4.3.6",
-		"tailwind-merge": "^3.4.0",
 		"typescript": "^5.9.3",
 		"vite": "^7.3.1",
 		"vitest": "^4.0.18"
@@ -63,6 +62,7 @@
 		"svelte"
 	],
 	"dependencies": {
+		"tailwind-merge": "^3.4.0",
 		"bits-ui": "^2.15.5",
 		"runed": "^0.37.1"
 	}
