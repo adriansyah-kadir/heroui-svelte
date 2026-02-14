@@ -44,7 +44,7 @@ jobs:
         run: bun run prepare
 
       - name: commit dist changes
-        run: git add dist && git commit -m "commit dist"
+        run: git add dist && git commit -m "commit dist" && git push origin
 
       - name: Build storybook
         run: bun run build-storybook
