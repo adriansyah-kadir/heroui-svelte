@@ -1,3 +1,4 @@
+import "./index.css"
 export { default as Button } from "$lib/button/button.svelte"
 export { default as Input } from "$lib/input/input.svelte"
 export { default as Label } from "$lib/label/label.svelte"
@@ -9,3 +10,4 @@ export * from "$lib/alert-dialog"
 export * from "$lib/card"
 export * from "$lib/surface"
 export * from "$lib/scroll-shadow"
+export {}
