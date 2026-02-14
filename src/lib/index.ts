@@ -10,4 +10,5 @@ export * from "$lib/alert-dialog"
 export * from "$lib/card"
 export * from "$lib/surface"
 export * from "$lib/scroll-shadow"
+export * from "$lib/link"
 export {}
