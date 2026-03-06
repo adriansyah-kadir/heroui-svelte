@@ -1,10 +1,6 @@
 @import "@heroui/styles";
 @source "./**/*.svelte";
 
-.list-box {
-  @apply p-1.5;
-}
-
 :root {
   --visual-viewport-height: 100vh;
 }

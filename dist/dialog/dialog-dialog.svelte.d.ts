@@ -1,4 +1,4 @@
-import type { HTMLAttributes } from "svelte/elements";
-declare const DialogDialog: import("svelte").Component<HTMLAttributes<HTMLDivElement>, {}, "">;
+import { Dialog } from "bits-ui";
+declare const DialogDialog: import("svelte").Component<Dialog.ContentProps, {}, "">;
 type DialogDialog = ReturnType<typeof DialogDialog>;
 export default DialogDialog;
