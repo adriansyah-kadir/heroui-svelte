@@ -5,11 +5,11 @@
   let {
     size = "md",
     scroll = "inside",
-    variant = "blur",
+    variant = "opaque",
     placement = "auto",
     open = $bindable(false),
     ...props
-  }: DialogRootProps & DialogContext = $props();
+  }: DialogRootProps & Partial<DialogContext> = $props();
 
   // svelte-ignore state_referenced_locally
   const ctx = DialogContext.set(

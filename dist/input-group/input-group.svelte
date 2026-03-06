@@ -19,7 +19,7 @@
     }: WithChildren<InputGroupVariants & HTMLAttributes<HTMLDivElement>> =
         $props();
 
-    const tf = TextFieldContext.getOr(TextFieldContext.set(textFieldContext()));
+    const tf = TextFieldContext.getOr(textFieldContext());
     const ig = InputGroupContext.set(inputGroupContext());
 
     $inspect($tf);
