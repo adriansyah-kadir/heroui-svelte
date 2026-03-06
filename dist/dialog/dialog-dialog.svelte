@@ -24,6 +24,7 @@
     "data-[state=closed]:fade-out-0",
     "data-[state=closed]:slide-out-to-bottom-10",
     "data-[state=closed]:e2ase-[cubic-bezier(0.5,0,0.75,0)]",
+    "data-nested-open:opacity-0",
     props.class,
   ]}
 >

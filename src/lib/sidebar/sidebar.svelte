@@ -1,9 +1,15 @@
 <script lang="ts">
-	import * as Sheet from "$lib/sheet/index.js";
 	import { cn, type WithElementRef } from "$lib/utils.js";
 	import type { HTMLAttributes } from "svelte/elements";
 	import { SIDEBAR_WIDTH_MOBILE } from "./constants.js";
 	import { useSidebar } from "./context.svelte.js";
+	import {
+		Sheet,
+		SheetContent,
+		SheetDescription,
+		SheetHeader,
+		SheetTitle,
+	} from "$lib";
 
 	let {
 		ref = $bindable(null),
@@ -34,11 +40,11 @@
 		{@render children?.()}
 	</div>
 {:else if sidebar.isMobile}
-	<Sheet.Root
+	<Sheet
 		bind:open={() => sidebar.openMobile, (v) => sidebar.setOpenMobile(v)}
 		{...restProps}
 	>
-		<Sheet.Content
+		<SheetContent
 			data-sidebar="sidebar"
 			data-slot="sidebar"
 			data-mobile="true"
@@ -46,17 +52,16 @@
 			style="--sidebar-width: {SIDEBAR_WIDTH_MOBILE};"
 			{side}
 		>
-			<Sheet.Header class="sr-only">
-				<Sheet.Title>Sidebar</Sheet.Title>
-				<Sheet.Description
-					>Displays the mobile sidebar.</Sheet.Description
+			<SheetHeader class="sr-only">
+				<SheetTitle>Sidebar</SheetTitle>
+				<SheetDescription>Displays the mobile sidebar.</SheetDescription
 				>
-			</Sheet.Header>
+			</SheetHeader>
 			<div class="flex h-full w-full flex-col">
 				{@render children?.()}
 			</div>
-		</Sheet.Content>
-	</Sheet.Root>
+		</SheetContent>
+	</Sheet>
 {:else}
 	<div
 		bind:this={ref}
@@ -80,9 +85,11 @@
 			)}
 		></div>
 		<div
+			{...restProps}
 			data-slot="sidebar-container"
 			class={cn(
 				"fixed inset-y-0 z-10 hidden h-svh w-(--sidebar-width) transition-[left,right,width] duration-200 ease-out md:flex",
+				"inset-s-0 group-data-[collapsible=offcanvas]:inset-s-[calc(var(--sidebar-width)*-1)]",
 				side === "left"
 					? "inset-s-0 group-data-[collapsible=offcanvas]:inset-s-[calc(var(--sidebar-width)*-1)]"
 					: "inset-e-0 group-data-[collapsible=offcanvas]:inset-e-[calc(var(--sidebar-width)*-1)]",
@@ -92,7 +99,6 @@
 					: "group-data-[collapsible=icon]:w-(--sidebar-width-icon) group-data-[side=left]:border-e group-data-[side=right]:border-s",
 				className,
 			)}
-			{...restProps}
 		>
 			<div
 				data-sidebar="sidebar"

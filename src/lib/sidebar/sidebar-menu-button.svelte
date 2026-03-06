@@ -5,7 +5,8 @@
 		base: "peer/menu-button ring-sidebar-ring hover:bg-sidebar-accent hover:text-sidebar-accent-foreground active:bg-sidebar-accent active:text-sidebar-accent-foreground data-[active=true]:bg-sidebar-accent data-[active=true]:text-sidebar-accent-foreground data-[state=open]:hover:bg-sidebar-accent data-[state=open]:hover:text-sidebar-accent-foreground flex w-full items-center gap-2 overflow-hidden rounded-field p-2 text-start text-sm outline-hidden transition-[width,height,padding] group-has-data-[sidebar=menu-action]/menu-item:pe-8 group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-[active=true]:font-medium [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0",
 		variants: {
 			variant: {
-				default: "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+				default:
+					"hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
 				outline:
 					"bg-background hover:bg-sidebar-accent hover:text-sidebar-accent-foreground shadow-[0_0_0_1px_var(--sidebar-border)] hover:shadow-[0_0_0_1px_var(--sidebar-accent)]",
 			},
@@ -30,7 +31,7 @@
 </script>
 
 <script lang="ts">
-	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
+	import { Tooltip, TooltipContent, TooltipTrigger } from "$lib";
 	import {
 		cn,
 		type WithElementRef,
@@ -60,7 +61,7 @@
 		size?: SidebarMenuButtonSize;
 		tooltipContent?: Snippet | string;
 		tooltipContentProps?: WithoutChildrenOrChild<
-			ComponentProps<typeof Tooltip.Content>
+			ComponentProps<typeof TooltipContent>
 		>;
 		child?: Snippet<[{ props: Record<string, unknown> }]>;
 	} = $props();
@@ -95,13 +96,13 @@
 {#if !tooltipContent}
 	{@render Button({})}
 {:else}
-	<Tooltip.Root>
-		<Tooltip.Trigger>
+	<Tooltip>
+		<TooltipTrigger>
 			{#snippet child({ props })}
 				{@render Button({ props })}
 			{/snippet}
-		</Tooltip.Trigger>
-		<Tooltip.Content
+		</TooltipTrigger>
+		<TooltipContent
 			side="right"
 			align="center"
 			hidden={sidebar.state !== "collapsed" || sidebar.isMobile}
@@ -112,6 +113,6 @@
 			{:else if tooltipContent}
 				{@render tooltipContent()}
 			{/if}
-		</Tooltip.Content>
-	</Tooltip.Root>
+		</TooltipContent>
+	</Tooltip>
 {/if}

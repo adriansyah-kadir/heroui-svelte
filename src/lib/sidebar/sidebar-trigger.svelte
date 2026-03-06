@@ -1,21 +1,16 @@
 <script lang="ts">
-	import { Button } from "$lib/components/ui/button/index.js";
+	import { Button } from "$lib";
 	import PanelLeftIcon from "@lucide/svelte/icons/panel-left";
 	import type { ComponentProps } from "svelte";
 	import { useSidebar } from "./context.svelte.js";
 
-	let {
-		ref = $bindable(null),
-		onclick,
-		...restProps
-	}: ComponentProps<typeof Button> & {
-		onclick?: (e: MouseEvent) => void;
-	} = $props();
+	let { onclick, ...props }: ComponentProps<typeof Button> = $props();
 
 	const sidebar = useSidebar();
 </script>
 
 <Button
+	{...props}
 	data-sidebar="trigger"
 	data-slot="sidebar-trigger"
 	variant="ghost"
@@ -23,10 +18,9 @@
 	isIconOnly
 	type="button"
 	onclick={(e) => {
-		onclick?.(e);
+		onclick?.(e as any);
 		sidebar.toggle();
 	}}
-	{...restProps}
 >
 	<PanelLeftIcon />
 	<span class="sr-only">Toggle Sidebar</span>

@@ -17,4 +17,7 @@ export * from "$lib/list-box"
 export * from "$lib/input-group"
 export * from "$lib/sidebar"
 export * from "$lib/sheet"
+export * from "$lib/separator"
+export * from "$lib/tooltip"
+export * from "$lib/skeleton"
 export {}

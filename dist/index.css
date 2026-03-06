@@ -1,6 +1,17 @@
 @import "@heroui/styles";
 @source "./**/*.svelte";
 
+@theme inline {
+  --color-sidebar: var(--color-surface);
+  --color-sidebar-foreground: var(--color-surface-foreground);
+  --color-sidebar-primary: var(--color-default);
+  --color-sidebar-primary-foreground: var(--color-default-foreground);
+  --color-sidebar-accent: var(--color-default);
+  --color-sidebar-accent-foreground: var(--color-default-foreground);
+  --color-sidebar-border: var(--color-separator);
+  --color-sidebar-ring: var(--color-separator-secondary);
+}
+
 :root {
   --visual-viewport-height: 100vh;
 }
