@@ -10,8 +10,10 @@
     value = $bindable(""),
     invalid = $bindable(false),
     id = crypto.randomUUID(),
+    headless,
     ...props
-  }: HTMLInputAttributes & InputVariants & { invalid?: boolean } = $props();
+  }: HTMLInputAttributes &
+    InputVariants & { invalid?: boolean; headless?: boolean } = $props();
   const tf = TextFieldContext.getOr(undefined);
   const tfi = tf?.input;
   const mergedProps = $derived({ ...$tfi, ...props });
@@ -37,5 +39,5 @@
   use:tf?.useInput={{ mode: $tf?.mode ?? "change" }}
   data-invalid={$tf?.invalid}
   aria-readonly={$tf?.readonly}
-  class={[inputVariants(theme), props.class]}
+  class={[!headless && inputVariants(theme), props.class]}
 />

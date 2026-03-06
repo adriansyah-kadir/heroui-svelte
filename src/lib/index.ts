@@ -13,4 +13,5 @@ export * from "$lib/scroll-shadow"
 export * from "$lib/link"
 export * from "$lib/select"
 export * from "$lib/list-box"
+export * from "$lib/input-group"
 export {}

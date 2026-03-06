@@ -1,7 +1,7 @@
 import type { InputVariants } from "@heroui/styles";
 import { Context } from "runed";
 import type { HTMLInputAttributes } from "svelte/elements";
-import { get, readable, writable } from "svelte/store";
+import { readable, writable } from "svelte/store";
 
 export type TextFieldContext = ContextAttributes & InputAttributes & InputVariants
 
