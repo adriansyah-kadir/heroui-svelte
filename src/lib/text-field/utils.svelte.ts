@@ -44,7 +44,7 @@ export function textFieldContext(init?: TextFieldContext) {
       setValue(ev.currentTarget.value)
     },
 
-    useInput(node: HTMLInputElement, { mode }: { mode: "input" | "change" }) {
+    useInput(node: HTMLInputElement | HTMLTextAreaElement, { mode }: { mode: "input" | "change" }) {
       node.addEventListener(mode, this.onValue)
       return {
         update: ({ mode: newMode }: { mode: "input" | "change" }) => {

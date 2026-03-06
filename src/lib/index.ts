@@ -1,6 +1,7 @@
 import "./index.css"
 export { default as Button } from "$lib/button/button.svelte"
 export { default as Input } from "$lib/input/input.svelte"
+export { default as TextArea } from "$lib/textarea/textarea.svelte"
 export { default as Label } from "$lib/label/label.svelte"
 export { default as TextField } from "$lib/text-field/text-field.svelte"
 export { default as Description } from "$lib/description/description.svelte"

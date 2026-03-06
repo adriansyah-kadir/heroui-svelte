@@ -1,5 +1,8 @@
 <script lang="ts">
-    import { TextFieldContext } from "$lib/text-field/utils.svelte";
+    import {
+        textFieldContext,
+        TextFieldContext,
+    } from "$lib/text-field/utils.svelte";
     import {
         inputGroupVariants,
         type InputGroupVariants,
@@ -16,21 +19,21 @@
     }: WithChildren<InputGroupVariants & HTMLAttributes<HTMLDivElement>> =
         $props();
 
-    const tf = TextFieldContext.getOr(undefined);
+    const tf = TextFieldContext.getOr(TextFieldContext.set(textFieldContext()));
     const ig = InputGroupContext.set(inputGroupContext());
 
-    $effect(() => {
-        $ig.fullWidth = fullWidth ?? $tf?.fullWidth;
-        $ig.variant = variant ?? $tf?.variant;
-    });
+    $inspect($tf);
 
-    $inspect($ig);
+    $effect(() => {
+        $ig.fullWidth = fullWidth ?? $tf.fullWidth;
+        $ig.variant = variant ?? $tf.variant;
+    });
 </script>
 
 <div
     {...props}
-    data-invalid={$tf?.invalid}
-    data-disabled={$tf?.disabled}
+    data-invalid={$tf.invalid}
+    data-disabled={$tf.disabled}
     class={[inputGroupVariants($ig).base(), props.class]}
 >
     {@render children?.()}
