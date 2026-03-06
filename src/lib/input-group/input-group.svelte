@@ -10,7 +10,7 @@
     import type { WithChildren } from "bits-ui";
     import type { HTMLAttributes } from "svelte/elements";
     import { inputGroupContext, InputGroupContext } from "./utils.svelte";
-
+    
     const {
         children,
         fullWidth,
@@ -19,10 +19,11 @@
     }: WithChildren<InputGroupVariants & HTMLAttributes<HTMLDivElement>> =
         $props();
 
-    const tf = TextFieldContext.getOr(textFieldContext());
-    const ig = InputGroupContext.set(inputGroupContext());
+    const tf = TextFieldContext.exists()
+        ? TextFieldContext.get()
+        : TextFieldContext.set(textFieldContext());
 
-    $inspect($tf);
+    const ig = InputGroupContext.set(inputGroupContext());
 
     $effect(() => {
         $ig.fullWidth = fullWidth ?? $tf.fullWidth;

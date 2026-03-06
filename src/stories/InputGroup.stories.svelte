@@ -31,7 +31,7 @@
             ></path></svg
         >
     </InputGroupPrefix>
-    <InputGroupInput type="email" />
+    <InputGroupInput type="email" placeholder="Email" />
     <InputGroupSuffix>
         <Button size="sm" variant="ghost">Ok</Button>
     </InputGroupSuffix>
