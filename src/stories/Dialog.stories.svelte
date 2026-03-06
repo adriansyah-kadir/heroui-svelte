@@ -46,6 +46,44 @@
   </DialogBackdrop>
 </Story>
 
+<Story name="Dialog in Dialog">
+  <DialogTrigger>Open a dialog</DialogTrigger>
+  <DialogBackdrop>
+    <DialogDialog>
+      <DialogCloseTrigger />
+      <DialogHeader>
+        <DialogIcon />
+        <DialogHeading>Dialog</DialogHeading>
+      </DialogHeader>
+      <DialogBody
+        >Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis, autem!</DialogBody
+      >
+      <DialogFooter>
+        <Button>Save</Button>
+        <Dialog>
+          <DialogTrigger variant="danger">Delete</DialogTrigger>
+          <DialogBackdrop>
+            <DialogDialog>
+              <DialogCloseTrigger />
+              <DialogHeader>
+                <DialogIcon />
+                <DialogHeading>Are you sure?</DialogHeading>
+              </DialogHeader>
+              <DialogBody
+                >Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis,
+                autem!</DialogBody
+              >
+              <DialogFooter>
+                <Button variant="danger">Delete</Button>
+              </DialogFooter>
+            </DialogDialog>
+          </DialogBackdrop>
+        </Dialog>
+      </DialogFooter>
+    </DialogDialog>
+  </DialogBackdrop>
+</Story>
+
 <Story name="Dialog scroll">
   <DialogTrigger>Scrollable Content</DialogTrigger>
   <DialogBackdrop>
