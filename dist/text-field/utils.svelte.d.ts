@@ -13,7 +13,7 @@ export declare function textFieldContext(init?: TextFieldContext): {
     update: (this: void, updater: import("svelte/store").Updater<TextFieldContext>) => void;
     input: import("svelte/store").Readable<InputAttributes>;
     onValue(ev: Event): void;
-    useInput(node: HTMLInputElement, { mode }: {
+    useInput(node: HTMLInputElement | HTMLTextAreaElement, { mode }: {
         mode: "input" | "change";
     }): {
         update: ({ mode: newMode }: {
@@ -27,7 +27,7 @@ export declare const TextFieldContext: Context<{
     update: (this: void, updater: import("svelte/store").Updater<TextFieldContext>) => void;
     input: import("svelte/store").Readable<InputAttributes>;
     onValue(ev: Event): void;
-    useInput(node: HTMLInputElement, { mode }: {
+    useInput(node: HTMLInputElement | HTMLTextAreaElement, { mode }: {
         mode: "input" | "change";
     }): {
         update: ({ mode: newMode }: {

@@ -1,5 +1,5 @@
 import { Context } from "runed";
-import { get, readable, writable } from "svelte/store";
+import { readable, writable } from "svelte/store";
 function getInputAttributes(v) {
     let { disabled, name, pattern, placeholder, readonly, required, type, id } = v;
     return {
