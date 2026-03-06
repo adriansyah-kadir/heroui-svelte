@@ -1,6 +1,7 @@
 import "./index.css";
 export { default as Button } from "./button/button.svelte";
 export { default as Input } from "./input/input.svelte";
+export { default as TextArea } from "./textarea/textarea.svelte";
 export { default as Label } from "./label/label.svelte";
 export { default as TextField } from "./text-field/text-field.svelte";
 export { default as Description } from "./description/description.svelte";
@@ -13,4 +14,5 @@ export * from "./scroll-shadow";
 export * from "./link";
 export * from "./select";
 export * from "./list-box";
+export * from "./input-group";
 export {};

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { type InputVariants, inputVariants } from "@heroui/styles";
-  import type { HTMLInputAttributes } from "svelte/elements";
+  import { textAreaVariants, type TextAreaVariants } from "@heroui/styles";
+  import type { HTMLTextareaAttributes } from "svelte/elements";
   import { watch } from "runed";
   import { TextFieldContext } from "../text-field/utils.svelte";
 
@@ -12,8 +12,8 @@
     id = crypto.randomUUID(),
     headless,
     ...props
-  }: HTMLInputAttributes &
-    InputVariants & { invalid?: boolean; headless?: boolean } = $props();
+  }: HTMLTextareaAttributes &
+    TextAreaVariants & { invalid?: boolean; headless?: boolean } = $props();
   const tf = TextFieldContext.getOr(undefined);
   const tfi = tf?.input;
   const mergedProps = $derived({ ...$tfi, ...props });
@@ -32,12 +32,12 @@
   );
 </script>
 
-<input
+<textarea
   {...mergedProps}
   {id}
   bind:value
   use:tf?.useInput={{ mode: $tf?.mode ?? "change" }}
   data-invalid={$tf?.invalid}
   aria-readonly={$tf?.readonly}
-  class={[!headless && inputVariants(theme), props.class]}
-/>
+  class={[!headless && textAreaVariants(theme), props.class]}
+></textarea>
