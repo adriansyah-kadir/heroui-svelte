@@ -47,7 +47,14 @@ jobs:
         run: bun run build-storybook
 
       - name: commit dist changes
-        run: git add dist && git commit -m "commit dist" && git push origin
+        run: |
+          git add dist
+          if ! git diff --cached --quiet; then
+            git commit -m "commit dist"
+            git push origin
+          else
+            echo "No changes to commit → skipping"
+          fi
         
       - uses: actions/configure-pages@v5
         
