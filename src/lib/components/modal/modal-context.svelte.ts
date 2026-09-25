@@ -6,6 +6,5 @@ export type ModalProps = ModalVariants & {
 }
 
 export function getModalProps(props: () => ModalProps = () => ({})) {
-  return getValueContextOr("modal-props", props,
-  )
+  return getValueContextOr("modal-props", props)
 }
