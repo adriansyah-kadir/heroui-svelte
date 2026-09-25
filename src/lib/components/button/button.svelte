@@ -4,10 +4,10 @@
   import Spinner from "../spinner/spinner.svelte";
 
   interface Props extends HTMLButtonAttributes {
-    fullWidth: ButtonVariants["fullWidth"];
-    isIconOnly: ButtonVariants["isIconOnly"];
-    size: ButtonVariants["size"];
-    variant: ButtonVariants["variant"];
+    fullWidth?: ButtonVariants["fullWidth"];
+    isIconOnly?: ButtonVariants["isIconOnly"];
+    size?: ButtonVariants["size"];
+    variant?: ButtonVariants["variant"];
     loading?: boolean;
   }
 
