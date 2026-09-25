@@ -2,6 +2,7 @@
   import { buttonVariants, type ButtonVariants } from "@heroui/styles";
   import type { HTMLButtonAttributes } from "svelte/elements";
   import Spinner from "../spinner/spinner.svelte";
+  import { popoverSelector } from "#lib/hooks/popover.svelte.ts";
 
   interface Props extends HTMLButtonAttributes {
     fullWidth?: ButtonVariants["fullWidth"];
@@ -13,10 +14,15 @@
 
   const { variant, size, isIconOnly, fullWidth, loading, ...props }: Props =
     $props();
+
+  const popover = popoverSelector(() =>
+    props["command"]?.includes("popover") ? props["commandfor"] : null,
+  );
 </script>
 
 <button
   {...props}
+  data-pressed={popover.open}
   disabled={props.disabled || loading}
   class={buttonVariants({
     variant,
