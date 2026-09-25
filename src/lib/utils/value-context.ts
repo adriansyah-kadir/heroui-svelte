@@ -1,4 +1,4 @@
-import ValueState from "#lib/hooks/value.svelte.ts";
+import valueState, { type ValueState } from "#lib/hooks/value.svelte.ts";
 import { getContext, hasContext, setContext } from "svelte";
 
 export type Getter<T> = () => T;
@@ -20,7 +20,7 @@ export default function getValueContextOr<T>(
     return getContext<ValueState<T>>(k);
   }
 
-  return v ? setContext(k, new ValueState(v)) : undefined;
+  return v ? setContext(k, valueState(v)) : undefined;
 }
 
 export function getValueContext<T>(
