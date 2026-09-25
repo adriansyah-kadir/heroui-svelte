@@ -1,5 +1,6 @@
 import type { Attachment } from "svelte/attachments"
 import querySelector from "./query-selector.svelte"
+import { untrack } from "svelte"
 
 export default class PopoverState {
   #node = $state<HTMLElement | null>(null)
@@ -60,15 +61,23 @@ export function getPopoverArea(popover: PopoverState) {
 
 export function popoverSelector(selector: () => string | undefined | null) {
   const popover = new PopoverState()
-  const query = querySelector<HTMLElement>(`#${selector()}`)
+  let query = $state<ReturnType<typeof querySelector>>()
 
   $effect(() => {
-    if (typeof selector() !== "string") return;
-    query.attach()(document)
+    const s = selector()
+    return untrack(() => {
+      if (!s) return;
+      query = querySelector(s)
+      const detach = query.attach()(document)
+      return () => {
+        detach?.()
+        query = undefined
+      }
+    })
   })
 
   $effect(() => {
-    const node = query.element
+    const node = query?.element
     if (!node) return
     return popover.attach()(node)
   })

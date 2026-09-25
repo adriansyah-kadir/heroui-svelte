@@ -15,8 +15,9 @@
   const { variant, size, isIconOnly, fullWidth, loading, ...props }: Props =
     $props();
 
+  const isPopoverCommand = $derived(props["command"]?.includes("popover"));
   const popover = popoverSelector(() =>
-    props["command"]?.includes("popover") ? props["commandfor"] : null,
+    isPopoverCommand ? `#${props["commandfor"]}` : null,
   );
 </script>
 
