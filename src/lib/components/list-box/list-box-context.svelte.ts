@@ -1,0 +1,15 @@
+import getValueContextOr from "#lib/utils/value-context.ts";
+import ComboboxState from "#lib/hooks/combobox.svelte.ts";
+
+export type ListBoxProps = {
+  multiple?: boolean;
+  name?: string;
+}
+
+export function getListBoxProps(props: () => ListBoxProps = () => ({})) {
+  return getValueContextOr("list-box-props", props)
+}
+
+export function getListBoxCombobox(props: () => ListBoxProps = () => ({})) {
+  return getValueContextOr("list-box-combobox", () => new ComboboxState(props().multiple))
+}
