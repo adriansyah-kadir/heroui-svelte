@@ -30,23 +30,31 @@ export default function valueState<T>(value: () => T): ValueState<T> {
   return new Proxy(state, {
     get(target, property) {
       if (property in target) {
-        // @ts-expect-error
-        return target[property]
+        return Reflect.get(target, property, target)
       }
 
-      // @ts-expect-error
-      return target.current[property]
+      if (typeof target.current !== "object" || target.current === null) return false;
+      if (!(property in target.current)) return false;
+
+      const value = Reflect.get(target.current, property)
+      if (typeof value === "function") {
+        return value.bind(target.current)
+      }
+
+      return value
     },
 
     set(target, property, value) {
       if (property in target) {
-        // @ts-expect-error
-        target[property] = value
+        return Reflect.set(target, property, value, target)
       }
 
-      // @ts-expect-error
-      target.current[property] = value
-      return true
+      const current = target.current
+      if (typeof current !== "object" || current === null) {
+        return false
+      }
+
+      return Reflect.set(current, property, value, current)
     }
   }) as ValueState<T>
 }
