@@ -1,2 +1,6 @@
 @import 'tailwindcss';
 @import '@heroui/styles';
+
+html {
+  @apply bg-background text-foreground;
+}
