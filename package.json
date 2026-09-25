@@ -34,6 +34,7 @@
 	},
 	"devDependencies": {
 		"@chromatic-com/storybook": "latest",
+		"@heroui/styles": "^3.2.6",
 		"@storybook/addon-a11y": "^10.6.0",
 		"@storybook/addon-docs": "^10.6.0",
 		"@storybook/addon-svelte-csf": "latest",
