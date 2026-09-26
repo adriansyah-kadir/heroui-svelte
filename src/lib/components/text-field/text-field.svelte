@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
-  import { getTextFieldProps } from "./text-field-context";
   import { textFieldVariants, type InputVariants } from "@heroui/styles";
+  import { getInputProps, getInputState } from "../input/input-context";
 
   interface Props extends HTMLAttributes<HTMLDivElement> {
     fullWidth?: boolean;
@@ -22,7 +22,8 @@
     ...props
   }: Props = $props();
 
-  const ctx = getTextFieldProps(() => ({
+  const input = getInputState();
+  getInputProps(() => ({
     fullWidth,
     disabled,
     required,
@@ -34,10 +35,10 @@
 
 <div
   {...props}
-  data-disabled={ctx.disabled}
-  data-required={ctx.required}
-  data-invalid={ctx.invalid}
-  class={textFieldVariants({ ...ctx.current, class: props.class?.toString() })}
+  data-disabled={disabled}
+  data-required={required}
+  data-invalid={invalid ?? input.invalid}
+  class={textFieldVariants({ fullWidth, class: props.class?.toString() })}
 >
   {@render props.children?.()}
 </div>

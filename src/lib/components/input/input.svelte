@@ -1,9 +1,7 @@
 <script lang="ts">
   import { inputVariants, type InputVariants } from "@heroui/styles";
   import type { HTMLInputAttributes } from "svelte/elements";
-  import { getTextFieldProps } from "../text-field/text-field-context";
-  import InputState from "#lib/hooks/input.svelte.ts";
-  import { untrack } from "svelte";
+  import { getInputProps, getInputState } from "./input-context";
 
   interface Props extends HTMLInputAttributes {
     fullWidth?: InputVariants["fullWidth"];
@@ -24,16 +22,8 @@
     ...props
   }: Props = $props();
 
-  const state = new InputState();
-  const field = getTextFieldProps();
-
-  $effect(() => {
-    const stateInvalid = state.invalid;
-    untrack(() => {
-      if (stateInvalid === undefined) return;
-      field.invalid = stateInvalid;
-    });
-  });
+  const state = getInputState();
+  const field = getInputProps();
 
   function onChange(event: Event & { currentTarget: HTMLInputElement }) {
     onchange?.(event);
@@ -43,10 +33,10 @@
 
 <input
   {...props}
-  {@attach state.attach()}
+  {@attach state?.attach()}
   onchange={onChange}
   name={field.name ?? name}
-  data-invalid={field.invalid ?? invalid}
+  data-invalid={field.invalid ?? invalid ?? state.invalid}
   disabled={field.disabled ?? disabled}
   required={field.required ?? required}
   class={inputVariants({

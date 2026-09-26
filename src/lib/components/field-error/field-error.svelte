@@ -1,19 +1,21 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
   import { fieldErrorVariants } from "@heroui/styles";
-  import { getTextFieldProps } from "../text-field/text-field-context";
+  import { getInputProps, getInputState } from "../input/input-context";
 
   interface Props extends HTMLAttributes<HTMLDivElement> {}
 
   const { ...props }: Props = $props();
-  const field = getTextFieldProps();
+  const input = getInputState();
+  const ctx = getInputProps();
+  const invalid = $derived(ctx.invalid ?? input.invalid);
 </script>
 
 <div
   {...props}
-  {...field.invalid
+  {...invalid
     ? {
-        "data-visible": field.invalid,
+        "data-visible": true,
       }
     : {}}
   data-slot="field-error"
