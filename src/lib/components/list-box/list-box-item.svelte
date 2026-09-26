@@ -22,7 +22,7 @@
   let node = $state<HTMLElement>();
   const combobox = getListBoxCombobox();
   const { name } = getListBoxProps();
-  const textValue = $derived(value ?? node?.textContent ?? "");
+  const textValue = $derived(value ?? node?.textContent.trim() ?? "");
 
   $effect(() => {
     return combobox.add(id, textValue);
@@ -33,6 +33,15 @@
   {...props}
   {id}
   bind:this={node}
+  onkeydown={(ev) => {
+    if (
+      ev.code === "Space" ||
+      (ev.code === "Enter" && ev.target === ev.currentTarget)
+    ) {
+      ev.preventDefault();
+      combobox.pick(id);
+    }
+  }}
   role="checkbox"
   tabindex="0"
   data-disabled={disabled}

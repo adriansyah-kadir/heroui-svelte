@@ -4,6 +4,7 @@
   import { popoverVariants } from "@heroui/styles";
   import {
     getPopoverProps,
+    getPopoverState,
     type PopoverPlacement,
   } from "./popover-context.svelte";
 
@@ -19,7 +20,7 @@
     ...props
   }: Props = $props();
 
-  const state = new PopoverState();
+  const state = getPopoverState();
   const area = getPopoverArea(state);
   const ctx = getPopoverProps(() => ({
     placement: (area.current as PopoverPlacement) ?? placement,

@@ -6,7 +6,7 @@ export default class ComboboxState<T> {
 
   constructor(readonly multiple: boolean = false) { }
 
-  get items() { return this.#items.entries() }
+  get items() { return this.#items.entries().toArray() }
   get selected() { return this.items.filter(([k]) => this.picked(k)) }
   get unselected() { return this.items.filter(([k]) => !this.picked(k)) }
 

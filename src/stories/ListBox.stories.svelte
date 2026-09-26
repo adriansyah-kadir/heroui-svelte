@@ -6,7 +6,7 @@
   import Label from "#lib/components/label/label.svelte";
   import Description from "#lib/components/description/description.svelte";
   import ListBoxSection from "#lib/components/list-box/list-box-section.svelte";
-    import Header from "#lib/components/header/header.svelte";
+  import Header from "#lib/components/header/header.svelte";
 
   const { Story } = defineMeta({
     component: ListBox,
@@ -58,9 +58,7 @@
 
 <Story name="ListBox" args={{ class: "max-w-xs" }}>
   <ListBoxSection>
-    <Header>
-      Users
-    </Header>
+    <Header>Users</Header>
     {#each users as user}
       <ListBoxItem>
         <img
@@ -77,9 +75,7 @@
     {/each}
   </ListBoxSection>
   <ListBoxSection>
-    <Header>
-      Admins
-    </Header>
+    <Header>Admins</Header>
     {#each admins as user}
       <ListBoxItem>
         <img

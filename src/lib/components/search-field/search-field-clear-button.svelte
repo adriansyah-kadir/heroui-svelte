@@ -20,6 +20,7 @@
 <CloseButton
   {...props}
   {onclick}
+  disabled={input.empty}
   data-slot="search-field-clear-button"
   class={searchFieldVariants().clearButton({
     ...ctx.current,
