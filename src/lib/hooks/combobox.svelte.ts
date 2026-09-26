@@ -24,7 +24,7 @@ export default class ComboboxState<T> {
     return this.#picks.has(key)
   }
 
-  pickedall() {
+  get pickedall() {
     for (const key of this.#items.keys()) {
       if (!this.picked(key)) return false
     }
@@ -46,16 +46,15 @@ export default class ComboboxState<T> {
     return this.#picks.delete(key)
   }
 
-  toggle = (key: string, checked?: boolean) => {
-    const select = checked ?? !this.picked(key)
-
-    if (!select) this.unpick(key);
+  toggle = (key: string) => {
+    if (this.picked(key)) this.unpick(key);
     else this.pick(key)
 
     return this.picked(key)
   }
 
-  toggleall = (checked?: boolean) => {
-    this.#items.keys().forEach(k => this.toggle(k, checked))
+  toggleall = () => {
+    if (this.pickedall) this.#picks.clear();
+    else this.#items.keys().forEach(k => this.#picks.add(k))
   }
 }

@@ -10,8 +10,12 @@ export default class InputState {
     return this.#invalid
   }
 
-  #checked = $state(false)
+  #checked = $state<boolean>()
   get checked() { return this.#checked }
+  set checked(value: boolean | undefined) {
+    this.#checked = value
+    if (this.#node) this.#node.checked = !!value
+  }
 
   #value = $state("")
   get empty() { return this.#value.trim() === "" }
