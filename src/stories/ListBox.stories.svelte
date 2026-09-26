@@ -56,7 +56,7 @@
   ];
 </script>
 
-<Story name="ListBox" args={{ class: "max-w-xs" }}>
+<Story name="ListBox" args={{ class: "min-w-60" }}>
   <ListBoxSection>
     <Header>Users</Header>
     {#each users as user}

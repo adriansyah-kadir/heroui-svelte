@@ -46,15 +46,17 @@ export default class ComboboxState<T> {
     return this.#picks.delete(key)
   }
 
-  toggle = (key: string) => {
-    if (this.picked(key)) this.unpick(key);
+  toggle = (key: string, toggle?: boolean) => {
+    const unpick = this.picked(key) || toggle === false
+    if (unpick) this.unpick(key);
     else this.pick(key)
 
     return this.picked(key)
   }
 
-  toggleall = () => {
-    if (this.pickedall) this.#picks.clear();
+  toggleall = (toggle?: boolean) => {
+    const clear = this.pickedall || toggle === false
+    if (clear) this.#picks.clear();
     else this.#items.keys().forEach(k => this.#picks.add(k))
   }
 }

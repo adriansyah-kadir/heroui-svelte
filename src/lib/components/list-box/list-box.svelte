@@ -9,12 +9,17 @@
   interface Props extends HTMLAttributes<HTMLDivElement> {
     multiple?: boolean;
     name?: string;
+    onvalue?: (values: [string, string][]) => any;
   }
 
-  const { multiple, name, ...props }: Props = $props();
+  const { multiple, name, onvalue, ...props }: Props = $props();
 
   const ctx = getListBoxProps(() => ({ multiple, name }));
   const combobox = getListBoxCombobox(() => ctx.current);
+
+  $effect(() => {
+    onvalue?.(combobox.selected);
+  });
 </script>
 
 <div

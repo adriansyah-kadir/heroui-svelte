@@ -21,25 +21,27 @@
     component: Autocomplete,
     tags: ["autodocs"],
   });
+
+  let picks = $state(["Aldo"]);
 </script>
 
-<Story name="Autocomplete" args={{ class: "max-w-xs", name: "aldo" }}>
+<Story name="Autocomplete" args={{ class: "min-w-60", name: "aldo" }}>
   <Label>Users</Label>
   <AutocompleteTrigger>
-    <AutocompleteValue placeholder="Select user"/>
+    <AutocompleteValue placeholder="Select user" />
     <AutocompleteIndicator />
     <AutocompleteClearButton />
   </AutocompleteTrigger>
-  <Description>Pick a user</Description>
+  <Description>Picked: {picks.join(", ")}</Description>
   <AutocompletePopover>
     <SearchField>
       <SearchFieldGroup data-focus-within={true}>
         <SearchFieldSearchIcon />
-        <SearchFieldInput autofocus placeholder="Search..." />
+        <SearchFieldInput placeholder="Search..." />
         <SearchFieldClearButton />
       </SearchFieldGroup>
     </SearchField>
-    <ListBox>
+    <ListBox onvalue={(v) => (picks = v.map((e) => e[1]))}>
       {#each ["Aldi", "Aldo", "All"] as name}
         <ListBoxItem>
           {name}
