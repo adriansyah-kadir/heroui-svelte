@@ -11,5 +11,6 @@ export function getListBoxProps(props: () => ListBoxProps = () => ({})) {
 }
 
 export function getListBoxCombobox(props: () => ListBoxProps = () => ({})) {
-  return getValueContextOr("list-box-combobox", () => new ComboboxState(props().multiple))
+  const multiple = $derived(props().multiple)
+  return getValueContextOr("list-box-combobox", () => new ComboboxState(multiple))
 }
