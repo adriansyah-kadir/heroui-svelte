@@ -8,4 +8,4 @@
   });
 </script>
 
-<Story name="Secondary" />
+<Story name="Spinner" />

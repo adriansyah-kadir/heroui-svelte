@@ -8,6 +8,7 @@
     variant?: InputVariants["variant"];
     invalid?: boolean;
     onvalue?: (value: string) => any;
+    headless?: boolean;
   }
 
   const {
@@ -19,6 +20,7 @@
     name,
     onvalue,
     onchange,
+    headless,
     ...props
   }: Props = $props();
 
@@ -39,9 +41,11 @@
   data-invalid={field.invalid ?? invalid ?? state.invalid}
   disabled={field.disabled ?? disabled}
   required={field.required ?? required}
-  class={inputVariants({
-    fullWidth: field.fullWidth ?? fullWidth,
-    variant: field.variant ?? variant,
-    class: props.class?.toString(),
-  })}
+  class={headless
+    ? props.class
+    : inputVariants({
+        fullWidth: field.fullWidth ?? fullWidth,
+        variant: field.variant ?? variant,
+        class: props.class?.toString(),
+      })}
 />
