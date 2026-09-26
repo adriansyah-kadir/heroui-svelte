@@ -10,6 +10,9 @@ export default class InputState {
     return this.#invalid
   }
 
+  #checked = $state(false)
+  get checked() { return this.#checked }
+
   #value = $state("")
   get empty() { return this.#value.trim() === "" }
   get value() { return this.#value }
@@ -23,6 +26,7 @@ export default class InputState {
       const update = this.#update.bind(this, node)
       const syncvalue = () => {
         this.value = node.value
+        this.#checked = node.checked
       }
 
       this.#node = node
