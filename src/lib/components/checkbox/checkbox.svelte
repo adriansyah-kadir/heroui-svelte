@@ -3,6 +3,7 @@
   import type { HTMLAttributes } from "svelte/elements";
   import { setCheckboxProps } from "./checkbox-context";
   import { setInputState } from "../input/input-context";
+  import { untrack } from "svelte";
 
   interface Props extends HTMLAttributes<HTMLDivElement> {
     variant?: CheckboxVariants["variant"];
@@ -12,6 +13,7 @@
     invalid?: boolean;
     name?: string;
     required?: boolean;
+    oncheck?: (checked: boolean) => any;
   }
 
   const {
@@ -22,6 +24,7 @@
     invalid,
     required,
     name,
+    oncheck,
     ...props
   }: Props = $props();
 
@@ -35,6 +38,13 @@
     disabled,
     invalid,
   }));
+
+  $effect(() => {
+    if (input.checked === undefined) return;
+    untrack(() => {
+      oncheck?.(!!input.checked);
+    });
+  });
 </script>
 
 <div

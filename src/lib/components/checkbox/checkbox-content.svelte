@@ -8,23 +8,27 @@
 
   const { ...props }: Props = $props();
 
-  const ctx = getCheckboxProps();
+  const { selected, required, disabled, name, variant } =
+    $derived(getCheckboxProps());
   const input = getInputState();
+
+  $effect(() => {
+    input.checked = selected;
+  });
 </script>
 
 <label
   {...props}
   data-slot="checkbox-content"
   class={checkboxVariants().content({
-    variant: ctx.variant,
+    variant: variant,
     class: props.class?.toString(),
   })}
 >
   <input
-    checked={ctx.selected}
-    required={ctx.required}
-    name={ctx.name}
-    disabled={ctx.disabled}
+    {required}
+    {name}
+    {disabled}
     {@attach input.attach()}
     hidden
     type="checkbox"
