@@ -3,7 +3,6 @@ import ComboboxState from "#lib/hooks/combobox.svelte.ts";
 
 export type ListBoxProps = {
   multiple?: boolean;
-  name?: string;
 }
 
 export function getListBoxProps(props: () => ListBoxProps = () => ({})) {

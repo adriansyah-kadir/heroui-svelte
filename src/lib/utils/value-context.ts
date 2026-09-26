@@ -23,8 +23,6 @@ export default function getValueContextOr<T>(
   return v ? setContext(k, valueState(v)) : undefined;
 }
 
-export function getValueContext<T>(
-  k: string,
-): ValueState<T> | undefined {
-  return getContext<ValueState<T>>(k);
+export function setValueContext<T>(k: string, v: () => T) {
+  return setContext(k, valueState(v))
 }

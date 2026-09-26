@@ -2,9 +2,9 @@
   import type { HTMLAttributes } from "svelte/elements";
   import {
     getListBoxCombobox,
-    getListBoxProps,
   } from "./list-box-context.svelte";
   import { listboxItemVariants } from "@heroui/styles";
+  import { getInputProps } from "../input/input-context";
 
   const {
     id = crypto.randomUUID(),
@@ -21,7 +21,7 @@
 
   let node = $state<HTMLElement>();
   const combobox = getListBoxCombobox();
-  const { name } = getListBoxProps();
+  const ctx = getInputProps();
   const textValue = $derived(value ?? node?.textContent.trim() ?? "");
 
   $effect(() => {
@@ -44,7 +44,7 @@
   }}
   role="checkbox"
   tabindex="0"
-  data-disabled={disabled}
+  data-disabled={ctx.disabled ?? disabled}
   data-slot="list-box-item"
   class={listboxItemVariants().item({ class: props.class?.toString() })}
 >
@@ -52,7 +52,8 @@
     bind:checked={
       () => combobox.picked(id), (toggle) => combobox.toggle(id, toggle)
     }
-    {name}
+    disabled={ctx.disabled ?? disabled}
+    name={ctx.name}
     type="checkbox"
     value={textValue}
     hidden

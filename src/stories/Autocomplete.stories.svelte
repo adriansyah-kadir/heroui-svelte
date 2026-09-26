@@ -11,7 +11,6 @@
   import ListBox from "#lib/components/list-box/list-box.svelte";
   import ListBoxItem from "#lib/components/list-box/list-box-item.svelte";
   import ListBoxItemIndicator from "#lib/components/list-box/list-box-item-indicator.svelte";
-  import PopoverArrow from "#lib/components/popover/popover-arrow.svelte";
   import AutocompleteValue from "#lib/components/autocomplete/autocomplete-value.svelte";
   import AutocompleteIndicator from "#lib/components/autocomplete/autocomplete-indicator.svelte";
   import AutocompleteClearButton from "#lib/components/autocomplete/autocomplete-clear-button.svelte";

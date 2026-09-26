@@ -1,7 +1,7 @@
 <script lang="ts">
   import { searchFieldVariants, type InputVariants } from "@heroui/styles";
   import type { HTMLAttributes } from "svelte/elements";
-  import { getInputProps, getInputState } from "../input/input-context";
+  import { getInputState, setInputProps } from "../input/input-context";
 
   interface Props extends HTMLAttributes<HTMLDivElement> {
     disabled?: boolean;
@@ -28,7 +28,7 @@
   }: Props = $props();
 
   const input = getInputState();
-  getInputProps(() => ({
+  setInputProps(() => ({
     disabled,
     required,
     invalid,

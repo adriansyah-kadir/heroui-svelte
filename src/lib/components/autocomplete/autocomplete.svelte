@@ -1,7 +1,7 @@
 <script lang="ts">
   import { autocompleteVariants, type InputVariants } from "@heroui/styles";
   import type { HTMLAttributes } from "svelte/elements";
-  import { getInputProps } from "../input/input-context";
+  import { getInputProps, setInputProps } from "../input/input-context";
   import { getListBoxCombobox } from "../list-box/list-box-context.svelte";
   import { getPopoverState } from "../popover/popover-context.svelte";
   import { untrack } from "svelte";
@@ -30,7 +30,7 @@
 
   const popover = getPopoverState();
   const combobox = getListBoxCombobox(() => ({ multiple }));
-  const ctx = getInputProps(() => ({
+  const ctx = setInputProps(() => ({
     disabled,
     required,
     invalid,
