@@ -25,10 +25,10 @@ export default class ComboboxState<T> {
   }
 
   pickedall() {
-    for (const key in this.#items) {
+    for (const key of this.#items.keys()) {
       if (!this.picked(key)) return false
     }
-    return this.#items.size > 0
+    return this.#picks.size > 0
   }
 
   pick = (key: string) => {
