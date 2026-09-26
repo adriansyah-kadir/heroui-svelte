@@ -4,6 +4,7 @@
   import { getInputProps } from "../input/input-context";
   import { getListBoxCombobox } from "../list-box/list-box-context.svelte";
   import { getPopoverState } from "../popover/popover-context.svelte";
+  import { untrack } from "svelte";
 
   interface Props extends HTMLAttributes<HTMLElement> {
     disabled?: boolean;
@@ -27,8 +28,8 @@
     ...props
   }: Props = $props();
 
-  getPopoverState();
-  getListBoxCombobox(() => ({ multiple }));
+  const popover = getPopoverState();
+  const combobox = getListBoxCombobox(() => ({ multiple }));
   const ctx = getInputProps(() => ({
     disabled,
     required,
@@ -37,6 +38,14 @@
     variant,
     fullWidth,
   }));
+
+  $effect(() => {
+    if (combobox.multiple) return;
+    const _ = combobox.selected;
+    untrack(() => {
+      popover.node?.hidePopover();
+    });
+  });
 
   // TODO: handle same context with search-field in popover getting invalid if this invalid
 </script>

@@ -20,6 +20,7 @@
 <div
   {...props}
   bind:this={node}
+  data-slot="list-box-item-indicator"
   class={listboxItemVariants().indicator({ class: props.class?.toString() })}
 >
   <svg

@@ -14,11 +14,12 @@
   const { multiple, name, ...props }: Props = $props();
 
   const ctx = getListBoxProps(() => ({ multiple, name }));
-  getListBoxCombobox(() => ctx.current);
+  const combobox = getListBoxCombobox(() => ctx.current);
 </script>
 
 <div
   {...props}
+  aria-multiselectable={combobox.multiple}
   data-slot="list-box"
   class={listboxVariants({ class: props.class?.toString() })}
 >
