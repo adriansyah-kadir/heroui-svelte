@@ -30,6 +30,21 @@ export function boxDerived<T>(
   }
 }
 
+export function boxDerivedObj<T extends Record<string, any>>(getter: Getter<T>, setter?: Setter<T>) {
+  const wrapper = boxDerived(getter, setter)
+
+  return new Proxy({}, {
+    get(_target, p) {
+      return Reflect.get(wrapper.current, p)
+    },
+
+    set(_target, p, value) {
+      setter?.({ ...wrapper.current, [p]: value })
+      return true
+    },
+  }) as unknown as T
+}
+
 export default function boxedDerived<T extends Record<string, any>>(
   getter: Getter<T>,
   setter?: <K extends keyof T>(key: K, value: T[K]) => any,
@@ -62,7 +77,6 @@ export default function boxedDerived<T extends Record<string, any>>(
 
       if (!box) {
         setter?.(property, value)
-        // Optionally create a box here
         return false
       }
 
