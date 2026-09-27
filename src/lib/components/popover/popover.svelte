@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
-  import PopoverState, { getPopoverArea } from "#lib/hooks/popover.svelte.ts";
+  import { getPopoverArea } from "#lib/hooks/popover.svelte.ts";
   import { popoverVariants } from "@heroui/styles";
   import {
     getPopoverProps,
