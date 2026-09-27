@@ -1,4 +1,4 @@
-<script module>
+<script module lang="ts">
   import { defineMeta } from "@storybook/addon-svelte-csf";
   import Table from "#lib/components/table/table.svelte";
   import TableScrollContainer from "#lib/components/table/table-scroll-container.svelte";
@@ -20,6 +20,17 @@
   import Label from "#lib/components/label/label.svelte";
   import SearchFieldSearchIcon from "#lib/components/search-field/search-field-search-icon.svelte";
   import SearchFieldClearButton from "#lib/components/search-field/search-field-clear-button.svelte";
+  import TableFooter from "#lib/components/table/table-footer.svelte";
+  import Pagination from "#lib/components/pagination/pagination.svelte";
+  import PaginationContent from "#lib/components/pagination/pagination-content.svelte";
+  import PaginationItem from "#lib/components/pagination/pagination-item.svelte";
+  import PaginationPrevious from "#lib/components/pagination/pagination-previous.svelte";
+  import PaginationNext from "#lib/components/pagination/pagination-next.svelte";
+  import PaginationPreviousIcon from "#lib/components/pagination/pagination-previous-icon.svelte";
+  import PaginationNextIcon from "#lib/components/pagination/pagination-next-icon.svelte";
+  import PaginationSummary from "#lib/components/pagination/pagination-summary.svelte";
+  import Input from "#lib/components/input/input.svelte";
+  import TextField from "#lib/components/text-field/text-field.svelte";
 
   const { Story } = defineMeta({
     component: Table,
@@ -30,144 +41,47 @@
   });
 
   let search = $state("");
-  const users = [
-    {
-      email: "kate@acme.com",
-      id: 1,
-      name: "Kate Moore",
-      role: "CEO",
-      status: "Active",
-    },
-    {
-      email: "john@acme.com",
-      id: 2,
-      name: "John Smith",
-      role: "CTO",
-      status: "Active",
-    },
-    {
-      email: "sara@acme.com",
-      id: 3,
-      name: "Sara Johnson",
-      role: "CMO",
-      status: "On Leave",
-    },
-    {
-      email: "michael@acme.com",
-      id: 4,
-      name: "Michael Brown",
-      role: "CFO",
-      status: "Active",
-    },
-    {
-      email: "emily@acme.com",
-      id: 5,
-      name: "Emily Davis",
-      role: "Product Manager",
-      status: "Inactive",
-    },
-    {
-      email: "davis@acme.com",
-      id: 6,
-      name: "Davis Wilson",
-      role: "Lead Designer",
-      status: "Active",
-    },
-    {
-      email: "olivia@acme.com",
-      id: 7,
-      name: "Olivia Martinez",
-      role: "Frontend Engineer",
-      status: "Active",
-    },
-    {
-      email: "james@acme.com",
-      id: 8,
-      name: "James Taylor",
-      role: "Backend Engineer",
-      status: "Active",
-    },
-    {
-      email: "sophia@acme.com",
-      id: 9,
-      name: "Sophia Anderson",
-      role: "QA Engineer",
-      status: "On Leave",
-    },
-    {
-      email: "liam@acme.com",
-      id: 10,
-      name: "Liam Thomas",
-      role: "DevOps Engineer",
-      status: "Active",
-    },
-    {
-      email: "lucas@acme.com",
-      id: 11,
-      name: "Lucas Martinez",
-      role: "Product Manager",
-      status: "Active",
-    },
-    {
-      email: "emma@acme.com",
-      id: 12,
-      name: "Emma Johnson",
-      role: "Frontend Engineer",
-      status: "Active",
-    },
-    {
-      email: "noah@acme.com",
-      id: 13,
-      name: "Noah Davis",
-      role: "Backend Engineer",
-      status: "Active",
-    },
-    {
-      email: "ava@acme.com",
-      id: 14,
-      name: "Ava Wilson",
-      role: "Lead Designer",
-      status: "Active",
-    },
-    {
-      email: "oliver@acme.com",
-      id: 15,
-      name: "Oliver Martinez",
-      role: "Frontend Engineer",
-      status: "Active",
-    },
-    {
-      email: "isabella@acme.com",
-      id: 16,
-      name: "Isabella Johnson",
-      role: "Backend Engineer",
-      status: "Active",
-    },
-    {
-      email: "mia@acme.com",
-      id: 17,
-      name: "Mia Davis",
-      role: "Lead Designer",
-      status: "Active",
-    },
-    {
-      email: "william@acme.com",
-      id: 18,
-      name: "William Wilson",
-      role: "Frontend Engineer",
-      status: "Active",
-    },
-  ];
+  let page = $state<Pagination>();
+  let pageSize = $state(10);
+  const users = Array(100)
+    .fill(0)
+    .map((e, i) => ({
+      id: i,
+      name: crypto.randomUUID().slice(0, 5),
+      email: crypto.randomUUID().slice(0, 6),
+      role: crypto.randomUUID().slice(0, 3),
+      status: crypto.randomUUID().slice(0, 5),
+    }));
+
+  const filtered = $derived(
+    users.filter((user) =>
+      user.name.trim().toLowerCase().includes(search.trim().toLowerCase()),
+    ),
+  );
+  const paginated = $derived(
+    filtered.slice(page?.pagination.start, page?.pagination.end),
+  );
 </script>
 
-<SearchField class="mb-4 w-xs" onvalue={(v) => (search = v)}>
-  <Label>Search</Label>
-  <SearchFieldGroup>
-    <SearchFieldSearchIcon />
-    <SearchFieldInput placeholder="search name" />
-    <SearchFieldClearButton />
-  </SearchFieldGroup>
-</SearchField>
+<div class="flex items-end gap-2">
+  <SearchField class="mb-4 w-xs" onvalue={(v) => (search = v)}>
+    <Label>Search</Label>
+    <SearchFieldGroup>
+      <SearchFieldSearchIcon />
+      <SearchFieldInput placeholder="search name" />
+      <SearchFieldClearButton />
+    </SearchFieldGroup>
+  </SearchField>
+  <TextField>
+    <Label>Page size</Label>
+    <Input
+      class="mb-4"
+      bind:value={pageSize}
+      placeholder="Page size"
+      type="number"
+    />
+  </TextField>
+</div>
 
 <Story name="Table" args={{}}>
   {@const combobox = getTableCombobox()}
@@ -198,9 +112,7 @@
         {/each}
       </TableHeader>
       <TableBody>
-        {#each users.filter((e) => e.name
-            .toLowerCase()
-            .includes(search.toLowerCase())) as user}
+        {#each paginated as user}
           <TableRow value={user} id={user.id.toString()}>
             <TableCell>
               <Checkbox selected={combobox.picked(user.id.toString())}>
@@ -223,4 +135,27 @@
       </TableBody>
     </TableContent>
   </TableScrollContainer>
+  <TableFooter>
+    <Pagination bind:this={page} {pageSize} total={users.length}>
+      <PaginationSummary>
+        {#snippet children(p)}
+          Showing {p.start}-{p.end} of {p.total} results
+        {/snippet}
+      </PaginationSummary>
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationPrevious>
+            <PaginationPreviousIcon />
+            Prev
+          </PaginationPrevious>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationNext>
+            Next
+            <PaginationNextIcon />
+          </PaginationNext>
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
+  </TableFooter>
 </Story>

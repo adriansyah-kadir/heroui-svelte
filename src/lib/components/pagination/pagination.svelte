@@ -14,7 +14,7 @@
     ...props
   }: PaginationProps & HTMLAttributes<HTMLDivElement> = $props();
 
-  const pagination = new PaginationState(
+  export const pagination = new PaginationState(
     boxDerived(
       () => ({
         page,

@@ -11,7 +11,8 @@
     headless?: boolean;
   }
 
-  const {
+  let {
+    value = $bindable(),
     fullWidth,
     variant,
     disabled,
@@ -36,6 +37,7 @@
 <input
   {...props}
   {@attach state?.attach()}
+  bind:value
   onchange={onChange}
   name={field.name ?? name}
   data-invalid={field.invalid ?? invalid ?? state.invalid}
