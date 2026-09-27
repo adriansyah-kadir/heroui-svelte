@@ -13,7 +13,13 @@ export default class ListBoxState {
   combobox: ComboboxState<string>
 
   static getOrCreate(opts: ListBoxOpts) {
-    if (hasContext("list-box-state")) return ListBoxState.get()
+    if (hasContext("list-box-state")) {
+      const c = ListBoxState.get()
+      $effect(() => {
+        opts.selected = c.opts.selected
+      })
+      return c
+    }
     return new ListBoxState(opts)
   }
 
