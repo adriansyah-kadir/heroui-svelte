@@ -1,30 +1,39 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
-  import {
-    getListBoxCombobox,
-    getListBoxProps,
-  } from "./list-box-context.svelte";
   import { listboxVariants } from "@heroui/styles";
+  import ListBoxState, { type ListBoxOpts } from "./list-box.svelte.ts";
+  import { boxDerivedObj } from "#lib/hooks/boxed.svelte.ts";
 
-  interface Props extends HTMLAttributes<HTMLDivElement> {
-    multiple?: boolean;
-    name?: string;
+  type Props = {
     onvalue?: (values: [string, string][]) => any;
-  }
+  } & HTMLAttributes<HTMLDivElement> &
+    ListBoxOpts;
 
-  const { multiple, name, onvalue, ...props }: Props = $props();
+  let {
+    multiple,
+    name,
+    onvalue,
+    disabled,
+    selected = $bindable(),
+    ...props
+  }: Props = $props();
 
-  const ctx = getListBoxProps(() => ({ multiple, name }));
-  const combobox = getListBoxCombobox(() => ctx.current);
+  const listBox = ListBoxState.getOrCreate(
+    boxDerivedObj(
+      () => ({ multiple, name, selected, disabled }),
+      (v) => ({ selected } = v),
+    ),
+  );
 
   $effect(() => {
-    onvalue?.(combobox.selected);
+    onvalue?.(selected ?? []);
   });
 </script>
 
 <div
   {...props}
-  aria-multiselectable={combobox.multiple}
+  role="listbox"
+  aria-multiselectable={listBox.combobox.multiple}
   data-slot="list-box"
   class={listboxVariants({ class: props.class?.toString() })}
 >
