@@ -35,7 +35,12 @@ export function boxDerivedObj<T extends Record<string, any>>(getter: Getter<T>, 
 
   return new Proxy({}, {
     get(_target, p) {
-      return Reflect.get(wrapper.current, p)
+      let value = Reflect.get(wrapper.current, p)
+      if (typeof value === "function") {
+        // @ts-expect-error
+        value = value.bind(wrapper.current)
+      }
+      return value
     },
 
     set(_target, p, value) {
