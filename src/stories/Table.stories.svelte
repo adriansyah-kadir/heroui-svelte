@@ -59,13 +59,20 @@
       user.name.trim().toLowerCase().includes(search.trim().toLowerCase()),
     ),
   );
+
   const paginated = $derived(
-    filtered.slice(page?.pagination.start, page?.pagination.end),
+    filtered.slice((page?.pagination.start ?? 1) - 1, page?.pagination.end),
   );
 </script>
 
 <div class="flex items-end gap-2">
-  <SearchField class="mb-4 w-xs" onvalue={(v) => (search = v)}>
+  <SearchField
+    class="mb-4 w-xs"
+    onvalue={(v) => {
+      search = v;
+      page!.pagination.page = 1;
+    }}
+  >
     <Label>Search</Label>
     <SearchFieldGroup>
       <SearchFieldSearchIcon />
@@ -137,11 +144,10 @@
     </TableContent>
   </TableScrollContainer>
   <TableFooter>
-    <Pagination bind:this={page} {pageSize} total={users.length}>
+    <Pagination bind:this={page} {pageSize} total={filtered.length}>
       <PaginationSummary>
-        {#snippet children(p)}
-          Showing {p.start}-{p.end} of {p.total} results
-        {/snippet}
+        Showing {page?.pagination.start}-{page?.pagination.end} of {page
+          ?.pagination.total} results
       </PaginationSummary>
       <PaginationContent>
         <PaginationItem>
