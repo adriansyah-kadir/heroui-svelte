@@ -28,6 +28,13 @@ export default class ListBoxState {
     this.combobox = boxDerivedObj(() => new ComboboxState<string>(multiple))
 
     $effect(() => {
+      const selected = opts.selected
+      untrack(() => {
+        selected?.map(e => e[0]).forEach(this.combobox.pick)
+      })
+    })
+
+    $effect(() => {
       const selected = this.combobox.selected
       untrack(() => {
         opts.selected = selected
