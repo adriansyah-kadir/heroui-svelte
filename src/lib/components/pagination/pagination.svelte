@@ -6,9 +6,9 @@
   import type { HTMLAttributes } from "svelte/elements";
 
   let {
-    page = $bindable(),
+    page = $bindable(1),
     total,
-    pageSize,
+    pageSize = 10,
     disabled,
     size,
     ...props

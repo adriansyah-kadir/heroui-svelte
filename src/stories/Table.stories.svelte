@@ -31,6 +31,7 @@
   import PaginationSummary from "#lib/components/pagination/pagination-summary.svelte";
   import Input from "#lib/components/input/input.svelte";
   import TextField from "#lib/components/text-field/text-field.svelte";
+  import PaginationLink from "#lib/components/pagination/pagination-link.svelte";
 
   const { Story } = defineMeta({
     component: Table,
@@ -148,6 +149,11 @@
             <PaginationPreviousIcon />
             Prev
           </PaginationPrevious>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink>
+            {page?.pagination.page}
+          </PaginationLink>
         </PaginationItem>
         <PaginationItem>
           <PaginationNext>
