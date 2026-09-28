@@ -38,7 +38,7 @@
       role="presentation"
       stroke="currentColor"
       stroke-dasharray={22}
-      stroke-dashoffset={input.opts.checked ? 44 : 66}
+      stroke-dashoffset={input.checked ? 44 : 66}
       stroke-linecap="round"
       stroke-linejoin="round"
       stroke-width={2}
