@@ -1,53 +1,56 @@
 <script lang="ts">
-  import { inputVariants, type InputVariants } from "@heroui/styles";
+  import { inputVariants } from "@heroui/styles";
   import type { HTMLInputAttributes } from "svelte/elements";
-  import { getInputProps, getInputState } from "./input-context";
+  import InputState, { type InputOpts } from "./input.svelte.ts";
+  import { boxDerivedObj } from "#lib/hooks/boxed.svelte.ts";
 
-  interface Props extends HTMLInputAttributes {
-    fullWidth?: InputVariants["fullWidth"];
-    variant?: InputVariants["variant"];
-    invalid?: boolean;
-    onvalue?: (value: string) => any;
+  type Props = {
+    onValue?: (value: string) => any;
     headless?: boolean;
-  }
+  } & InputOpts &
+    HTMLInputAttributes;
 
   let {
     value = $bindable(),
+    checked = $bindable(),
+    invalid = $bindable(),
     fullWidth,
     variant,
     disabled,
     required,
-    invalid,
     name,
-    onvalue,
-    onchange,
+    mode,
+    onValue,
     headless,
     ...props
   }: Props = $props();
 
-  const state = getInputState();
-  const field = getInputProps();
-
-  function onChange(event: Event & { currentTarget: HTMLInputElement }) {
-    onchange?.(event);
-    onvalue?.(event.currentTarget.value);
-  }
+  const input = InputState.getOr(
+    boxDerivedObj(
+      () => ({
+        checked,
+        disabled,
+        fullWidth,
+        invalid,
+        mode,
+        name,
+        required,
+        value,
+        variant,
+      }),
+      (v) => ({ invalid, value, checked } = v),
+    ),
+  );
 </script>
 
 <input
   {...props}
-  {@attach state?.attach()}
-  bind:value
-  onchange={onChange}
-  name={field.name ?? name}
-  data-invalid={field.invalid ?? invalid ?? state.invalid}
-  disabled={field.disabled ?? disabled}
-  required={field.required ?? required}
+  {...input.props}
+  {@attach input.attach()}
   class={headless
     ? props.class
     : inputVariants({
-        fullWidth: field.fullWidth ?? fullWidth,
-        variant: field.variant ?? variant,
+        ...input.heroui,
         class: props.class?.toString(),
       })}
 />
