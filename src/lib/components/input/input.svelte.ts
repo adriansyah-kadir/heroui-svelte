@@ -1,5 +1,5 @@
 import type { InputVariants } from "@heroui/styles";
-import { getContext, hasContext } from "svelte";
+import { getContext, hasContext, setContext } from "svelte";
 import type { Attachment } from "svelte/attachments";
 import type { HTMLInputAttributes } from "svelte/elements";
 
@@ -26,6 +26,7 @@ export default class InputState {
   }
 
   constructor(public opts: InputOpts) {
+    setContext("input-state", this)
     $effect(() => {
       if (!this.node) return;
       const value = this.opts.value
@@ -60,6 +61,7 @@ export default class InputState {
       disabled: this.opts.disabled,
       required: this.opts.required,
       "data-invalid": this.opts.invalid,
+      "data-empty": this.empty,
       name: this.opts.name,
     } satisfies HTMLInputAttributes
   }
@@ -72,6 +74,6 @@ export default class InputState {
   }
 
   get empty() {
-    return this.opts.value === ""
+    return this.opts.value === undefined || this.opts.value === ""
   }
 }
