@@ -1,14 +1,13 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
   import { fieldErrorVariants } from "@heroui/styles";
-  import { getInputProps, getInputState } from "../input/input-context";
+  import InputState from "../input/input.svelte.ts";
 
-  interface Props extends HTMLAttributes<HTMLDivElement> {}
+  type Props = HTMLAttributes<HTMLDivElement>;
 
-  const { ...props }: Props = $props();
-  const input = getInputState();
-  const ctx = getInputProps();
-  const invalid = $derived(ctx.invalid ?? input.invalid);
+  const props: Props = $props();
+  const input = InputState.getOr({});
+  const invalid = $derived(input.opts.invalid);
 </script>
 
 <div
