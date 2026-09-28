@@ -1,23 +1,21 @@
 <script lang="ts">
   import { autocompleteVariants } from "@heroui/styles";
   import type { HTMLAttributes } from "svelte/elements";
-  import { getInputProps } from "../input/input-context";
-  import { getPopoverState } from "../popover/popover-context.svelte";
   import ChevronDownIcon from "#lib/icons/chevron-down-icon.svelte";
+  import AutocompleteState from "./autocomplete.svelte.ts";
 
   interface Props extends HTMLAttributes<HTMLDivElement> {}
 
   const { children, ...props }: Props = $props();
 
-  const popover = getPopoverState();
-  const ctx = getInputProps();
+  const autocomplete = AutocompleteState.ctx();
+  const popover = autocomplete.popover;
 </script>
 
 <div
   {...props}
   data-open={popover.open}
-  class={autocompleteVariants().indicator({
-    ...ctx.current,
+  class={autocompleteVariants(autocomplete.heroui).indicator({
     class: props.class?.toString(),
   })}
 >

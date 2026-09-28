@@ -1,13 +1,9 @@
 <script lang="ts">
-  import {
-    autocompleteVariants,
-    tagGroupVariants,
-    tagVariants,
-  } from "@heroui/styles";
+  import { autocompleteVariants, tagVariants } from "@heroui/styles";
   import type { HTMLAttributes } from "svelte/elements";
-  import { getListBoxCombobox } from "../list-box/list-box-context.svelte";
   import CloseIcon from "#lib/icons/close-icon.svelte";
-  import { getInputProps } from "../input/input-context";
+  import ListBox from "../list-box/list-box.svelte.ts";
+  import AutocompleteState from "./autocomplete.svelte.ts";
 
   const {
     placeholder,
@@ -15,13 +11,14 @@
   }: HTMLAttributes<HTMLDivElement> & {
     placeholder?: string;
   } = $props();
-  const combobox = getListBoxCombobox();
-  const hasselected = $derived(combobox.selected.length > 0);
-  const ctx = getInputProps();
+  const autocomplete = AutocompleteState.ctx();
+  const listBox = ListBox.get();
+  const firstKey = $derived(listBox.opts.selected.values().next().value)
   const tag = $derived(
     tagVariants({
       size: "sm",
-      variant: ctx.variant === "secondary" ? "surface" : "default",
+      variant:
+        autocomplete.heroui.variant === "secondary" ? "surface" : "default",
     }),
   );
 </script>
@@ -31,17 +28,17 @@
     class: ["tag-group", props.class?.toString()],
   })}
 >
-  {#if combobox.multiple && hasselected}
+  {#if listBox.opts.multiple && firstKey !== undefined}
     <ul class="tag-group__list">
-      {#each combobox.selected as [k, v]}
+      {#each listBox.opts.selected?.values() as k}
         <span class={tag.base()}>
-          {v}
+          {listBox.items.get(k)}
           <button
             class={tag.removeButton()}
             onclick={(ev) => {
               ev.preventDefault();
               ev.stopPropagation();
-              combobox.unpick(k);
+              listBox.itemUnpick(k);
             }}
           >
             <CloseIcon />
@@ -49,8 +46,8 @@
         </span>
       {/each}
     </ul>
-  {:else if hasselected}
-    {combobox.selected.at(0)?.[1]}
+  {:else if firstKey}
+    {listBox.items.get(firstKey)}
   {:else}
     {placeholder ?? "-"}
   {/if}

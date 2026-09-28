@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
   import { listboxItemVariants } from "@heroui/styles";
-    import ListBoxState from "./list-box.svelte.ts";
+  import ListBoxState from "./list-box.svelte.ts";
 
   const {
     selected,
@@ -11,11 +11,10 @@
   } = $props();
 
   let node = $state<HTMLElement>();
-  const listBox = ListBoxState.get()
-  const combobox = listBox.combobox;
+  const listBox = ListBoxState.get();
   const parent = $derived(node?.closest(".list-box-item"));
   const parentId = $derived(parent?.id);
-  const picked = $derived(parentId ? combobox.picked(parentId) : false);
+  const picked = $derived(parentId ? listBox.itemSelected(parentId) : false);
 </script>
 
 <div

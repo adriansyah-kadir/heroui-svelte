@@ -47,6 +47,10 @@ export function boxDerivedObj<T extends Record<string, any>>(getter: Getter<T>, 
       setter?.({ ...wrapper.current, [p]: value })
       return true
     },
+
+    ownKeys() {
+      return Object.keys(wrapper.current)
+    }
   }) as unknown as T
 }
 

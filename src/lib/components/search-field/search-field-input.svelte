@@ -13,6 +13,6 @@
   headless
   data-slot="search-field-input"
   class={searchFieldVariants(input.heroui).input({
-    class: props.class?.toString(),
+    class: ["min-w-0", props.class?.toString()],
   })}
 />

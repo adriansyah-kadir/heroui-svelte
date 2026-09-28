@@ -1,4 +1,4 @@
-<script module>
+<script module lang="ts">
   import { defineMeta } from "@storybook/addon-svelte-csf";
   import Autocomplete from "#lib/components/autocomplete/autocomplete.svelte";
   import AutocompleteTrigger from "#lib/components/autocomplete/autocomplete-trigger.svelte";
@@ -16,23 +16,35 @@
   import AutocompleteClearButton from "#lib/components/autocomplete/autocomplete-clear-button.svelte";
   import Label from "#lib/components/label/label.svelte";
   import Description from "#lib/components/description/description.svelte";
+  import EmptyState from "#lib/components/empty-state/empty-state.svelte";
+  import ListBoxState from "#lib/components/list-box/list-box.svelte.ts";
 
   const { Story } = defineMeta({
     component: Autocomplete,
     tags: ["autodocs"],
   });
 
-  let picks = $state(["Aldo"]);
+  let selected = $state<string[]>([]);
 </script>
 
-<Story name="Autocomplete" args={{ class: "min-w-60", name: "aldo" }}>
+<Story
+  name="Autocomplete"
+  args={{
+    class: "min-w-60",
+    name: "aldo",
+    onSelected: (s) => (selected = s),
+  }}
+>
   <Label>Users</Label>
   <AutocompleteTrigger>
     <AutocompleteValue placeholder="Select user" />
     <AutocompleteIndicator />
     <AutocompleteClearButton />
   </AutocompleteTrigger>
-  <Description>Picked: {picks.join(", ")}</Description>
+  {@const list = ListBoxState.get()}
+  <Description
+    >Picked: {selected?.map((e) => list.items.get(e)).join(", ")}</Description
+  >
   <AutocompletePopover>
     <SearchField>
       <SearchFieldGroup data-focus-within={true}>
@@ -41,12 +53,14 @@
         <SearchFieldClearButton />
       </SearchFieldGroup>
     </SearchField>
-    <ListBox onvalue={(v) => (picks = v.map((e) => e[1]))}>
+    <ListBox>
       {#each ["Aldi", "Aldo", "All"] as name}
         <ListBoxItem>
           {name}
           <ListBoxItemIndicator />
         </ListBoxItem>
+      {:else}
+        <EmptyState>Empty</EmptyState>
       {/each}
     </ListBox>
   </AutocompletePopover>

@@ -1,6 +1,12 @@
 import type { Attachment } from "svelte/attachments"
 
+export type InputOpts = {
+  mode?: "change" | "input"
+}
+
 export default class InputState {
+  constructor(public opts: InputOpts) { }
+
   #node = $state<HTMLInputElement>()
   get node() { return this.#node }
 
@@ -34,12 +40,12 @@ export default class InputState {
       }
 
       this.#node = node
-      node.addEventListener("input", syncvalue)
+      node.addEventListener(this.opts.mode ?? "change", syncvalue)
       node.addEventListener("change", update)
       node.addEventListener("invalid", update)
       return () => {
         this.#node = undefined
-        node.removeEventListener("input", syncvalue)
+        node.removeEventListener(this.opts.mode ?? "change", syncvalue)
         node.removeEventListener("change", update)
         node.removeEventListener("invalid", update)
       }

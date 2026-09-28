@@ -18,7 +18,7 @@
 
 <Story
   name="SearchField"
-  args={{ class: "max-w-xs", onvalue: (v) => (search = v) }}
+  args={{ class: "max-w-xs", onValue: (v) => (search = v) }}
 >
   <Label>Search</Label>
   <SearchFieldGroup>

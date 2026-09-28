@@ -1,54 +1,33 @@
 <script lang="ts">
-  import { autocompleteVariants } from "@heroui/styles";
   import type { HTMLAttributes } from "svelte/elements";
-  import { getInputProps } from "../input/input-context";
-  import { getPopoverState } from "../popover/popover-context.svelte";
+  import AutocompleteState from "./autocomplete.svelte.ts";
+  import { autocompleteVariants } from "@heroui/styles";
 
   interface Props extends HTMLAttributes<HTMLDivElement> {}
 
   const { children, ...props }: Props = $props();
 
-  const popover = getPopoverState();
-  const ctx = getInputProps();
-
-  function isInside(ev: Event) {
-    const target = ev.target;
-
-    if (!(target instanceof Node)) return false;
-
-    return popover.source?.contains(target) || popover.node?.contains(target);
-  }
+  const autocomplete = AutocompleteState.ctx();
 </script>
 
-<svelte:window
-  onkeyup={(ev) => {
-    if (ev.key === "Escape") popover.node?.hidePopover();
-  }}
-  onclick={(ev) => {
-    if (isInside(ev)) return;
-    popover.node?.hidePopover();
-  }}
-/>
-
 <div
-  role="button"
-  data-disabled={ctx.disabled}
-  data-invalid={ctx.invalid}
-  tabindex="0"
   {...props}
-  onkeydown={(ev) => {
-    if (ev.code === "Enter" || ev.code === "Space" && ev.target === ev.currentTarget) {
-      ev.preventDefault();
-      popover.node?.togglePopover({ source: ev.currentTarget });
-    }
+  {...autocomplete.props}
+  role="button"
+  tabindex="0"
+  class={autocompleteVariants(autocomplete.heroui).trigger({
+    class: props?.class?.toString(),
+  })}
+  onkeyup={(ev) => {
+    if (ev.code !== "Enter" && ev.code !== "Space") return;
+    if (ev.target !== ev.currentTarget) return;
+    props?.onkeyup?.(ev);
+    autocomplete.toggle(ev.currentTarget);
   }}
   onclick={(ev) => {
-    popover.node?.togglePopover({ source: ev.currentTarget });
+    props?.onclick?.(ev);
+    autocomplete.toggle(ev.currentTarget);
   }}
-  class={autocompleteVariants().trigger({
-    ...ctx.current,
-    class: props.class?.toString(),
-  })}
 >
   {@render children?.()}
 </div>

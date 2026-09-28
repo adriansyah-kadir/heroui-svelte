@@ -18,11 +18,10 @@
 
   let node = $state<HTMLElement>();
   const listBox = ListBoxState.get();
-  const combobox = listBox.combobox;
   const textValue = $derived(value ?? node?.textContent.trim() ?? "");
 
   $effect(() => {
-    return combobox.add(id, textValue);
+    return listBox.itemAdd(id, textValue);
   });
 </script>
 
@@ -36,7 +35,7 @@
       (ev.code === "Enter" && ev.target === ev.currentTarget)
     ) {
       ev.preventDefault();
-      combobox.pick(id);
+      ev.currentTarget.querySelector("input")?.click();
     }
   }}
   role="checkbox"
@@ -47,7 +46,7 @@
 >
   <input
     bind:checked={
-      () => combobox.picked(id), (toggle) => combobox.toggle(id, toggle)
+      () => listBox.itemSelected(id), (toggle) => listBox.itemToggle(id, toggle)
     }
     disabled={listBox.opts.disabled ?? disabled}
     required={listBox.opts.required}

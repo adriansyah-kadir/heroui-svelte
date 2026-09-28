@@ -1,17 +1,16 @@
-import { boxDerivedObj } from "#lib/hooks/boxed.svelte.ts";
-import ComboboxState from "#lib/hooks/combobox.svelte.ts";
 import { getContext, hasContext, setContext, untrack } from "svelte";
+import { SvelteMap, SvelteSet } from "svelte/reactivity";
 
 export type ListBoxOpts = {
   disabled?: boolean,
   multiple?: boolean;
   required?: boolean;
   name?: string;
-  selected?: [string, string][]
+  selected: SvelteSet<string>;
 }
 
 export default class ListBoxState {
-  combobox: ComboboxState<string>
+  items = new SvelteMap<string, string>()
 
   static getOr(opts: ListBoxOpts) {
     if (hasContext("list-box-state")) return ListBoxState.get();
@@ -25,21 +24,46 @@ export default class ListBoxState {
   constructor(public opts: ListBoxOpts) {
     setContext("list-box-state", this)
 
-    const multiple = $derived(opts.multiple)
-    this.combobox = boxDerivedObj(() => new ComboboxState<string>(multiple))
-
     $effect(() => {
-      const selected = opts.selected
+      const multiple = opts.multiple
       untrack(() => {
-        selected?.map(e => e[0]).forEach(this.combobox.pick)
+        if (!multiple) opts.selected.clear();
       })
     })
+  }
 
-    $effect(() => {
-      const selected = this.combobox.selected
-      untrack(() => {
-        opts.selected = selected
-      })
-    })
+  itemAdd(key: string, val: string) {
+    this.items.set(key, val)
+    return () => this.items.delete(key)
+  }
+
+  itemPick(key: string) {
+    if (!this.items.has(key)) return;
+    if (!this.opts.multiple) this.opts.selected?.clear();
+    this.opts.selected.add(key)
+  }
+
+  itemUnpick(key: string) {
+    this.opts.selected.delete(key)
+  }
+
+  itemToggle(key: string, toggle?: boolean) {
+    const pick = toggle ?? !this.itemSelected(key)
+    if (!pick) this.itemUnpick(key);
+    else this.itemPick(key);
+  }
+
+  itemsToggle(toggle?: boolean) {
+    const pickAll = toggle ?? !this.itemsSelected()
+    if (!pickAll) this.opts.selected.clear();
+    else this.items.keys().forEach(this.itemPick)
+  }
+
+  itemSelected(key: string) {
+    return this.opts.selected.has(key)
+  }
+
+  itemsSelected() {
+    return this.items.keys().every(e => this.itemSelected(e))
   }
 }

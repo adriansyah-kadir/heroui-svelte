@@ -58,6 +58,7 @@
 
 <div
   {...props}
+  data-slot="search-field"
   data-disabled={disabled}
   data-required={required}
   data-invalid={invalid}

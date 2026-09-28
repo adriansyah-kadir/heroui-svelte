@@ -3,21 +3,22 @@
   import CloseButton from "../close-button/close-button.svelte";
   import { autocompleteVariants } from "@heroui/styles";
   import type { ComponentProps } from "svelte";
-  import { getListBoxCombobox } from "../list-box/list-box-context.svelte";
+  import AutocompleteState from "./autocomplete.svelte.ts";
 
   const props: ComponentProps<typeof CloseButton> = $props();
-  const combobox = getListBoxCombobox();
+  const autocomplete = AutocompleteState.ctx();
+  const combobox = autocomplete.listBox;
 </script>
 
 <button
   {...props}
-  disabled={combobox.selected.length === 0}
-  data-empty={combobox.selected.length === 0}
+  disabled={autocomplete.empty}
+  data-empty={autocomplete.empty}
   onclick={(ev) => {
     ev.preventDefault();
     ev.stopPropagation();
     props.onclick?.(ev);
-    combobox.toggleall(false);
+    combobox.itemsToggle(false);
   }}
   class={autocompleteVariants().clearButton({ class: props.class?.toString() })}
 >
