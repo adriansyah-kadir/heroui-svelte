@@ -2,11 +2,11 @@
   import type { HTMLAttributes } from "svelte/elements";
   import { labelVariants } from "@heroui/styles";
 
-  interface Props extends HTMLAttributes<HTMLParagraphElement> {
+  type Props = HTMLAttributes<HTMLParagraphElement> & {
     disabled?: boolean;
     required?: boolean;
     invalid?: boolean;
-  }
+  };
 
   const { disabled, required, invalid, ...props }: Props = $props();
 </script>
