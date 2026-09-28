@@ -1,43 +1,47 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
-  import { textFieldVariants, type InputVariants } from "@heroui/styles";
-  import { getInputProps, getInputState } from "../input/input-context";
+  import { textFieldVariants } from "@heroui/styles";
+  import InputState, { type InputOpts } from "../input/input.svelte.ts";
+  import { boxDerivedObj } from "#lib/hooks/boxed.svelte.ts";
 
-  interface Props extends HTMLAttributes<HTMLDivElement> {
-    fullWidth?: boolean;
-    disabled?: boolean;
-    required?: boolean;
-    invalid?: boolean;
-    variant?: InputVariants["variant"];
-    name?: string;
-  }
+  type Props = InputOpts & HTMLAttributes<HTMLDivElement>;
 
-  const {
-    fullWidth,
+  let {
+    invalid = $bindable(),
+    value = $bindable(),
+    checked = $bindable(),
     disabled,
     required,
-    invalid,
-    variant,
     name,
+    mode,
+    fullWidth,
+    variant,
     ...props
   }: Props = $props();
 
-  const input = getInputState();
-  getInputProps(() => ({
-    fullWidth,
-    disabled,
-    required,
-    invalid,
-    variant,
-    name,
-  }));
+  new InputState(
+    boxDerivedObj(
+      () => ({
+        checked,
+        disabled,
+        fullWidth,
+        invalid,
+        mode,
+        name,
+        required,
+        value,
+        variant,
+      }),
+      (v) => ({ invalid, value, checked } = v),
+    ),
+  );
 </script>
 
 <div
   {...props}
   data-disabled={disabled}
   data-required={required}
-  data-invalid={invalid ?? input.invalid}
+  data-invalid={invalid}
   class={textFieldVariants({ fullWidth, class: props.class?.toString() })}
 >
   {@render props.children?.()}
