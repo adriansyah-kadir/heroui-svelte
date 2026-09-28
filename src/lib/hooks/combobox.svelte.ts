@@ -10,6 +10,10 @@ export default class ComboboxState<T> {
   get selected() { return this.items.filter(([k]) => this.picked(k)) }
   get unselected() { return this.items.filter(([k]) => !this.picked(k)) }
 
+  clearSelected() {
+    this.#picks.clear()
+  }
+
   add(key: string, value: T) {
     this.#items.set(key, value)
     return () => this.del(key)
