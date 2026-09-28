@@ -1,19 +1,19 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
   import { inputGroupVariants } from "@heroui/styles";
-  import { getInputProps } from "../input/input-context";
+  import InputState from "../input/input.svelte.ts";
 
   interface Props extends HTMLAttributes<HTMLElement> {}
 
   const { ...props }: Props = $props();
-  const ctx = getInputProps();
+  const input = InputState.get();
 </script>
 
 <div
   {...props}
   data-slot="input-group-prefix"
   class={inputGroupVariants({
-    ...ctx.current,
+    ...input.heroui,
     class: props.class?.toString(),
   }).prefix()}
 >
