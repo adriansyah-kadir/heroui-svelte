@@ -13,6 +13,14 @@ export default class PopoverState {
   get open() { return this.#open }
   get closed() { return !this.#open }
 
+  constructor() {
+    $effect(() => {
+      const node = this.#node;
+      if (!node || node.id !== '') return;
+      node.id = crypto.randomUUID()
+    })
+  }
+
   attach(): Attachment<HTMLElement> {
     return node => {
       const popover = node.closest("*[popover]") as HTMLElement | null
