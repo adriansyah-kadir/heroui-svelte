@@ -1,22 +1,30 @@
-import PopoverState, { popoverSelector } from "#lib/hooks/popover.svelte.ts";
+import type { Box } from "#lib/hooks/boxed.svelte.ts";
+import Context from "#lib/utils/context.ts";
 import type { ButtonVariants } from "@heroui/styles";
-import type { HTMLButtonAttributes } from "svelte/elements";
 
-export type ButtonProps = {
-  fullWidth?: ButtonVariants["fullWidth"];
-  isIconOnly?: ButtonVariants["isIconOnly"];
-  size?: ButtonVariants["size"];
-  variant?: ButtonVariants["variant"];
-  loading?: boolean;
-} & HTMLButtonAttributes
+export type ButtonOpts = {
+  focused?: boolean,
+  hovered?: boolean,
+  pending?: boolean,
+  pressed?: boolean,
+} & ButtonVariants
 
-export default class ButtonState {
-  #popover: PopoverState
+export default class ButtonState extends Context {
+  opts: ButtonOpts
+
+  constructor(opts: Box<ButtonOpts>) {
+    super()
+    this.opts = opts.current
+  }
 
   get props() {
     return {
-      "data-pressed": this.#popover.open,
-    } satisfies HTMLButtonAttributes
+      "data-focused": this.opts.focused,
+      "data-pressed": this.opts.pressed,
+      "data-focus-visible": this.opts.focused,
+      "data-hovered": this.opts.hovered,
+      ...(this.opts.pending ? { "data-pending": true } : {})
+    }
   }
 
   get heroui() {
@@ -24,21 +32,7 @@ export default class ButtonState {
       fullWidth: this.opts.fullWidth,
       isIconOnly: this.opts.isIconOnly,
       size: this.opts.size,
-      variant: this.opts.variant,
-    } satisfies ButtonVariants
-  }
-
-  constructor(public opts: ButtonProps) {
-    const isPopover = $derived(
-      "popovertarget" in this.opts ||
-      this.opts.command?.includes("popover")
-    )
-
-    const target = $derived(
-      this.opts.commandfor ||
-      this.opts.popovertarget
-    )
-
-    this.#popover = popoverSelector(() => isPopover ? `#${target}` : null)
+      variant: this.opts.variant
+    }
   }
 }
