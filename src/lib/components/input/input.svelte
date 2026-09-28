@@ -1,11 +1,10 @@
 <script lang="ts">
   import { inputVariants } from "@heroui/styles";
   import type { HTMLInputAttributes } from "svelte/elements";
-  import InputState, { type InputOpts } from "./input.svelte.ts";
-  import { boxDerivedObj } from "#lib/hooks/boxed.svelte.ts";
+  import InputContext, { type InputOpts } from "./input.svelte.ts";
+  import { boxDerived } from "#lib/hooks/boxed.svelte.ts";
 
   type Props = {
-    onValue?: (value: string) => any;
     headless?: boolean;
   } & InputOpts &
     HTMLInputAttributes;
@@ -19,38 +18,35 @@
     disabled,
     required,
     name,
-    mode,
-    onValue,
     headless,
+    indeterminate,
     ...props
   }: Props = $props();
 
-  const input = InputState.getOr(
-    boxDerivedObj(
-      () => ({
-        checked,
-        disabled,
-        fullWidth,
-        invalid,
-        mode,
-        name,
-        required,
-        value,
-        variant,
-      }),
-      (v) => ({ invalid, value, checked } = v),
-    ),
+  const input = InputContext.getOr(
+    boxDerived(() => ({
+      checked,
+      disabled,
+      fullWidth,
+      indeterminate,
+      invalid,
+      name,
+      required,
+      value,
+      variant,
+    })),
   );
+
+  const className = $derived(
+    headless
+      ? props.class
+      : inputVariants({ ...input.heroui, class: props.class?.toString() }),
+  );
+  const mergedProps = $derived({ ...props, ...input.props, class: className });
 </script>
 
-<input
-  {...props}
-  {...input.props}
-  {@attach input.attach()}
-  class={headless
-    ? props.class
-    : inputVariants({
-        ...input.heroui,
-        class: props.class?.toString(),
-      })}
-/>
+{#if props.type === "checkbox"}
+  <input {...mergedProps} bind:checked type="checkbox" />
+{:else}
+  <input {...mergedProps} bind:value />
+{/if}
