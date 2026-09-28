@@ -18,7 +18,7 @@
     ...props
   }: Props = $props();
 
-  const listBox = ListBoxState.getOrCreate(
+  const listBox = ListBoxState.getOr(
     boxDerivedObj(
       () => ({ multiple, name, selected, disabled }),
       (v) => ({ selected } = v),

@@ -1,4 +1,4 @@
-import { boxDerivedObj } from "#lib/hooks/boxed.svelte.ts";
+import { boxDerivedObj, type Getter, type Setter } from "#lib/hooks/boxed.svelte.ts";
 import ComboboxState from "#lib/hooks/combobox.svelte.ts";
 import { getContext, hasContext, setContext, untrack } from "svelte";
 
@@ -12,14 +12,8 @@ export type ListBoxOpts = {
 export default class ListBoxState {
   combobox: ComboboxState<string>
 
-  static getOrCreate(opts: ListBoxOpts) {
-    if (hasContext("list-box-state")) {
-      const c = ListBoxState.get()
-      $effect(() => {
-        opts.selected = c.opts.selected
-      })
-      return c
-    }
+  static getOr(opts: ListBoxOpts) {
+    if (hasContext("list-box-state")) return ListBoxState.get();
     return new ListBoxState(opts)
   }
 
