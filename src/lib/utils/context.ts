@@ -1,10 +1,40 @@
 import { getContext, hasContext, setContext } from "svelte";
 
-export function getContextOr<T>(key: string): T | undefined
-export function getContextOr<T>(key: string, value: T): T
+type Constructor<T, Args extends unknown[] = unknown[]> =
+  new (...args: Args) => T;
 
-export function getContextOr<T>(key: string, value?: T) {
-  if (hasContext(key)) return getContext<T>(key);
-  if (value !== undefined) return setContext(key, value)
-  return undefined
+export default class Context {
+  static get<T extends Context>(
+    this: abstract new (...args: any[]) => T,
+  ): T {
+    return getContext<T>(this);
+  }
+
+  static getOr<T extends Context>(
+    this: Constructor<T, []>,
+  ): T | undefined;
+
+  static getOr<T extends Context, Args extends unknown[]>(
+    this: Constructor<T, Args>,
+    ...args: Args
+  ): T;
+
+  static getOr<T extends Context, Args extends unknown[]>(
+    this: Constructor<T, Args>,
+    ...args: Args
+  ): T | undefined {
+    if (hasContext(this)) {
+      return getContext<T>(this);
+    }
+
+    if (args.length === 0) {
+      return undefined;
+    }
+
+    return new this(...args);
+  }
+
+  constructor() {
+    setContext(this.constructor, this);
+  }
 }
