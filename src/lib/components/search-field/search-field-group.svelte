@@ -1,13 +1,13 @@
 <script lang="ts">
   import { searchFieldVariants } from "@heroui/styles";
   import type { HTMLAttributes } from "svelte/elements";
-  import InputState from "../input/input.svelte.ts";
+  import InputContext from "../input/input.svelte.ts";
 
   type Props = HTMLAttributes<HTMLDivElement>;
 
   const { children, ...props }: Props = $props();
 
-  const input = InputState.get();
+  const input = InputContext.get();
 </script>
 
 <div

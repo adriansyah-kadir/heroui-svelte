@@ -2,12 +2,12 @@
   import type { HTMLAttributes } from "svelte/elements";
   import { searchFieldVariants } from "@heroui/styles";
   import SearchIcon from "#lib/icons/search-icon.svelte";
-  import InputState from "../input/input.svelte.ts";
+  import InputContext from "../input/input.svelte.ts";
 
   interface Props extends HTMLAttributes<HTMLElement> {}
 
   const { ...props }: Props = $props();
-  const input = InputState.get();
+  const input = InputContext.get();
 </script>
 
 <div

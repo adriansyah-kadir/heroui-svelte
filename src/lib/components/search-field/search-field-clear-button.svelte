@@ -2,17 +2,16 @@
   import { searchFieldVariants } from "@heroui/styles";
   import CloseButton from "../close-button/close-button.svelte";
   import type { ComponentProps } from "svelte";
-  import InputState from "../input/input.svelte.ts";
+  import InputContext from "../input/input.svelte.ts";
 
   interface Props extends ComponentProps<typeof CloseButton> {}
 
   const { ...props }: Props = $props();
-  const input = InputState.get();
+  const input = InputContext.get();
 
   function onclick(ev: MouseEvent & { currentTarget: HTMLButtonElement }) {
     props.onclick?.(ev);
-    input.opts.value = "";
-    input.node?.focus();
+    input.value = "";
   }
 </script>
 
