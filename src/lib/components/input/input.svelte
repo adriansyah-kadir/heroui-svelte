@@ -24,17 +24,20 @@
   }: Props = $props();
 
   const input = InputContext.getOr(
-    boxDerived(() => ({
-      checked,
-      disabled,
-      fullWidth,
-      indeterminate,
-      invalid,
-      name,
-      required,
-      value,
-      variant,
-    })),
+    boxDerived(
+      () => ({
+        checked,
+        disabled,
+        fullWidth,
+        indeterminate,
+        invalid,
+        name,
+        required,
+        value,
+        variant,
+      }),
+      (v) => ({ checked, value } = v),
+    ),
   );
 
   const className = $derived(
@@ -46,7 +49,7 @@
 </script>
 
 {#if props.type === "checkbox"}
-  <input {...mergedProps} bind:checked type="checkbox" />
+  <input {...mergedProps} bind:checked={input.checked} type="checkbox" />
 {:else}
-  <input {...mergedProps} bind:value />
+  <input {...mergedProps} bind:value={input.value} />
 {/if}

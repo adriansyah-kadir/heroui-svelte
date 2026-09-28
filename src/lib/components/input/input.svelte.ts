@@ -17,6 +17,28 @@ export default class InputContext extends Context {
   #opts: Box<InputOpts>
   get opts() { return this.#opts.current }
 
+  get value() {
+    return this.opts.value
+  }
+
+  set value(value: any) {
+    this.#opts.current = {
+      ...this.opts,
+      value
+    }
+  }
+
+  get checked() {
+    return this.opts.checked
+  }
+
+  set checked(checked: boolean | undefined) {
+    this.#opts.current = {
+      ...this.opts,
+      checked
+    }
+  }
+
   constructor(opts: Box<InputOpts>) {
     super()
     this.#opts = opts
