@@ -1,26 +1,23 @@
 <script lang="ts">
   import { checkboxVariants } from "@heroui/styles";
   import type { HTMLAttributes } from "svelte/elements";
-  import { getCheckboxProps } from "./checkbox-context";
-  import { getInputState } from "../input/input-context";
+  import InputState from "../input/input.svelte.ts";
 
-  interface Props extends HTMLAttributes<HTMLSpanElement> {}
+  type Props = HTMLAttributes<HTMLSpanElement>;
 
   const { ...props }: Props = $props();
-
-  const { variant, indeterminate, selected } = $derived(getCheckboxProps());
-  const input = getInputState();
+  const input = InputState.get();
 </script>
 
 <span
   {...props}
   data-slot="checkbox-indicator"
   class={checkboxVariants().indicator({
-    variant,
+    variant: input.heroui.variant,
     class: props.class?.toString(),
   })}
 >
-  {#if indeterminate}
+  {#if input.opts.indeterminate}
     <svg
       aria-hidden="true"
       data-slot="checkbox-default-indicator--indeterminate"
@@ -41,7 +38,7 @@
       role="presentation"
       stroke="currentColor"
       stroke-dasharray={22}
-      stroke-dashoffset={(selected ?? input.checked) ? 44 : 66}
+      stroke-dashoffset={input.opts.checked ? 44 : 66}
       stroke-linecap="round"
       stroke-linejoin="round"
       stroke-width={2}

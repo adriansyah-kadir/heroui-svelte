@@ -1,20 +1,20 @@
 <script lang="ts">
   import { checkboxVariants } from "@heroui/styles";
   import type { HTMLAttributes } from "svelte/elements";
-  import { getCheckboxProps } from "./checkbox-context";
+  import InputState from "../input/input.svelte.ts";
 
-  interface Props extends HTMLAttributes<HTMLSpanElement> {}
+  type Props = HTMLAttributes<HTMLSpanElement>;
 
-  const { ...props }: Props = $props();
+  const props: Props = $props();
 
-  const { variant } = getCheckboxProps();
+  const input = InputState.get();
 </script>
 
 <span
   {...props}
   data-slot="checkbox-control"
   class={checkboxVariants().control({
-    variant,
+    variant: input.heroui.variant,
     class: props.class?.toString(),
   })}
 >

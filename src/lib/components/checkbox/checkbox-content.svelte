@@ -1,37 +1,24 @@
 <script lang="ts">
   import { checkboxVariants } from "@heroui/styles";
   import type { HTMLLabelAttributes } from "svelte/elements";
-  import { getCheckboxProps } from "./checkbox-context";
-  import { getInputState } from "../input/input-context";
+  import InputState from "../input/input.svelte.ts";
+  import Input from "../input/input.svelte";
 
-  interface Props extends HTMLLabelAttributes {}
+  type Props = HTMLLabelAttributes;
 
-  const { ...props }: Props = $props();
+  const props: Props = $props();
 
-  const { selected, required, disabled, name, variant } =
-    $derived(getCheckboxProps());
-  const input = getInputState();
-
-  $effect(() => {
-    input.checked = selected;
-  });
+  const input = InputState.get();
 </script>
 
 <label
   {...props}
   data-slot="checkbox-content"
   class={checkboxVariants().content({
-    variant: variant,
+    variant: input.heroui.variant,
     class: props.class?.toString(),
   })}
 >
-  <input
-    {required}
-    {name}
-    {disabled}
-    {@attach input.attach()}
-    hidden
-    type="checkbox"
-  />
+  <Input headless hidden type="checkbox" />
   {@render props.children?.()}
 </label>

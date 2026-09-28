@@ -1,57 +1,49 @@
 <script lang="ts">
-  import { checkboxVariants, type CheckboxVariants } from "@heroui/styles";
+  import { checkboxVariants } from "@heroui/styles";
   import type { HTMLAttributes } from "svelte/elements";
-  import { setCheckboxProps } from "./checkbox-context";
-  import { setInputState } from "../input/input-context";
-  import { untrack } from "svelte";
+  import InputState, { type InputOpts } from "../input/input.svelte.ts";
+  import { boxDerivedObj } from "#lib/hooks/boxed.svelte.ts";
 
-  interface Props extends HTMLAttributes<HTMLDivElement> {
-    variant?: CheckboxVariants["variant"];
-    selected?: boolean;
-    indeterminate?: boolean;
-    disabled?: boolean;
-    invalid?: boolean;
-    name?: string;
-    required?: boolean;
-    oncheck?: (checked: boolean) => any;
-  }
+  type Props = InputOpts & HTMLAttributes<HTMLDivElement>;
 
-  const {
-    variant,
-    selected,
+  let {
+    invalid = $bindable(),
+    value = $bindable(),
+    checked = $bindable(),
     indeterminate,
     disabled,
-    invalid,
     required,
     name,
-    oncheck,
+    mode,
+    fullWidth,
+    variant,
     ...props
   }: Props = $props();
 
-  const input = setInputState();
-  setCheckboxProps(() => ({
-    name,
-    variant,
-    required,
-    selected,
-    indeterminate,
-    disabled,
-    invalid,
-  }));
-
-  $effect(() => {
-    if (input.checked === undefined) return;
-    untrack(() => {
-      oncheck?.(!!input.checked);
-    });
-  });
+  InputState.getOr(
+    boxDerivedObj(
+      () => ({
+        checked,
+        disabled,
+        fullWidth,
+        invalid,
+        mode,
+        name,
+        required,
+        value,
+        variant,
+        indeterminate,
+      }),
+      (v) => ({ invalid, value, checked } = v),
+    ),
+  );
 </script>
 
 <div
   {...props}
   data-slot="checkbox"
-  data-selected={selected ?? input.checked}
-  data-invalid={invalid ?? input.invalid}
+  data-selected={checked}
+  data-invalid={invalid}
   data-disabled={disabled}
   data-required={required}
   data-indeterminate={indeterminate}
