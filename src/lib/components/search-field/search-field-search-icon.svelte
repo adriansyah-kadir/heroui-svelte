@@ -1,20 +1,19 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
   import { searchFieldVariants } from "@heroui/styles";
-  import { getInputProps } from "../input/input-context";
   import SearchIcon from "#lib/icons/search-icon.svelte";
+  import InputState from "../input/input.svelte.ts";
 
   interface Props extends HTMLAttributes<HTMLElement> {}
 
   const { ...props }: Props = $props();
-  const ctx = getInputProps();
+  const input = InputState.get();
 </script>
 
 <div
   {...props}
   data-slot="search-field-search-icon"
-  class={searchFieldVariants().searchIcon({
-    ...ctx.current,
+  class={searchFieldVariants(input.heroui).searchIcon({
     class: props.class?.toString(),
   })}
 >

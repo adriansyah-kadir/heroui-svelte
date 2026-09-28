@@ -1,18 +1,17 @@
 <script lang="ts">
   import { searchFieldVariants } from "@heroui/styles";
-  import { getInputProps, getInputState } from "../input/input-context";
   import CloseButton from "../close-button/close-button.svelte";
   import type { ComponentProps } from "svelte";
+  import InputState from "../input/input.svelte.ts";
 
   interface Props extends ComponentProps<typeof CloseButton> {}
 
   const { ...props }: Props = $props();
-  const input = getInputState();
-  const ctx = getInputProps();
+  const input = InputState.get();
 
   function onclick(ev: MouseEvent & { currentTarget: HTMLButtonElement }) {
     props.onclick?.(ev);
-    input.value = "";
+    input.opts.value = "";
     input.node?.focus();
   }
 </script>
@@ -22,8 +21,7 @@
   {onclick}
   disabled={input.empty}
   data-slot="search-field-clear-button"
-  class={searchFieldVariants().clearButton({
-    ...ctx.current,
+  class={searchFieldVariants(input.heroui).clearButton({
     class: props.class?.toString(),
   })}
 />

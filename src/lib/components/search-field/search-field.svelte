@@ -1,65 +1,70 @@
 <script lang="ts">
-  import { searchFieldVariants, type InputVariants } from "@heroui/styles";
   import type { HTMLAttributes } from "svelte/elements";
-  import { getInputState, setInputProps } from "../input/input-context";
+  import { searchFieldVariants } from "@heroui/styles";
+  import InputState, { type InputOpts } from "../input/input.svelte.ts";
+  import { boxDerivedObj } from "#lib/hooks/boxed.svelte.ts";
+  import { untrack } from "svelte";
 
-  interface Props extends HTMLAttributes<HTMLDivElement> {
-    disabled?: boolean;
-    required?: boolean;
-    invalid?: boolean;
-    name?: string;
-    variant?: InputVariants["variant"];
-    fullWidth?: boolean;
-    onvalue?: (search: string) => any;
-    debounce?: number;
-  }
+  type Props = InputOpts &
+    HTMLAttributes<HTMLDivElement> & {
+      debounce?: number;
+      onValue?: (value: string) => any;
+    };
 
-  const {
+  let {
+    invalid = $bindable(),
+    value = $bindable(),
+    checked = $bindable(),
     disabled,
     required,
-    invalid,
     name,
-    variant,
+    mode = "input",
     fullWidth,
-    children,
-    onvalue,
+    variant,
+    onValue,
     debounce = 300,
     ...props
   }: Props = $props();
 
-  const input = getInputState();
-  setInputProps(() => ({
-    disabled,
-    required,
-    invalid,
-    variant,
-    fullWidth,
-    name,
-  }));
+  const input = new InputState(
+    boxDerivedObj(
+      () => ({
+        checked,
+        disabled,
+        fullWidth,
+        invalid,
+        mode,
+        name,
+        required,
+        value,
+        variant,
+      }),
+      (v) => ({ invalid, value, checked } = v),
+    ),
+  );
 
   $effect(() => {
-    const value = input.value;
-    const i = setTimeout(() => {
-      onvalue?.(value);
-    }, debounce);
-    return () => {
-      clearTimeout(i);
-    };
+    const v = value ?? "";
+    return untrack(() => {
+      return clearTimeout.bind(
+        null,
+        setTimeout(() => {
+          onValue?.(v);
+        }, debounce),
+      );
+    });
   });
 </script>
 
 <div
   {...props}
-  data-slot="search-field"
-  data-empty={input.empty}
   data-disabled={disabled}
   data-required={required}
-  data-invalid={invalid ?? input.invalid}
-  class={searchFieldVariants().base({
-    variant,
-    fullWidth,
+  data-invalid={invalid}
+  data-empty={input.empty}
+  class={searchFieldVariants(input.heroui).base({
     class: props.class?.toString(),
   })}
 >
-  {@render children?.()}
+  {@render props.children?.()}
 </div>

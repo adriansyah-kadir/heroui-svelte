@@ -1,19 +1,18 @@
 <script lang="ts">
   import { searchFieldVariants } from "@heroui/styles";
-  import { getInputProps } from "../input/input-context";
   import Input from "../input/input.svelte";
   import type { ComponentProps } from "svelte";
+  import InputState from "../input/input.svelte.ts";
 
   const props: ComponentProps<typeof Input> = $props();
-  const ctx = getInputProps();
+  const input = InputState.get();
 </script>
 
 <Input
   {...props}
   headless
   data-slot="search-field-input"
-  class={searchFieldVariants().input({
-    ...ctx.current,
+  class={searchFieldVariants(input.heroui).input({
     class: props.class?.toString(),
   })}
 />

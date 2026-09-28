@@ -1,24 +1,22 @@
 <script lang="ts">
   import { searchFieldVariants } from "@heroui/styles";
   import type { HTMLAttributes } from "svelte/elements";
-  import { getInputProps, getInputState } from "../input/input-context";
+  import InputState from "../input/input.svelte.ts";
 
-  interface Props extends HTMLAttributes<HTMLDivElement> {}
+  type Props = HTMLAttributes<HTMLDivElement>;
 
   const { children, ...props }: Props = $props();
 
-  const input = getInputState();
-  const ctx = getInputProps();
+  const input = InputState.get();
 </script>
 
 <div
   {...props}
   data-slot="search-field-group"
-  data-disabled={ctx.disabled}
-  data-required={ctx.required}
-  data-invalid={ctx.invalid ?? input.invalid}
-  class={searchFieldVariants().group({
-    ...ctx.current,
+  data-disabled={input.opts.disabled}
+  data-required={input.opts.required}
+  data-invalid={input.opts.invalid}
+  class={searchFieldVariants(input.heroui).group({
     class: props.class?.toString(),
   })}
 >
