@@ -1,10 +1,11 @@
-import { boxDerivedObj, type Getter, type Setter } from "#lib/hooks/boxed.svelte.ts";
+import { boxDerivedObj } from "#lib/hooks/boxed.svelte.ts";
 import ComboboxState from "#lib/hooks/combobox.svelte.ts";
 import { getContext, hasContext, setContext, untrack } from "svelte";
 
 export type ListBoxOpts = {
   disabled?: boolean,
   multiple?: boolean;
+  required?: boolean;
   name?: string;
   selected?: [string, string][]
 }

@@ -50,6 +50,7 @@
       () => combobox.picked(id), (toggle) => combobox.toggle(id, toggle)
     }
     disabled={listBox.opts.disabled ?? disabled}
+    required={listBox.opts.required}
     name={listBox.opts.name}
     type="checkbox"
     value={textValue}
