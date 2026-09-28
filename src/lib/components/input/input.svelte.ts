@@ -11,6 +11,7 @@ export type InputOpts = {
   mode?: "change" | "input"
   value?: string,
   checked?: boolean,
+  indeterminate?: boolean
 } & InputVariants
 
 export default class InputState {
@@ -33,6 +34,7 @@ export default class InputState {
       const checked = this.opts.checked
       this.node.value = value ?? ""
       this.node.checked = checked ?? false
+      this.opts.indeterminate = this.node?.indeterminate
     })
   }
 
