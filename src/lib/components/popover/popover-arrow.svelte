@@ -1,16 +1,16 @@
 <script lang="ts">
   import ArrowIcon from "#lib/icons/arrow-icon.svelte";
   import type { HTMLAttributes } from "svelte/elements";
-  import { getPopoverProps } from "./popover-context.svelte";
+  import PopoverContext from "./popover.svelte.ts";
 
   const props: HTMLAttributes<HTMLDivElement> = $props();
 
-  const ctx = getPopoverProps();
+  const ctx = PopoverContext.get();
 </script>
 
 <div
   {...props}
-  data-placement={ctx.current.placement ?? "bottom"}
+  {...ctx.props}
   data-slot="popover-overlay-arrow-group"
   class={[
     "absolute",

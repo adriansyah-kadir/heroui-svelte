@@ -1,7 +1,7 @@
 import { type PopoverVariants } from "@heroui/styles";
 import getValueContextOr from "#lib/utils/value-context.ts";
-import { getContextOr } from "#lib/utils/context.ts";
 import PopoverState from "#lib/hooks/popover.svelte.ts";
+import { getContext, hasContext, setContext } from "svelte";
 
 export type PopoverPlacement = "top" | "bottom" | "left" | "right"
 
@@ -14,5 +14,6 @@ export function getPopoverProps(props: () => PopoverProps = () => ({})) {
 }
 
 export function getPopoverState() {
-  return getContextOr("popover-state", new PopoverState())
+  if (hasContext("popover-state")) return getContext<PopoverState>("popover-state");
+  return setContext("popover-state", new PopoverState())
 }
