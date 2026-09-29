@@ -1,65 +1,39 @@
-# Svelte library
+# HeroUI Svelte
 
-Everything you need to build a Svelte library, powered by [`sv`](https://npmjs.com/package/sv).
+A Svelte 5 wrapper for [HeroUI](https://heroui.com), bringing HeroUI's styling and component experience to Svelte applications.
 
-Read more about creating a library [in the docs](https://svelte.dev/docs/kit/packaging).
-
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
+## Installation
 
 ```sh
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
+bun add github:adriansyah-kadir/heroui-svelte#release @heroui/styles
 ```
 
-To recreate this project with the same configuration:
+## Setup
 
-```sh
-# recreate this project
-bun x sv@1.0.0-next.7 create --template library --types ts --add tailwindcss="plugins:none" storybook --install bun heroui-svelte
+Import Tailwind CSS and HeroUI styles in your main CSS file:
+
+```css
+@import "tailwindcss";
+@import "@heroui/styles";
+
+@source "../node_modules/heroui-svelte/dist";
 ```
 
-## Developing
+Adjust the `@source` path to match your project structure.
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+## Usage
 
-```sh
-npm run dev
+Import components from `heroui-svelte` and use them in your Svelte 5 components.
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+```svelte
+<script lang="ts">
+  import { Button } from "heroui-svelte";
+</script>
+
+<Button>Get started</Button>
 ```
 
-Everything inside `src/lib` is part of your library, everything inside `src/routes` can be used as a showcase or preview app.
+## Documentation
 
-## Building
-
-To build your library:
-
-```sh
-npm pack
-```
-
-To create a production version of your showcase app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
-
-## Publishing
-
-Go into the `package.json` and give your package the desired name through the `"name"` option. Also consider adding a `"license"` field and point it to a `LICENSE` file which you can create from a template (one popular option is the [MIT license](https://opensource.org/license/mit/)).
-
-To publish your library to [npm](https://www.npmjs.com):
-
-```sh
-npm publish
-```
+* [HeroUI](https://heroui.com) — Original design system and component reference.
+* [Storybook](./) — Explore this library's Svelte components and examples.
