@@ -1,0 +1,75 @@
+name: Build and publish release branch
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+        with:
+          ref: master
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build Svelte package
+        run: bun run prepack
+
+      - name: Checkout release branch
+        uses: actions/checkout@v4
+        with:
+          ref: release
+          path: release
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Prepare distributable package
+        run: |
+          # Keep the release branch's Git metadata.
+          find release -mindepth 1 -maxdepth 1 \
+            ! -name .git -exec rm -rf {} +
+
+          # Copy generated package files.
+          mkdir -p release/dist
+          cp -a dist/. release/dist/
+
+          # Keep package metadata, but remove development scripts
+          # and dependencies that aren't needed by consumers.
+          jq '
+            del(.scripts, .devDependencies, .imports, .packageManager)
+            | .files = ["dist"]
+          ' package.json > release/package.json
+
+          # Include documentation when available.
+          [ ! -f README.md ] || cp README.md release/
+          [ ! -f LICENSE ] || cp LICENSE release/
+
+      - name: Commit and push release
+        run: |
+          cd release
+
+          git config user.name "github-actions[bot]"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add -A
+
+          if git diff --cached --quiet; then
+            echo "Release is already up to date."
+            exit 0
+          fi
+
+          git commit -m "Build package from master"
+          git push origin HEAD:release
