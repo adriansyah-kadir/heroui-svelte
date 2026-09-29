@@ -36,4 +36,4 @@ Import components from `heroui-svelte` and use them in your Svelte 5 components.
 ## Documentation
 
 * [HeroUI](https://heroui.com) — Original design system and component reference.
-* [Storybook](./) — Explore this library's Svelte components and examples.
+* [Storybook](https://adriansyah-kadir.github.io/heroui-svelte/) — Explore this library's Svelte components and examples.
