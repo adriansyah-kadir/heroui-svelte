@@ -1,10 +1,9 @@
 <script lang="ts">
   import { buttonVariants } from "@heroui/styles";
-  import type { HTMLAttributes } from "svelte/elements";
+  import type { HTMLButtonAttributes } from "svelte/elements";
   import { type ButtonOpts, ButtonContext, Spinner, boxDerived } from "#lib";
 
   const {
-    href,
     focused,
     hovered,
     pending,
@@ -15,10 +14,7 @@
     size,
     variant,
     ...props
-  }: ButtonOpts &
-    HTMLAttributes<HTMLElement> & {
-      href?: string;
-    } = $props();
+  }: ButtonOpts & HTMLButtonAttributes = $props();
 
   const btn = new ButtonContext(
     boxDerived(() => ({
@@ -35,25 +31,14 @@
   );
 </script>
 
-{#if typeof href === "string"}
-  <a
-    {...props}
-    {...btn.props}
-    {href}
-    class={buttonVariants({ ...btn.heroui, class: props.class?.toString() })}
-  >
-    {@render Children()}
-  </a>
-{:else}
-  <button
-    {...props}
-    {...btn.props}
-    {disabled}
-    class={buttonVariants({ ...btn.heroui, class: props.class?.toString() })}
-  >
-    {@render Children()}
-  </button>
-{/if}
+<button
+  {...props}
+  {...btn.props}
+  {disabled}
+  class={buttonVariants({ ...btn.heroui, class: props.class?.toString() })}
+>
+  {@render Children()}
+</button>
 
 {#snippet Children()}
   ok
