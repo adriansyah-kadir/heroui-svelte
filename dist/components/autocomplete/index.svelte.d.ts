@@ -1,6 +1,6 @@
 import { type ListBoxOpts, type PopoverOpts, type Box, ListBoxContext, PopoverState } from "#lib";
 import type { AutocompleteVariants } from "@heroui/styles";
-import { Context } from "./utils/context.js";
+import { Context } from "#lib/utils/context.js";
 export type AutocompleteOpts = ListBoxOpts & AutocompleteVariants & {
     invalid?: boolean;
 } & PopoverOpts;
