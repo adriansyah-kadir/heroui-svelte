@@ -34,7 +34,7 @@
 <button
   {...props}
   {...btn.props}
-  {disabled}
+  disabled={disabled ?? pending}
   class={buttonVariants({ ...btn.heroui, class: props.class?.toString() })}
 >
   {@render Children()}
