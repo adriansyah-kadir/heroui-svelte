@@ -19,7 +19,7 @@
   const {
     children,
     closeButton,
-    placement,
+    placement = "auto",
     scroll,
     size,
     variant,

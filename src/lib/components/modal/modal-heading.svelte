@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
   import { modalVariants } from "@heroui/styles";
-  import { ModalContext } from "./index.svelte";
+  import { ModalContext } from "#lib";
 
   const props: HTMLAttributes<HTMLParagraphElement> = $props();
 

@@ -1,4 +1,4 @@
-export * from "./index.svelte.ts"
+export * from "./index.svelte"
 export { default as TableBody } from "./table-body.svelte"
 export { default as TableCell } from "./table-cell.svelte"
 export { default as TableColumn } from "./table-column.svelte"

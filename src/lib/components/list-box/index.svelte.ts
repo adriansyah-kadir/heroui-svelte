@@ -1,4 +1,5 @@
-import { type Box, Context, } from "#lib"
+import type { Box } from "#lib/hooks/index.ts";
+import { Context } from "#lib/utils/index.ts";
 import { untrack } from "svelte";
 import { SvelteMap } from "svelte/reactivity";
 

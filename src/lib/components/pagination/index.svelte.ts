@@ -1,4 +1,4 @@
-import type { Box } from "#lib/hooks/boxed.svelte.ts";
+import type { Box } from "#lib/hooks/index.ts";
 import { type PaginationVariants } from "@heroui/styles";
 import { getContext, setContext } from "svelte";
 

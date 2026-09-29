@@ -1,4 +1,4 @@
-export * from "./index.svelte.ts"
+export * from "./index.svelte"
 export { default as PaginationContent } from "./pagination-content.svelte"
 export { default as PaginationEllipsis } from "./pagination-ellipsis.svelte"
 export { default as PaginationItem } from "./pagination-item.svelte"

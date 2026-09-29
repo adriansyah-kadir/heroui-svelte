@@ -1,5 +1,5 @@
-import type { Box } from "#lib/hooks/boxed.svelte.ts";
-import { Context } from "#lib";
+import type { Box } from "#lib/hooks/index.ts";
+import { Context } from "#lib/utils/index.ts";
 import type { TableVariants } from "@heroui/styles";
 
 export type TableOpts = TableVariants

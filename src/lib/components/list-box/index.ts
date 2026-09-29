@@ -1,4 +1,4 @@
-export * from "./index.svelte.ts"
+export * from "./index.svelte"
 export { default as ListBoxItemIndicator } from "./list-box-item-indicator.svelte"
 export { default as ListBoxItem } from "./list-box-item.svelte"
 export { default as ListBoxSection } from "./list-box-section.svelte"

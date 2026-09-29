@@ -1,4 +1,5 @@
-import { Context, type Box } from "#lib";
+import type { Box } from "#lib/hooks/index.ts";
+import { Context } from "#lib/utils/index.ts";
 import type { ButtonVariants } from "@heroui/styles";
 
 export type ButtonOpts = {
@@ -8,7 +9,7 @@ export type ButtonOpts = {
   pressed?: boolean,
 } & ButtonVariants
 
-export default class ButtonState extends Context {
+export class ButtonContext extends Context {
   opts: ButtonOpts
 
   constructor(opts: Box<ButtonOpts>) {
