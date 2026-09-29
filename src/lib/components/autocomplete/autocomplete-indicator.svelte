@@ -8,7 +8,7 @@
 
   const { children, ...props }: Props = $props();
 
-  const autocomplete = AutocompleteState.ctx();
+  const autocomplete = AutocompleteState.get();
   const popover = autocomplete.popover;
 </script>
 

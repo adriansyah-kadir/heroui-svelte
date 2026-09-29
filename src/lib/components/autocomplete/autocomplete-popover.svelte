@@ -1,11 +1,11 @@
 <script lang="ts">
   import { autocompleteVariants } from "@heroui/styles";
-  import Popover from "../popover/popover.svelte";
   import type { HTMLAttributes } from "svelte/elements";
   import AutocompleteState from "./autocomplete.svelte.ts";
+  import PopoverContent from "../popover/popover-content.svelte";
 
   const props: HTMLAttributes<HTMLDivElement> = $props();
-  const autocomplete = AutocompleteState.ctx();
+  const autocomplete = AutocompleteState.get();
   const popover = autocomplete.popover;
   let triggerWidth = $state("auto");
 
@@ -14,7 +14,7 @@
   });
 </script>
 
-<Popover {@attach popover.attach()} popover="manual">
+<PopoverContent popover="manual" {@attach popover.attach()}>
   <div
     {...props}
     style:--trigger-width={triggerWidth}
@@ -24,4 +24,4 @@
   >
     {@render props.children?.()}
   </div>
-</Popover>
+</PopoverContent>

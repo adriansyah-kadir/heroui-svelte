@@ -4,8 +4,8 @@
   import AutocompleteState, {
     type AutocompleteOpts,
   } from "./autocomplete.svelte.ts";
-  import { boxDerivedObj } from "#lib/hooks/boxed.svelte.ts";
-  import { SvelteSet } from "svelte/reactivity";
+  import { boxDerived } from "#lib/hooks/boxed.svelte.ts";
+  import Popover from "../popover/popover.svelte";
 
   type Props = HTMLAttributes<HTMLElement> &
     AutocompleteOpts & {
@@ -17,37 +17,43 @@
     multiple,
     required,
     name,
-    selected = new SvelteSet<string>(),
+    selected = $bindable([]),
     fullWidth,
     variant,
     invalid,
     onSelected,
+    offset,
+    placement,
     ...props
   }: Props = $props();
 
   const autocomplete = new AutocompleteState(
-    boxDerivedObj(() => ({
-      disabled,
-      fullWidth,
-      invalid,
-      multiple,
-      required,
-      variant,
-      selected,
-    })),
+    boxDerived(
+      () => ({
+        offset,
+        placement,
+        selected,
+        disabled,
+        fullWidth,
+        invalid,
+        multiple,
+        name,
+        required,
+        variant,
+      }),
+      (v) => ({ selected } = v),
+    ),
   );
-
-  $effect(() => {
-    onSelected?.(selected.values().toArray());
-  });
 </script>
 
-<div
+<Popover
   {...props}
   {...autocomplete.props}
+  {offset}
+  {placement}
   class={autocompleteVariants(autocomplete.heroui).base({
     class: props.class?.toString(),
   })}
 >
   {@render props.children?.()}
-</div>
+</Popover>

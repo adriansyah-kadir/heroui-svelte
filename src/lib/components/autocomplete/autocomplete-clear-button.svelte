@@ -6,7 +6,7 @@
   import AutocompleteState from "./autocomplete.svelte.ts";
 
   const props: ComponentProps<typeof CloseButton> = $props();
-  const autocomplete = AutocompleteState.ctx();
+  const autocomplete = AutocompleteState.get();
   const combobox = autocomplete.listBox;
 </script>
 

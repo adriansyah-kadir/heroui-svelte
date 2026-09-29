@@ -1,32 +1,35 @@
 import PopoverState from "#lib/hooks/popover.svelte.ts"
 import { isEventTargetInAny } from "#lib/utils/dom.ts"
-import { getContext, onMount, setContext } from "svelte"
-import ListBoxState, { type ListBoxOpts } from "../list-box/list-box.svelte.ts"
+import { onMount } from "svelte"
+import ListBoxContext, { type ListBoxOpts } from "../list-box/list-box.svelte.ts"
 import type { AutocompleteVariants } from "@heroui/styles"
+import type { PopoverOpts } from "../popover/popover.svelte.ts"
+import type { Box } from "#lib/hooks/boxed.svelte.ts"
+import Context from "#lib/utils/context.ts"
 
 export type AutocompleteOpts = ListBoxOpts & AutocompleteVariants & {
   invalid?: boolean
-}
+} & PopoverOpts
 
-export default class AutocompleteState {
+export default class AutocompleteState extends Context {
+  #opts: Box<AutocompleteOpts>
+  get opts() { return this.#opts.current }
+
   popover = new PopoverState()
-  listBox: ListBoxState
+  listBox: ListBoxContext
 
   get empty() {
-    return !this.listBox.opts.selected?.size
+    return this.listBox.opts.selected.length === 0
   }
 
   clear() {
-    this.listBox.opts.selected?.clear()
+    this.listBox.selected = []
   }
 
-  static ctx() {
-    return getContext<AutocompleteState>("autocomplete-state")
-  }
-
-  constructor(public opts: AutocompleteOpts) {
-    setContext("autocomplete-state", this)
-    this.listBox = new ListBoxState(opts)
+  constructor(opts: Box<AutocompleteOpts>) {
+    super()
+    this.#opts = opts
+    this.listBox = new ListBoxContext(opts)
     onMount(() => {
       this.autoCloseOnSingleSelect()
       return this.autoCloseOnFocusLost()
@@ -59,7 +62,7 @@ export default class AutocompleteState {
   autoCloseOnSingleSelect() {
     $effect(() => {
       if (this.opts.multiple) return;
-      this.opts.selected.size;
+      this.opts.selected;
       this.close()
     })
   }
