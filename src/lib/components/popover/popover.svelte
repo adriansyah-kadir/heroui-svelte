@@ -5,7 +5,11 @@
   import { boxDerived } from "#lib/hooks/boxed.svelte.ts";
 
   type Props = HTMLAttributes<HTMLDivElement> & PopoverOpts;
-  const { placement = "bottom", offset = 8, ...props }: Props = $props();
+  const {
+    placement = "bottom",
+    offset = 8,
+    ...props
+  }: Partial<Props> = $props();
 
   new PopoverContext(boxDerived(() => ({ placement, offset })));
 </script>
