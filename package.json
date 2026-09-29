@@ -21,9 +21,5 @@
   },
   "keywords": [
     "svelte"
-  ],
-  "imports": {
-    "#lib": "./dist/index.js",
-    "#lib/*": "./dist/*"
-  }
+  ]
 }

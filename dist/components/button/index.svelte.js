@@ -1,4 +1,4 @@
-import { Context } from "#lib/utils/index.ts";
+import { Context } from "#lib/utils/index.js";
 export class ButtonContext extends Context {
     opts;
     constructor(opts) {

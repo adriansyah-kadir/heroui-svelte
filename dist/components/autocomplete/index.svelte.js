@@ -1,6 +1,6 @@
 import { isEventTargetInAny, ListBoxContext, PopoverState } from "#lib";
 import { onMount } from "svelte";
-import { Context } from "#lib/utils/context.ts";
+import { Context } from "#lib/utils/context.js";
 export class AutocompleteContext extends Context {
     #opts;
     get opts() { return this.#opts.current; }

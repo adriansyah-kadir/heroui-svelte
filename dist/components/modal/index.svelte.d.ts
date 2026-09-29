@@ -1,5 +1,5 @@
-import { DialogState, type Box } from "#lib/hooks/index.ts";
-import { Context } from "#lib/utils/index.ts";
+import { DialogState, type Box } from "#lib/hooks/index.js";
+import { Context } from "#lib/utils/index.js";
 import type { ModalVariants } from "@heroui/styles";
 export type ModalOpts = ModalVariants & {
     placement?: "top" | "bottom" | "center" | "auto";

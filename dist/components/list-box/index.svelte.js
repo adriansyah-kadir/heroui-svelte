@@ -1,4 +1,4 @@
-import { Context } from "#lib/utils/index.ts";
+import { Context } from "#lib/utils/index.js";
 import { untrack } from "svelte";
 import { SvelteMap } from "svelte/reactivity";
 export class ListBoxContext extends Context {
