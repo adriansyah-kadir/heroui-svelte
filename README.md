@@ -16,7 +16,7 @@ Import Tailwind CSS and HeroUI styles in your main CSS file:
 @import "tailwindcss";
 @import "@heroui/styles";
 
-@source "../node_modules/heroui-svelte/dist";
+@source "../../node_modules/heroui-svelte/dist";
 ```
 
 Adjust the `@source` path to match your project structure.
