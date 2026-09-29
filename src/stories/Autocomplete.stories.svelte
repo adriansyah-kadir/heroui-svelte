@@ -23,8 +23,6 @@
     component: Autocomplete,
     tags: ["autodocs"],
   });
-
-  let selected = $state<string[]>([]);
 </script>
 
 <Story
@@ -32,7 +30,6 @@
   args={{
     class: "min-w-60",
     name: "aldo",
-    onSelected: (s) => (selected = s),
   }}
 >
   <Label>Users</Label>
@@ -42,8 +39,7 @@
     <AutocompleteClearButton />
   </AutocompleteTrigger>
   {@const list = ListBoxState.get()}
-  <Description
-    >Picked: {selected?.map((e) => list.items.get(e)).join(", ")}</Description
+  <Description>Picked: {list.selected.map((e) => e.val).join(", ")}</Description
   >
   <AutocompletePopover>
     <SearchField>

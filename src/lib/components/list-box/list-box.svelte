@@ -15,7 +15,7 @@
     ...props
   }: Props = $props();
 
-  export const ctx = new ListBoxState(
+  export const ctx = ListBoxState.getOr(
     boxDerived(
       () => ({ selected, disabled, multiple, name, required }),
       (v) => ({ selected } = v),
