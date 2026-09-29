@@ -1,4 +1,5 @@
-import { type Box, Context } from "#lib";
+import type { Box } from "#lib/hooks/index.ts";
+import { Context } from "#lib/utils/index.ts";
 import type { InputVariants } from "@heroui/styles";
 export type InputOpts = {
     disabled?: boolean;

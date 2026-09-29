@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
   import { popoverVariants } from "@heroui/styles";
-  import PopoverContext from "./index.svelte.ts";
+  import PopoverContext from "./index.svelte";
 
   type Props = HTMLAttributes<HTMLDivElement>;
 

@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from "svelte/elements";
-import PaginationState from "./index.svelte.ts";
+import PaginationState from "./index.svelte";
 import type { Snippet } from "svelte";
 type $$ComponentProps = Omit<HTMLAttributes<HTMLDivElement>, "children"> & {
     children?: Snippet<[PaginationState]>;

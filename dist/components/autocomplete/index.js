@@ -4,4 +4,4 @@ export { default as AutocompletePopover } from "./autocomplete-popover.svelte";
 export { default as AutocompleteTrigger } from "./autocomplete-trigger.svelte";
 export { default as AutocompleteValue } from "./autocomplete-value.svelte";
 export { default as Autocomplete } from "./autocomplete.svelte";
-export * from "./index.svelte.ts";
+export * from "./index.svelte.js";

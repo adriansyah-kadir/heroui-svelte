@@ -1,13 +1,10 @@
 <script lang="ts">
   import { buttonVariants } from "@heroui/styles";
-  import Spinner from "../spinner/spinner.svelte";
-  import type { ButtonOpts } from "./index.svelte.ts";
-  import ButtonState from "./index.svelte.ts";
-  import { boxDerived } from "#lib/hooks/boxed.svelte.ts";
   import type { HTMLButtonAttributes } from "svelte/elements";
+  import { type ButtonOpts, ButtonContext, Spinner, boxDerived } from "#lib";
 
   const props: ButtonOpts & HTMLButtonAttributes = $props();
-  const btn = new ButtonState(boxDerived(() => props));
+  const btn = new ButtonContext(boxDerived(() => props));
 </script>
 
 <button

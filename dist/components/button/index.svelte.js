@@ -1,5 +1,5 @@
-import { Context } from "#lib";
-export default class ButtonState extends Context {
+import { Context } from "#lib/utils/index.ts";
+export class ButtonContext extends Context {
     opts;
     constructor(opts) {
         super();

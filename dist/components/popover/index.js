@@ -1,4 +1,4 @@
-export { default as PopoverContext } from "./index.svelte.ts";
+export { default as PopoverContext } from "./index.svelte";
 export { default as PopoverArrow } from "./popover-arrow.svelte";
 export { default as PopoverContent } from "./popover-content.svelte";
 export { default as PopoverDialog } from "./popover-dialog.svelte";

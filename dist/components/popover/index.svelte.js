@@ -1,4 +1,5 @@
-import { Context, PopoverState, getPopoverArea } from "#lib";
+import { getPopoverArea, PopoverState } from "#lib/hooks/index.ts";
+import { Context } from "#lib/utils/index.ts";
 export default class PopoverContext extends Context {
     #opts;
     get opts() { return this.#opts.current; }

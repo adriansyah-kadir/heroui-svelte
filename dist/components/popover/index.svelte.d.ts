@@ -1,4 +1,5 @@
-import { Context, PopoverState, type Box } from "#lib";
+import { PopoverState, type Box } from "#lib/hooks/index.ts";
+import { Context } from "#lib/utils/index.ts";
 export type PopoverOpts = {
     placement: "bottom" | "top" | "left" | "right";
     offset: number;

@@ -1,4 +1,5 @@
-import { Context, DialogState } from "#lib";
+import { DialogState } from "#lib/hooks/index.ts";
+import { Context } from "#lib/utils/index.ts";
 export class ModalContext extends Context {
     #opts;
     get opts() {

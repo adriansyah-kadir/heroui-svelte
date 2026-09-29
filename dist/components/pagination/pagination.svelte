@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { boxDerived } from "#lib/hooks/boxed.svelte.ts";
   import { paginationVariants } from "@heroui/styles";
-  import type { PaginationProps } from "./index.svelte.ts";
-  import PaginationState from "./index.svelte.ts";
+  import type { PaginationProps } from "./index.svelte";
   import type { HTMLAttributes } from "svelte/elements";
+  import { boxDerived } from "#lib/hooks/index.ts";
+  import PaginationState from "./index.svelte";
 
   let {
     page = $bindable(1),

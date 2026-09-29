@@ -1,4 +1,4 @@
-import { Context } from "#lib";
+import { Context } from "#lib/utils/index.ts";
 export default class TableContext extends Context {
     #opts;
     get opts() { return this.#opts.current; }

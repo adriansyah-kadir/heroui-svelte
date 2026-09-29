@@ -1,6 +1,6 @@
-import type { PaginationProps } from "./index.svelte.ts";
-import PaginationState from "./index.svelte.ts";
+import type { PaginationProps } from "./index.svelte";
 import type { HTMLAttributes } from "svelte/elements";
+import PaginationState from "./index.svelte";
 type $$ComponentProps = PaginationProps & HTMLAttributes<HTMLDivElement>;
 declare const Pagination: import("svelte").Component<$$ComponentProps, {
     pagination: PaginationState;

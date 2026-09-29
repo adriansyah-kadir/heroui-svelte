@@ -1,18 +1,22 @@
 import { getContext, hasContext, setContext } from "svelte";
 export class Context {
     static get() {
-        return getContext(this);
+        return getContext(this.getKey());
     }
     static getOr(...args) {
-        if (hasContext(this)) {
-            return getContext(this);
+        const key = this.getKey();
+        if (hasContext(key)) {
+            return getContext(key);
         }
         if (args.length === 0) {
             return undefined;
         }
         return new this(...args);
     }
+    static getKey() {
+        return Symbol.for(`heroui-svelte:context:${this.name}`);
+    }
     constructor() {
-        setContext(this.constructor, this);
+        setContext(this.constructor.getKey(), this);
     }
 }
