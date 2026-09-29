@@ -1,0 +1,11 @@
+export * from "./index.svelte.ts";
+export { default as TableBody } from "./table-body.svelte";
+export { default as TableCell } from "./table-cell.svelte";
+export { default as TableColumn } from "./table-column.svelte";
+export { default as TableContent } from "./table-content.svelte";
+export { default as TableEmptyState } from "./table-empty-state.svelte";
+export { default as TableFooter } from "./table-footer.svelte";
+export { default as TableHeader } from "./table-header.svelte";
+export { default as TableRow } from "./table-row.svelte";
+export { default as TableScrollContainer } from "./table-scroll-container.svelte";
+export { default as Table } from "./table.svelte";

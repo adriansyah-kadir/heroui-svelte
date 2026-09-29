@@ -1,0 +1,11 @@
+export * from "./index.svelte.ts";
+export { default as PaginationContent } from "./pagination-content.svelte";
+export { default as PaginationEllipsis } from "./pagination-ellipsis.svelte";
+export { default as PaginationItem } from "./pagination-item.svelte";
+export { default as PaginationLink } from "./pagination-link.svelte";
+export { default as PaginationNextIcon } from "./pagination-next-icon.svelte";
+export { default as PaginationNext } from "./pagination-next.svelte";
+export { default as PaginationPreviousIcon } from "./pagination-previous-icon.svelte";
+export { default as PaginationPrevious } from "./pagination-previous.svelte";
+export { default as PaginationSummary } from "./pagination-summary.svelte";
+export { default as Pagination } from "./pagination.svelte";

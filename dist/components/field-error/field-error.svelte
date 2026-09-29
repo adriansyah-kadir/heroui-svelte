@@ -1,0 +1,23 @@
+<script lang="ts">
+  import type { HTMLAttributes } from "svelte/elements";
+  import { fieldErrorVariants } from "@heroui/styles";
+  import { boxDerived, InputContext } from "#lib";
+  type Props = HTMLAttributes<HTMLDivElement>;
+
+  const props: Props = $props();
+  const input = InputContext.getOr(boxDerived(() => ({})));
+  const invalid = $derived(input.opts.invalid);
+</script>
+
+<div
+  {...props}
+  {...invalid
+    ? {
+        "data-visible": true,
+      }
+    : {}}
+  data-slot="field-error"
+  class={fieldErrorVariants({ class: ["duration-0", props.class?.toString()] })}
+>
+  {@render props.children?.()}
+</div>
