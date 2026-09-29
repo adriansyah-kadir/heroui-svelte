@@ -48,7 +48,7 @@ jobs:
           # Keep package metadata, but remove development scripts
           # and dependencies that aren't needed by consumers.
           jq '
-            del(.scripts, .devDependencies, .imports, .packageManager)
+            del(.scripts, .devDependencies, .packageManager)
             | .files = ["dist"]
           ' package.json > release/package.json
 
