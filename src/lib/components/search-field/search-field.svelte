@@ -1,9 +1,8 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
   import { searchFieldVariants } from "@heroui/styles";
-  import InputContext, { type InputOpts } from "../input/input.svelte.ts";
-  import { boxDerived } from "#lib/hooks/boxed.svelte.ts";
   import { untrack } from "svelte";
+  import { type InputOpts, InputContext, boxDerived } from "#lib";
 
   type Props = Omit<InputOpts, "checked"> &
     HTMLAttributes<HTMLDivElement> & {

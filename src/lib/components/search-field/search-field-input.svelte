@@ -2,7 +2,7 @@
   import { searchFieldVariants } from "@heroui/styles";
   import Input from "../input/input.svelte";
   import type { ComponentProps } from "svelte";
-  import InputContext from "../input/input.svelte.ts";
+  import {InputContext} from "#lib";
 
   const props: ComponentProps<typeof Input> = $props();
   const input = InputContext.get();

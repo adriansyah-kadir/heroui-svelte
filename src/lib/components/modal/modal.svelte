@@ -1,21 +1,32 @@
 <script lang="ts">
-  import ModalBackdrop from "./modal-backdrop.svelte";
-  import ModalBase from "./modal-base.svelte";
-  import ModalContainer from "./modal-container.svelte";
-  import ModalDialog from "./modal-dialog.svelte";
-  import ModalCloseTrigger from "./modal-close-trigger.svelte";
-  import type { ModalVariants } from "@heroui/styles";
   import type { HTMLDialogAttributes } from "svelte/elements";
+  import {
+    ModalBackdrop,
+    ModalBase,
+    ModalContainer,
+    ModalDialog,
+    ModalCloseTrigger,
+    ModalContext,
+    type ModalOpts,
+    boxDerived,
+  } from "#lib";
 
-  interface Props extends HTMLDialogAttributes {
-    placement?: "top" | "bottom" | "center" | "auto";
-    scroll?: ModalVariants["scroll"];
-    size?: ModalVariants["size"];
-    variant?: ModalVariants["variant"];
-    closeButton?: boolean;
-  }
+  type Props = HTMLDialogAttributes &
+    ModalOpts & {
+      closeButton?: boolean;
+    };
 
-  const { children, closeButton, ...props }: Props = $props();
+  const {
+    children,
+    closeButton,
+    placement,
+    scroll,
+    size,
+    variant,
+    ...props
+  }: Props = $props();
+
+  new ModalContext(boxDerived(() => ({ placement, scroll, size, variant })));
 </script>
 
 <ModalBase {...props} class="">

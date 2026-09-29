@@ -1,7 +1,7 @@
 <script lang="ts">
   import { tableVariants } from "@heroui/styles";
   import type { HTMLAttributes } from "svelte/elements";
-  import TableContext from "./table.svelte.ts";
+  import TableContext from "./index.svelte.ts";
 
   type Props = HTMLAttributes<HTMLElement> & {
     disabled?: boolean;

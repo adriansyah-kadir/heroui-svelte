@@ -1,13 +1,13 @@
 <script lang="ts">
   import { checkboxVariants } from "@heroui/styles";
   import type { HTMLAttributes } from "svelte/elements";
-  import InputState from "../input/input.svelte.ts";
+  import { InputContext } from "#lib";
 
   type Props = HTMLAttributes<HTMLSpanElement>;
 
   const props: Props = $props();
 
-  const input = InputState.get();
+  const input = InputContext.get();
 </script>
 
 <span

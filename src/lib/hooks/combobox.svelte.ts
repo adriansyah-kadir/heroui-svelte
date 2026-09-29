@@ -1,6 +1,6 @@
 import { SvelteMap, SvelteSet } from "svelte/reactivity"
 
-export type Props<T> = {
+export type ComboboxOpts<T> = {
   initial?: [string, T][],
   multiple?: boolean
 }
@@ -10,7 +10,7 @@ export default class ComboboxState<T> {
   #picks = new SvelteSet<string>()
   multiple: boolean
 
-  constructor(props?: Props<T>) {
+  constructor(props?: ComboboxOpts<T>) {
     this.multiple = props?.multiple ?? false
     this.#items = new SvelteMap(props?.initial ?? [])
   }

@@ -1,8 +1,7 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
   import { textFieldVariants } from "@heroui/styles";
-  import InputState, { type InputOpts } from "../input/input.svelte.ts";
-  import { boxDerived } from "#lib/hooks/boxed.svelte.ts";
+  import { type InputOpts, InputContext, boxDerived } from "#lib";
 
   type Props = InputOpts & HTMLAttributes<HTMLDivElement>;
 
@@ -13,12 +12,12 @@
     disabled,
     required,
     name,
-   fullWidth,
+    fullWidth,
     variant,
     ...props
   }: Props = $props();
 
-  new InputState(
+  new InputContext(
     boxDerived(
       () => ({
         checked,

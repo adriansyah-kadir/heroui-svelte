@@ -1,5 +1,7 @@
-import type { Box } from "#lib/hooks/boxed.svelte.ts";
-import Context from "#lib/utils/context.ts";
+import {
+  type Box,
+  Context,
+} from "#lib"
 import type { InputVariants } from "@heroui/styles";
 import type { HTMLInputAttributes } from "svelte/elements";
 
@@ -13,7 +15,7 @@ export type InputOpts = {
   indeterminate?: boolean
 } & InputVariants
 
-export default class InputContext extends Context {
+export class InputContext extends Context {
   #opts: Box<InputOpts>
   get opts() { return this.#opts.current }
 

@@ -2,7 +2,7 @@
   import type { HTMLAttributes } from "svelte/elements";
   import { searchFieldVariants } from "@heroui/styles";
   import SearchIcon from "#lib/icons/search-icon.svelte";
-  import InputContext from "../input/input.svelte.ts";
+  import { InputContext } from "#lib";
 
   interface Props extends HTMLAttributes<HTMLElement> {}
 

@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { ComponentProps } from "svelte";
   import Button from "../button/button.svelte";
-  import PopoverContext from "./popover.svelte.ts";
+  import PopoverContext from "./index.svelte.ts";
 
   const props: ComponentProps<typeof Button> = $props();
 

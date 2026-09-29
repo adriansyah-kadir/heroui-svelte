@@ -10,7 +10,7 @@ function toggler(dialog: HTMLDialogElement): Toggle {
   }
 }
 
-export default class DialogState {
+export class DialogState {
   open = $state(false)
   closed = $derived(!this.open)
 

@@ -1,6 +1,4 @@
-import type { Box } from "#lib/hooks/boxed.svelte.ts"
-import PopoverState, { getPopoverArea } from "#lib/hooks/popover.svelte.ts"
-import Context from "#lib/utils/context.ts"
+import { Context, PopoverState, getPopoverArea, type Box } from "#lib"
 
 export type PopoverOpts = {
   placement: "bottom" | "top" | "left" | "right",

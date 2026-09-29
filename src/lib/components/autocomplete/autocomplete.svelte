@@ -1,11 +1,12 @@
 <script lang="ts">
   import { autocompleteVariants } from "@heroui/styles";
   import type { HTMLAttributes } from "svelte/elements";
-  import AutocompleteState, {
+  import {
+    boxDerived,
+    Popover,
+    AutocompleteContext,
     type AutocompleteOpts,
-  } from "./autocomplete.svelte.ts";
-  import { boxDerived } from "#lib/hooks/boxed.svelte.ts";
-  import Popover from "../popover/popover.svelte";
+  } from "#lib";
 
   type Props = HTMLAttributes<HTMLElement> &
     AutocompleteOpts & {
@@ -27,7 +28,7 @@
     ...props
   }: Props = $props();
 
-  const autocomplete = new AutocompleteState(
+  const autocomplete = new AutocompleteContext(
     boxDerived(
       () => ({
         offset,

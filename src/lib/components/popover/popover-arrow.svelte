@@ -1,7 +1,7 @@
 <script lang="ts">
   import ArrowIcon from "#lib/icons/arrow-icon.svelte";
   import type { HTMLAttributes } from "svelte/elements";
-  import PopoverContext from "./popover.svelte.ts";
+  import PopoverContext from "./index.svelte.ts";
 
   const props: HTMLAttributes<HTMLDivElement> = $props();
 

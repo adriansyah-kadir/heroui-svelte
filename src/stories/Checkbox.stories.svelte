@@ -1,10 +1,12 @@
 <script module>
   import { defineMeta } from "@storybook/addon-svelte-csf";
-  import Checkbox from "#lib/components/checkbox/checkbox.svelte";
-  import CheckboxContent from "#lib/components/checkbox/checkbox-content.svelte";
-  import CheckboxControl from "#lib/components/checkbox/checkbox-control.svelte";
-  import CheckboxIndicator from "#lib/components/checkbox/checkbox-indicator.svelte";
-  import Label from "#lib/components/label/label.svelte";
+  import {
+    Checkbox,
+    CheckboxContent,
+    CheckboxControl,
+    CheckboxIndicator,
+    Label,
+  } from "#lib";
 
   const { Story } = defineMeta({
     component: Checkbox,

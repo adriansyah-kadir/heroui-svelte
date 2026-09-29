@@ -1,4 +1,4 @@
-export default function getViewport() {
+export function getViewport() {
   let height = $state(0)
   let width = $state(0)
   let offsetTop = $state(0)

@@ -1,5 +1,4 @@
-import type { Box } from "#lib/hooks/boxed.svelte.ts";
-import Context from "#lib/utils/context.ts";
+import { type Box, Context, } from "#lib"
 import { untrack } from "svelte";
 import { SvelteMap } from "svelte/reactivity";
 
@@ -13,7 +12,7 @@ export type ListBoxOpts = {
   selected: Selected;
 }
 
-export default class ListBoxContext extends Context {
+export class ListBoxContext extends Context {
   #opts: Box<ListBoxOpts>
   get opts() {
     return this.#opts.current

@@ -1,12 +1,10 @@
 <script lang="ts">
-  import CloseIcon from "#lib/icons/close-icon.svelte";
-  import CloseButton from "../close-button/close-button.svelte";
+  import { CloseIcon, CloseButton, AutocompleteContext } from "#lib";
   import { autocompleteVariants } from "@heroui/styles";
   import type { ComponentProps } from "svelte";
-  import AutocompleteState from "./autocomplete.svelte.ts";
 
   const props: ComponentProps<typeof CloseButton> = $props();
-  const autocomplete = AutocompleteState.get();
+  const autocomplete = AutocompleteContext.get();
   const combobox = autocomplete.listBox;
 </script>
 

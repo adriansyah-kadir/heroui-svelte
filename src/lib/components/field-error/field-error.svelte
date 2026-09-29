@@ -1,12 +1,11 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
   import { fieldErrorVariants } from "@heroui/styles";
-  import InputState from "../input/input.svelte.ts";
-
+  import { boxDerived, InputContext } from "#lib";
   type Props = HTMLAttributes<HTMLDivElement>;
 
   const props: Props = $props();
-  const input = InputState.getOr({});
+  const input = InputContext.getOr(boxDerived(() => ({})));
   const invalid = $derived(input.opts.invalid);
 </script>
 

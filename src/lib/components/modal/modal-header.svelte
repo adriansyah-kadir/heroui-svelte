@@ -1,16 +1,16 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
-  import { getModalProps } from "./modal-context.svelte";
   import { modalVariants } from "@heroui/styles";
+  import { ModalContext } from "./index.svelte";
 
   const props: HTMLAttributes<HTMLDivElement> = $props();
 
-  const ctx = getModalProps();
+  const ctx = ModalContext.get();
 </script>
 
 <div
   {...props}
-  class={modalVariants(ctx.current).header({
+  class={modalVariants(ctx.heroui).header({
     class: [props.class?.toString()],
   })}
 >

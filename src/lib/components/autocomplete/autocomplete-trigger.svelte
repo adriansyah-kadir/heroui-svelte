@@ -1,13 +1,13 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
-  import AutocompleteState from "./autocomplete.svelte.ts";
+  import { AutocompleteContext } from "#lib";
   import { autocompleteVariants } from "@heroui/styles";
 
   interface Props extends HTMLAttributes<HTMLDivElement> {}
 
   const { children, ...props }: Props = $props();
 
-  const autocomplete = AutocompleteState.get();
+  const autocomplete = AutocompleteContext.get();
 </script>
 
 <div

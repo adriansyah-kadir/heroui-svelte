@@ -1,23 +1,25 @@
 <script module lang="ts">
   import { defineMeta } from "@storybook/addon-svelte-csf";
-  import Autocomplete from "#lib/components/autocomplete/autocomplete.svelte";
-  import AutocompleteTrigger from "#lib/components/autocomplete/autocomplete-trigger.svelte";
-  import AutocompletePopover from "#lib/components/autocomplete/autocomplete-popover.svelte";
-  import SearchField from "#lib/components/search-field/search-field.svelte";
-  import SearchFieldGroup from "#lib/components/search-field/search-field-group.svelte";
-  import SearchFieldSearchIcon from "#lib/components/search-field/search-field-search-icon.svelte";
-  import SearchFieldInput from "#lib/components/search-field/search-field-input.svelte";
-  import SearchFieldClearButton from "#lib/components/search-field/search-field-clear-button.svelte";
-  import ListBox from "#lib/components/list-box/list-box.svelte";
-  import ListBoxItem from "#lib/components/list-box/list-box-item.svelte";
-  import ListBoxItemIndicator from "#lib/components/list-box/list-box-item-indicator.svelte";
-  import AutocompleteValue from "#lib/components/autocomplete/autocomplete-value.svelte";
-  import AutocompleteIndicator from "#lib/components/autocomplete/autocomplete-indicator.svelte";
-  import AutocompleteClearButton from "#lib/components/autocomplete/autocomplete-clear-button.svelte";
-  import Label from "#lib/components/label/label.svelte";
-  import Description from "#lib/components/description/description.svelte";
-  import EmptyState from "#lib/components/empty-state/empty-state.svelte";
-  import ListBoxState from "#lib/components/list-box/list-box.svelte.ts";
+  import {
+    Autocomplete,
+    AutocompleteTrigger,
+    AutocompletePopover,
+    SearchField,
+    SearchFieldGroup,
+    SearchFieldSearchIcon,
+    SearchFieldInput,
+    SearchFieldClearButton,
+    ListBox,
+    ListBoxItem,
+    ListBoxItemIndicator,
+    AutocompleteValue,
+    AutocompleteIndicator,
+    AutocompleteClearButton,
+    Label,
+    Description,
+    EmptyState,
+    ListBoxContext,
+  } from "#lib";
 
   const { Story } = defineMeta({
     component: Autocomplete,
@@ -38,7 +40,7 @@
     <AutocompleteIndicator />
     <AutocompleteClearButton />
   </AutocompleteTrigger>
-  {@const list = ListBoxState.get()}
+  {@const list = ListBoxContext.get()}
   <Description>Picked: {list.selected.map((e) => e.val).join(", ")}</Description
   >
   <AutocompletePopover>

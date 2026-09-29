@@ -1,7 +1,7 @@
 <script lang="ts">
   import { searchFieldVariants } from "@heroui/styles";
   import type { HTMLAttributes } from "svelte/elements";
-  import InputContext from "../input/input.svelte.ts";
+  import {InputContext} from "#lib";
 
   type Props = HTMLAttributes<HTMLDivElement>;
 

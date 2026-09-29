@@ -1,8 +1,7 @@
 <script lang="ts">
   import { checkboxVariants } from "@heroui/styles";
   import type { HTMLAttributes } from "svelte/elements";
-  import InputState, { type InputOpts } from "../input/input.svelte.ts";
-  import { boxDerived } from "#lib/hooks/boxed.svelte.ts";
+  import { type InputOpts, InputContext, boxDerived } from "#lib";
 
   type Props = InputOpts & HTMLAttributes<HTMLDivElement>;
 
@@ -18,7 +17,7 @@
     ...props
   }: Props = $props();
 
-  InputState.getOr(
+  InputContext.getOr(
     boxDerived(
       () => ({
         checked,

@@ -2,7 +2,7 @@
   import { tableVariants } from "@heroui/styles";
   import type { HTMLTableAttributes } from "svelte/elements";
 
-  import TableState from "./table.svelte.ts";
+  import TableState from "./index.svelte.ts";
 
   interface Props extends HTMLTableAttributes {}
 

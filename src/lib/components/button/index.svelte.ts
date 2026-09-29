@@ -1,5 +1,4 @@
-import type { Box } from "#lib/hooks/boxed.svelte.ts";
-import Context from "#lib/utils/context.ts";
+import { Context, type Box } from "#lib";
 import type { ButtonVariants } from "@heroui/styles";
 
 export type ButtonOpts = {

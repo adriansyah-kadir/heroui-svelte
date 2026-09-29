@@ -2,7 +2,7 @@ import type { Attachment } from "svelte/attachments"
 import querySelector from "./query-selector.svelte"
 import { untrack } from "svelte"
 
-export default class PopoverState {
+export class PopoverState {
   #node = $state<HTMLElement | null>(null)
   get node() { return this.#node }
 

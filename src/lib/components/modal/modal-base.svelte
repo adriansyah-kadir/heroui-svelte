@@ -1,8 +1,7 @@
 <script lang="ts">
   import type { HTMLDialogAttributes } from "svelte/elements";
   import { modalVariants, type ModalVariants } from "@heroui/styles";
-  import getViewport from "#lib/hooks/get-viewport.svelte.ts";
-  import { getModalProps } from "./modal-context.svelte";
+  import { getViewport, ModalContext } from "#lib";
 
   interface Props extends HTMLDialogAttributes {
     placement?: "top" | "bottom" | "center" | "auto";
@@ -19,14 +18,15 @@
     ...props
   }: Props = $props();
 
-  const ctx = getModalProps(() => ({ scroll, size, placement, variant }));
+  const ctx = ModalContext.get();
   const viewport = getViewport();
 </script>
 
 <dialog
   {...props}
+  {@attach ctx.dialog.attach()}
   style:--visual-viewport-height={viewport.height + "px"}
-  class={modalVariants(ctx.current).base({
+  class={modalVariants(ctx.heroui).base({
     class: [
       props.class?.toString(),
       "transition-discrete duration-200 transition-[display]",

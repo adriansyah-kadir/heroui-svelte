@@ -3,7 +3,7 @@ import { getContext, hasContext, setContext } from "svelte";
 type Constructor<T, Args extends unknown[] = unknown[]> =
   new (...args: Args) => T;
 
-export default class Context {
+export class Context {
   static get<T extends Context>(
     this: abstract new (...args: any[]) => T,
   ): T {

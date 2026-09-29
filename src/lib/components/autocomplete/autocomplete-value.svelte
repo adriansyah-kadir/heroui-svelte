@@ -1,9 +1,7 @@
 <script lang="ts">
   import { autocompleteVariants, tagVariants } from "@heroui/styles";
   import type { HTMLAttributes } from "svelte/elements";
-  import CloseIcon from "#lib/icons/close-icon.svelte";
-  import ListBoxContext from "../list-box/list-box.svelte.ts";
-  import AutocompleteState from "./autocomplete.svelte.ts";
+  import { CloseIcon, ListBoxContext, AutocompleteContext } from "#lib";
 
   const {
     placeholder,
@@ -11,7 +9,7 @@
   }: HTMLAttributes<HTMLDivElement> & {
     placeholder?: string;
   } = $props();
-  const autocomplete = AutocompleteState.get();
+  const autocomplete = AutocompleteContext.get();
   const listBox = ListBoxContext.get();
   const first = $derived(listBox.opts.selected.values().next().value);
   const tag = $derived(

@@ -1,8 +1,7 @@
 <script lang="ts">
   import { inputVariants } from "@heroui/styles";
   import type { HTMLInputAttributes } from "svelte/elements";
-  import InputContext, { type InputOpts } from "./input.svelte.ts";
-  import { boxDerived } from "#lib/hooks/boxed.svelte.ts";
+  import { type InputOpts, InputContext, boxDerived } from "#lib";
 
   type Props = {
     headless?: boolean;

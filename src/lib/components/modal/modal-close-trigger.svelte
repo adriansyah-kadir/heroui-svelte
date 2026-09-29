@@ -1,14 +1,12 @@
 <script lang="ts">
-  import { getModalProps } from "./modal-context.svelte";
   import type { HTMLButtonAttributes } from "svelte/elements";
-  import CloseButton from "../close-button/close-button.svelte";
-  import DialogState from "#lib/hooks/dialog.svelte.ts";
   import { modalVariants } from "@heroui/styles";
+  import { ModalContext, CloseButton } from "#lib";
 
   const props: HTMLButtonAttributes = $props();
 
-  const ctx = getModalProps();
-  const dialog = new DialogState();
+  const ctx = ModalContext.get();
+  const dialog = ctx.dialog;
   const onClick = (ev: MouseEvent & { currentTarget: HTMLButtonElement }) => {
     dialog.close?.();
     props.onclick?.(ev);
@@ -20,7 +18,7 @@
     {...props}
     {@attach dialog.attach()}
     onclick={onClick}
-    class={modalVariants(ctx.current).closeTrigger({
+    class={modalVariants(ctx.heroui).closeTrigger({
       class: props.class?.toString(),
     })}
   >
@@ -30,7 +28,7 @@
   <CloseButton
     {@attach dialog.attach()}
     onclick={onClick}
-    class={modalVariants(ctx.current).closeTrigger({
+    class={modalVariants(ctx.heroui).closeTrigger({
       class: props.class?.toString(),
     })}
   />

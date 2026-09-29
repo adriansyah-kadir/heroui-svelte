@@ -1,11 +1,10 @@
 <script lang="ts">
   import { inputGroupVariants } from "@heroui/styles";
-  import Input from "../input/input.svelte";
   import type { ComponentProps } from "svelte";
-  import InputState from "../input/input.svelte.ts";
+  import { Input, InputContext } from "#lib";
 
   const props: ComponentProps<typeof Input> = $props();
-  const input = InputState.get();
+  const input = InputContext.get();
 </script>
 
 <Input

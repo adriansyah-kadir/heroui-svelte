@@ -1,8 +1,8 @@
 <script lang="ts">
   import { buttonVariants } from "@heroui/styles";
   import Spinner from "../spinner/spinner.svelte";
-  import type { ButtonOpts } from "./button.svelte.ts";
-  import ButtonState from "./button.svelte.ts";
+  import type { ButtonOpts } from "./index.svelte.ts";
+  import ButtonState from "./index.svelte.ts";
   import { boxDerived } from "#lib/hooks/boxed.svelte.ts";
   import type { HTMLButtonAttributes } from "svelte/elements";
 

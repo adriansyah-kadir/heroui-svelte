@@ -1,12 +1,12 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
   import { inputGroupVariants } from "@heroui/styles";
-  import InputState from "../input/input.svelte.ts";
+  import { InputContext } from "#lib";
 
   type Props = HTMLAttributes<HTMLElement>;
 
   const props: Props = $props();
-  const input = InputState.get();
+  const input = InputContext.get();
 </script>
 
 <div

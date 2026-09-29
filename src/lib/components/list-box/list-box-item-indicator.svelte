@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
   import { listboxItemVariants } from "@heroui/styles";
-  import ListBoxState from "./list-box.svelte.ts";
+  import { ListBoxContext } from "#lib";
 
   const {
     selected,
@@ -11,7 +11,7 @@
   } = $props();
 
   let node = $state<HTMLElement>();
-  const listBox = ListBoxState.get();
+  const listBox = ListBoxContext.get();
   const parent = $derived(node?.closest(".list-box-item"));
   const parentId = $derived(parent?.id);
   const picked = $derived(parentId ? listBox.itemSelected(parentId) : false);

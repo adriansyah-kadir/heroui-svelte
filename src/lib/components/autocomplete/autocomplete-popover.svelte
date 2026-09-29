@@ -1,11 +1,10 @@
 <script lang="ts">
   import { autocompleteVariants } from "@heroui/styles";
   import type { HTMLAttributes } from "svelte/elements";
-  import AutocompleteState from "./autocomplete.svelte.ts";
-  import PopoverContent from "../popover/popover-content.svelte";
+  import { PopoverContent, AutocompleteContext } from "#lib";
 
   const props: HTMLAttributes<HTMLDivElement> = $props();
-  const autocomplete = AutocompleteState.get();
+  const autocomplete = AutocompleteContext.get();
   const popover = autocomplete.popover;
   let triggerWidth = $state("auto");
 

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { tableVariants } from "@heroui/styles";
   import type { HTMLAttributes } from "svelte/elements";
-  import TableContext, { type TableOpts } from "./table.svelte.ts";
+  import TableContext, { type TableOpts } from "./index.svelte.ts";
   import { boxDerived } from "#lib/hooks/boxed.svelte.ts";
 
   type Props = HTMLAttributes<HTMLDivElement> & TableOpts;

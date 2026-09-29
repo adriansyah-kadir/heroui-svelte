@@ -1,22 +1,21 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
-  import { getModalProps } from "./modal-context.svelte";
-  import DialogState from "#lib/hooks/dialog.svelte.ts";
   import { modalVariants } from "@heroui/styles";
+  import { ModalContext } from "#lib";
 
   const props: HTMLAttributes<HTMLDivElement> = $props();
 
-  const ctx = getModalProps();
-  const dialog = new DialogState();
+  const modal = ModalContext.get();
+  const dialog = modal.dialog;
 </script>
 
 <div
   {...props}
   {@attach dialog.attach()}
-  data-placement={ctx.current.placement}
+  data-placement={modal.opts.placement}
   data-entering={dialog.open}
   data-exiting={!dialog.open}
-  class={modalVariants(ctx.current).container({
+  class={modalVariants(modal.heroui).container({
     class: [
       "data-[entering=true]:animate-in",
       "data-[entering=true]:fade-in-0",

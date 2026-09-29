@@ -1,8 +1,7 @@
 <script lang="ts">
   import { searchFieldVariants } from "@heroui/styles";
-  import CloseButton from "../close-button/close-button.svelte";
   import type { ComponentProps } from "svelte";
-  import InputContext from "../input/input.svelte.ts";
+  import { InputContext, CloseButton } from "#lib";
 
   interface Props extends ComponentProps<typeof CloseButton> {}
 

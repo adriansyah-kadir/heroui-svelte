@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { HTMLButtonAttributes } from "svelte/elements";
-  import PaginationState from "./pagination.svelte.ts";
+  import PaginationState from "./index.svelte.ts";
   import { paginationVariants } from "@heroui/styles";
 
   const {

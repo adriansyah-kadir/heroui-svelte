@@ -1,14 +1,13 @@
 <script lang="ts">
   import { checkboxVariants } from "@heroui/styles";
   import type { HTMLLabelAttributes } from "svelte/elements";
-  import InputState from "../input/input.svelte.ts";
-  import Input from "../input/input.svelte";
+  import { InputContext, Input } from "#lib";
 
   type Props = HTMLLabelAttributes;
 
   const props: Props = $props();
 
-  const input = InputState.get();
+  const input = InputContext.get();
 </script>
 
 <label

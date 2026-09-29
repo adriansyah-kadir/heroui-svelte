@@ -1,8 +1,8 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
   import { listboxItemVariants } from "@heroui/styles";
-  import ListBoxContext from "./list-box.svelte.ts";
   import { untrack } from "svelte";
+  import { ListBoxContext } from "#lib";
 
   let {
     id = crypto.randomUUID(),
