@@ -1,10 +1,19 @@
 import { SvelteMap, SvelteSet } from "svelte/reactivity"
 
-export default class ComboboxState<T> {
-  #items = new SvelteMap<string, T>()
-  #picks = new SvelteSet<string>()
+export type Props<T> = {
+  initial?: [string, T][],
+  multiple?: boolean
+}
 
-  constructor(readonly multiple: boolean = false) { }
+export default class ComboboxState<T> {
+  #items: SvelteMap<string, T>
+  #picks = new SvelteSet<string>()
+  multiple: boolean
+
+  constructor(props?: Props<T>) {
+    this.multiple = props?.multiple ?? false
+    this.#items = new SvelteMap(props?.initial ?? [])
+  }
 
   get items() { return this.#items.entries().toArray() }
   get selected() { return this.items.filter(([k]) => this.picked(k)) }

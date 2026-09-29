@@ -12,7 +12,6 @@
   import CheckboxContent from "#lib/components/checkbox/checkbox-content.svelte";
   import CheckboxControl from "#lib/components/checkbox/checkbox-control.svelte";
   import CheckboxIndicator from "#lib/components/checkbox/checkbox-indicator.svelte";
-  import { getTableCombobox } from "#lib/components/table/table-context.svelte.ts";
   import TableEmptyState from "#lib/components/table/table-empty-state.svelte";
   import SearchField from "#lib/components/search-field/search-field.svelte";
   import SearchFieldGroup from "#lib/components/search-field/search-field-group.svelte";
@@ -32,9 +31,10 @@
   import Input from "#lib/components/input/input.svelte";
   import TextField from "#lib/components/text-field/text-field.svelte";
   import PaginationLink from "#lib/components/pagination/pagination-link.svelte";
+  import ComboboxState from "#lib/hooks/combobox.svelte.ts";
 
   const { Story } = defineMeta({
-    component: Table,
+    component: Table as any,
     tags: ["autodocs"],
     args: {
       selection: "multiple",
@@ -63,16 +63,17 @@
   const paginated = $derived(
     filtered.slice((page?.pagination.start ?? 1) - 1, page?.pagination.end),
   );
+
+  const list = $derived(
+    new ComboboxState({
+      initial: users.map((e) => [e.id.toString(), e] as const),
+      multiple: true
+    }),
+  );
 </script>
 
 <div class="flex items-end gap-2">
-  <SearchField
-    class="mb-4 w-xs"
-    onvalue={(v) => {
-      search = v;
-      page!.pagination.page = 1;
-    }}
-  >
+  <SearchField class="mb-4 w-xs" bind:debounced={search}>
     <Label>Search</Label>
     <SearchFieldGroup>
       <SearchFieldSearchIcon />
@@ -80,19 +81,13 @@
       <SearchFieldClearButton />
     </SearchFieldGroup>
   </SearchField>
-  <TextField>
+  <TextField bind:value={pageSize}>
     <Label>Page size</Label>
-    <Input
-      class="mb-4"
-      bind:value={pageSize}
-      placeholder="Page size"
-      type="number"
-    />
+    <Input class="mb-4" placeholder="Page size" type="number" />
   </TextField>
 </div>
 
 <Story name="Table" args={{}}>
-  {@const combobox = getTableCombobox()}
   <TableScrollContainer
     class="max-h-80 in-data-[empty=true]:min-h-30 overflow-y-auto"
   >
@@ -100,13 +95,13 @@
       <TableHeader>
         <TableColumn>
           <Checkbox
+            checked={list.pickedall}
             onclick={(ev) => {
               ev.preventDefault();
               ev.stopPropagation();
-              combobox.toggleall();
+              list.toggleall();
             }}
-            selected={combobox.pickedall}
-            disabled={!combobox.multiple}
+            disabled={!list.multiple}
           >
             <CheckboxContent>
               <CheckboxControl>
@@ -121,9 +116,10 @@
       </TableHeader>
       <TableBody>
         {#each paginated as user}
-          <TableRow value={user} id={user.id.toString()}>
+          {@const id = user.id.toString()}
+          <TableRow onclick={() => list.toggle(id)} selected={list.picked(id)}>
             <TableCell>
-              <Checkbox selected={combobox.picked(user.id.toString())}>
+              <Checkbox checked={list.picked(id)}>
                 <CheckboxContent>
                   <CheckboxControl>
                     <CheckboxIndicator />

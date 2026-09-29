@@ -1,19 +1,18 @@
 <script lang="ts">
   import { tableVariants } from "@heroui/styles";
   import type { HTMLAttributes } from "svelte/elements";
-  import { getTableProps } from "./table-context.svelte";
+  import TableState from "./table.svelte.ts";
 
   interface Props extends HTMLAttributes<HTMLDivElement> {}
 
   const { children, ...props }: Props = $props();
 
-  const { variant } = getTableProps();
+  const table = TableState.get();
 </script>
 
 <div
   {...props}
-  class={tableVariants().scrollContainer({
-    variant,
+  class={tableVariants(table.heroui).scrollContainer({
     class: props.class?.toString(),
   })}
 >

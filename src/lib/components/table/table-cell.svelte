@@ -1,20 +1,19 @@
 <script lang="ts">
   import { tableVariants } from "@heroui/styles";
   import type { HTMLTdAttributes } from "svelte/elements";
-  import { getTableProps } from "./table-context.svelte";
+  import TableState from "./table.svelte.ts";
 
-  interface Props extends HTMLTdAttributes {}
+  type Props = HTMLTdAttributes;
 
   const { children, ...props }: Props = $props();
 
-  const { variant } = getTableProps();
+  const table = TableState.get();
 </script>
 
 <td
   {...props}
   data-slot="table-cell"
-  class={tableVariants().cell({
-    variant,
+  class={tableVariants(table.heroui).cell({
     class: props.class?.toString(),
   })}
 >
