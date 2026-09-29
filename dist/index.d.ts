@@ -17,6 +17,8 @@ export * from "./components/search-field";
 export * from "./components/spinner";
 export * from "./components/table";
 export * from "./components/text-field";
+export * from "./components/surface";
+export * from "./components/fieldset";
 export * from "./icons";
 export * from "./utils";
 export * from "./hooks";
