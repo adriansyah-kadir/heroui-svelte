@@ -2,7 +2,7 @@
   import { tableVariants } from "@heroui/styles";
   import type { HTMLAttributes } from "svelte/elements";
   import TableContext, { type TableOpts } from "./index.svelte";
-  import { boxDerived } from "#lib/hooks/index.ts";
+  import { boxDerived } from "#lib/hooks/index.js";
 
   type Props = HTMLAttributes<HTMLDivElement> & TableOpts;
 

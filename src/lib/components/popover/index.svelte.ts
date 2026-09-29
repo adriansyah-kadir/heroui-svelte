@@ -1,5 +1,5 @@
-import { getPopoverArea, PopoverState, type Box } from "#lib/hooks/index.ts"
-import { Context } from "#lib/utils/index.ts"
+import { getPopoverArea, PopoverState, type Box } from "#lib/hooks/index.js"
+import { Context } from "#lib/utils/index.js"
 
 export type PopoverOpts = {
   placement: "bottom" | "top" | "left" | "right",

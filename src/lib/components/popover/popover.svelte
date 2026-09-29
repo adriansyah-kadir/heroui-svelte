@@ -2,7 +2,7 @@
   import type { HTMLAttributes } from "svelte/elements";
   import type { PopoverOpts } from "./index.svelte";
   import PopoverContext from "./index.svelte";
-  import { boxDerived } from "#lib/hooks/index.ts";
+  import { boxDerived } from "#lib/hooks/index.js";
 
   type Props = HTMLAttributes<HTMLDivElement> & PopoverOpts;
   const {

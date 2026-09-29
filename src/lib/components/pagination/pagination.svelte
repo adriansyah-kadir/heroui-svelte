@@ -2,7 +2,7 @@
   import { paginationVariants } from "@heroui/styles";
   import type { PaginationProps } from "./index.svelte";
   import type { HTMLAttributes } from "svelte/elements";
-  import { boxDerived } from "#lib/hooks/index.ts";
+  import { boxDerived } from "#lib/hooks/index.js";
   import PaginationState from "./index.svelte";
 
   let {

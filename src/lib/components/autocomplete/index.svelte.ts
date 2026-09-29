@@ -8,7 +8,7 @@ import {
 } from "#lib"
 import { onMount } from "svelte"
 import type { AutocompleteVariants } from "@heroui/styles"
-import { Context } from "#lib/utils/context.ts"
+import { Context } from "#lib/utils/context.js"
 
 export type AutocompleteOpts = ListBoxOpts & AutocompleteVariants & {
   invalid?: boolean
