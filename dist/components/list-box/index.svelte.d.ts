@@ -1,5 +1,5 @@
-import type { Box } from "#lib/hooks/index.js";
-import { Context } from "#lib/utils/index.js";
+import type { Box } from "./hooks/index.js";
+import { Context } from "./utils/index.js";
 import { SvelteMap } from "svelte/reactivity";
 type Selected = {
     key: string;

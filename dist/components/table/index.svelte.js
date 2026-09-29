@@ -1,4 +1,4 @@
-import { Context } from "#lib/utils/index.js";
+import { Context } from "./utils/index.js";
 export default class TableContext extends Context {
     #opts;
     get opts() { return this.#opts.current; }

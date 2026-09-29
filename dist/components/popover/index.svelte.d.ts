@@ -1,5 +1,5 @@
-import { PopoverState, type Box } from "#lib/hooks/index.js";
-import { Context } from "#lib/utils/index.js";
+import { PopoverState, type Box } from "./hooks/index.js";
+import { Context } from "./utils/index.js";
 export type PopoverOpts = {
     placement: "bottom" | "top" | "left" | "right";
     offset: number;

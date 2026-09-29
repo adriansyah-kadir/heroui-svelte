@@ -1,4 +1,4 @@
-import type { Box } from "#lib/hooks/index.js";
+import type { Box } from "./hooks/index.js";
 import { type PaginationVariants } from "@heroui/styles";
 export type PaginationProps = {
     total?: number;
