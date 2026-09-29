@@ -1,13 +1,14 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
   import { listboxItemVariants } from "@heroui/styles";
-  import ListBoxState from "./list-box.svelte.ts";
+  import ListBoxContext from "./list-box.svelte.ts";
+  import { untrack } from "svelte";
 
-  const {
+  let {
     id = crypto.randomUUID(),
     value,
     disabled,
-    selected,
+    selected = $bindable(),
     ...props
   }: HTMLAttributes<HTMLLabelElement> & {
     id?: string;
@@ -17,8 +18,16 @@
   } = $props();
 
   let node = $state<HTMLElement>();
-  const listBox = ListBoxState.get();
+  const listBox = ListBoxContext.get();
   const textValue = $derived(value ?? node?.textContent.trim() ?? "");
+  const itemSelected = $derived(listBox.itemSelected(id));
+
+  $effect(() => {
+    itemSelected;
+    return untrack(() => {
+      selected = itemSelected;
+    });
+  });
 
   $effect(() => {
     return listBox.itemAdd(id, textValue);
@@ -45,9 +54,7 @@
   class={listboxItemVariants().item({ class: props.class?.toString() })}
 >
   <input
-    bind:checked={
-      () => listBox.itemSelected(id), (toggle) => listBox.itemToggle(id, toggle)
-    }
+    bind:checked={() => selected, (v) => listBox.itemToggle(id, v)}
     disabled={listBox.opts.disabled ?? disabled}
     required={listBox.opts.required}
     name={listBox.opts.name}
