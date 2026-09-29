@@ -17,7 +17,7 @@
     ...props
   }: Props = $props();
 
-  InputContext.getOr(
+  const input = InputContext.getOr(
     boxDerived(
       () => ({
         checked,
@@ -39,11 +39,9 @@
   data-disabled={disabled}
   data-required={required}
   data-invalid={invalid}
-  class={inputGroupVariants({
-    variant,
-    fullWidth,
+  class={inputGroupVariants(input.heroui).base({
     class: props.class?.toString(),
-  }).base()}
+  })}
 >
   {@render props.children?.()}
 </div>

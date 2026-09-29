@@ -12,10 +12,9 @@
 <div
   {...props}
   data-slot="input-group-prefix"
-  class={inputGroupVariants({
-    ...input.heroui,
+  class={inputGroupVariants(input.heroui).prefix({
     class: props.class?.toString(),
-  }).prefix()}
+  })}
 >
   {@render props.children?.()}
 </div>
