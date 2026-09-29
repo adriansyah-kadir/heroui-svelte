@@ -3,6 +3,9 @@ declare const PopoverTrigger: import("svelte").Component<{
     hovered?: boolean;
     pending?: boolean;
     pressed?: boolean;
-} & import("@heroui/styles").ButtonVariants & import("svelte/elements").HTMLButtonAttributes, {}, "">;
+    disabled?: boolean;
+} & import("@heroui/styles").ButtonVariants & import("svelte/elements").HTMLAttributes<HTMLElement> & {
+    href?: string;
+}, {}, "">;
 type PopoverTrigger = ReturnType<typeof PopoverTrigger>;
 export default PopoverTrigger;

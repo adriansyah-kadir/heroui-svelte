@@ -7,6 +7,7 @@ export class ButtonContext extends Context {
     }
     get props() {
         return {
+            "data-disabled": this.opts.disabled,
             "data-focused": this.opts.focused,
             "data-pressed": this.opts.pressed,
             "data-focus-visible": this.opts.focused,

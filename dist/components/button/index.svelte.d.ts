@@ -6,12 +6,14 @@ export type ButtonOpts = {
     hovered?: boolean;
     pending?: boolean;
     pressed?: boolean;
+    disabled?: boolean;
 } & ButtonVariants;
 export declare class ButtonContext extends Context {
     opts: ButtonOpts;
     constructor(opts: Box<ButtonOpts>);
     get props(): {
         "data-pending"?: boolean | undefined;
+        "data-disabled": boolean | undefined;
         "data-focused": boolean | undefined;
         "data-pressed": boolean | undefined;
         "data-focus-visible": boolean | undefined;
