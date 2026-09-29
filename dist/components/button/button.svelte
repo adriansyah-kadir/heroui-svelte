@@ -41,7 +41,6 @@
 </button>
 
 {#snippet Children()}
-  ok
   {#if pending}
     <Spinner color="current" size="sm" />
   {/if}
