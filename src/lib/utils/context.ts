@@ -7,7 +7,7 @@ export class Context {
   static get<T extends Context>(
     this: abstract new (...args: any[]) => T,
   ): T {
-    return getContext<T>(this);
+    return getContext<T>(this.getKey());
   }
 
   static getOr<T extends Context>(
@@ -23,8 +23,10 @@ export class Context {
     this: Constructor<T, Args>,
     ...args: Args
   ): T | undefined {
-    if (hasContext(this)) {
-      return getContext<T>(this);
+    const key = this.getKey();
+
+    if (hasContext(key)) {
+      return getContext<T>(key);
     }
 
     if (args.length === 0) {
@@ -34,7 +36,14 @@ export class Context {
     return new this(...args);
   }
 
+  protected static getKey(): symbol {
+    return Symbol.for(`heroui-svelte:context:${this.name}`);
+  }
+
   constructor() {
-    setContext(this.constructor, this);
+    setContext(
+      (this.constructor as typeof Context).getKey(),
+      this,
+    );
   }
 }
