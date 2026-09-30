@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { modalVariants } from "@heroui/styles";
   import Button from "../button/button.svelte";
   import { ModalContext } from "./index.svelte";
   import type { ComponentProps } from "svelte";
@@ -16,9 +15,9 @@
 
 <Button
   {...props}
+  type="button"
   command={action === "show" ? "show-modal" : "close"}
   commandfor={ctx.dialog.nodeId}
-  class={modalVariants(ctx.heroui).trigger({ class: props.class?.toString() })}
 >
   {@render props.children?.()}
 </Button>
