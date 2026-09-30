@@ -16,9 +16,9 @@
 
 <Button
   {...props}
+  type="button"
   command={action === "show" ? "show-modal" : "close"}
   commandfor={ctx.dialog.nodeId}
-  class={modalVariants(ctx.heroui).trigger({ class: props.class?.toString() })}
 >
   {@render props.children?.()}
 </Button>
