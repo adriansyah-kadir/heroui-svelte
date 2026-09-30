@@ -3,23 +3,24 @@
   import { modalVariants } from "@heroui/styles";
   import { ModalContext } from "#lib";
 
-  const props: HTMLAttributes<HTMLDivElement> = $props();
+  type Props = HTMLAttributes<HTMLDivElement>;
 
-  const modal = ModalContext.get();
-  const dialog = modal.dialog;
+  const props: Props = $props();
+
+  const ctx = ModalContext.get();
 </script>
 
 <div
   {...props}
-  data-entering={dialog.open}
-  data-exiting={dialog.closed}
-  class={modalVariants(modal.heroui).backdrop({
+  data-entering={ctx.dialog.open}
+  data-exiting={ctx.dialog.closed}
+  class={modalVariants(ctx.heroui).backdrop({
     class: [
+      props.class?.toString(),
       "data-[entering=true]:duration-500",
       "data-[entering=true]:ease-[cubic-bezier(0.25,1,0.5,1)]",
       "data-[exiting=true]:duration-200",
       "data-[exiting=true]:ease-[cubic-bezier(0.5,0,0.75,0)]",
-      props.class?.toString(),
     ],
   })}
 >

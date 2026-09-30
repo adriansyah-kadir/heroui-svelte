@@ -11,7 +11,6 @@
 
 <div
   {...props}
-  {@attach dialog.attach()}
   data-placement={modal.opts.placement}
   data-entering={dialog.open}
   data-exiting={!dialog.open}
