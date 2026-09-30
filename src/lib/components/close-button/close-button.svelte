@@ -8,6 +8,7 @@
 
 <button
   {...props}
+  type={props.type ?? "button"}
   class={closeButtonVariants({
     class: props.class?.toString(),
   })}
