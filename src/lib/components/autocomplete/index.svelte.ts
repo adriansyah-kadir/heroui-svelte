@@ -41,11 +41,14 @@ export class AutocompleteContext extends Context {
 
   autoCloseOnFocusLost() {
     const handleWindowClick = (ev: MouseEvent) => {
-      if (isEventTargetInAny(ev, this.popover.source, this.popover.node)) return;
-      ev.preventDefault()
-      ev.stopPropagation()
-      this.close()
-    }
+      if (!this.popover.node?.matches(":popover-open")) return;
+
+      if (isEventTargetInAny(ev, this.popover.source, this.popover.node)) {
+        return;
+      }
+
+      this.close();
+    };
 
     const handleEscapeKey = (ev: KeyboardEvent) => {
       if (ev.code !== "Escape") return;
