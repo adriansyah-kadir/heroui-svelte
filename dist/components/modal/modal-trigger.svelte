@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { modalVariants } from "@heroui/styles";
   import Button from "../button/button.svelte";
   import { ModalContext } from "./index.svelte";
   import type { ComponentProps } from "svelte";
