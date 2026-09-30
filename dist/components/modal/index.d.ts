@@ -1,4 +1,4 @@
-export * from "./index.svelte.ts";
+export * from "./index.svelte.js";
 export { default as Modal } from "./modal.svelte";
 export { default as ModalTrigger } from "./modal-trigger.svelte";
 export { default as ModalContent } from "./modal-content.svelte";
