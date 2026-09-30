@@ -8,6 +8,7 @@ export declare class DialogState {
     toggle: Toggle | undefined;
     close: (() => void) | undefined;
     show: (() => void) | undefined;
+    get nodeId(): string | undefined;
     attach(): Attachment;
 }
 export {};

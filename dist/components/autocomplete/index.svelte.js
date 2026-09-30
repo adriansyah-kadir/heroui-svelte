@@ -23,10 +23,11 @@ export class AutocompleteContext extends Context {
     }
     autoCloseOnFocusLost() {
         const handleWindowClick = (ev) => {
-            if (isEventTargetInAny(ev, this.popover.source, this.popover.node))
+            if (!this.popover.node?.matches(":popover-open"))
                 return;
-            ev.preventDefault();
-            ev.stopPropagation();
+            if (isEventTargetInAny(ev, this.popover.source, this.popover.node)) {
+                return;
+            }
             this.close();
         };
         const handleEscapeKey = (ev) => {

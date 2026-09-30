@@ -1,4 +1,5 @@
 import type { HTMLAttributes } from "svelte/elements";
-declare const ModalBackdrop: import("svelte").Component<HTMLAttributes<HTMLDivElement>, {}, "">;
+type Props = HTMLAttributes<HTMLDivElement>;
+declare const ModalBackdrop: import("svelte").Component<Props, {}, "">;
 type ModalBackdrop = ReturnType<typeof ModalBackdrop>;
 export default ModalBackdrop;

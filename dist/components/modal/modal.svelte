@@ -1,43 +1,21 @@
 <script lang="ts">
-  import type { HTMLDialogAttributes } from "svelte/elements";
-  import {
-    ModalBackdrop,
-    ModalBase,
-    ModalContainer,
-    ModalDialog,
-    ModalCloseTrigger,
-    ModalContext,
-    type ModalOpts,
-    boxDerived,
-  } from "#lib";
+  import type { HTMLAttributes } from "svelte/elements";
+  import { boxDerived, ModalContext, type ModalOpts } from "#lib";
+  import { modalVariants } from "@heroui/styles";
 
-  type Props = HTMLDialogAttributes &
-    ModalOpts & {
-      closeButton?: boolean;
-    };
+  type Props = HTMLAttributes<HTMLDivElement> & ModalOpts;
 
   const {
-    children,
-    closeButton,
     placement = "auto",
     scroll,
     size,
-    variant,
+    variant = "blur",
     ...props
   }: Props = $props();
 
   new ModalContext(boxDerived(() => ({ placement, scroll, size, variant })));
 </script>
 
-<ModalBase {...props} class="">
-  <ModalBackdrop>
-    <ModalContainer>
-      <ModalDialog class={props.class}>
-        {#if closeButton}
-          <ModalCloseTrigger />
-        {/if}
-        {@render children?.()}
-      </ModalDialog>
-    </ModalContainer>
-  </ModalBackdrop>
-</ModalBase>
+<div {...props} class={modalVariants().base()}>
+  {@render props.children?.()}
+</div>

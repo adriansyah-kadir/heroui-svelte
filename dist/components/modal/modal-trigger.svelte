@@ -1,0 +1,24 @@
+<script lang="ts">
+  import { modalVariants } from "@heroui/styles";
+  import Button from "../button/button.svelte";
+  import { ModalContext } from "./index.svelte";
+  import type { ComponentProps } from "svelte";
+
+  const {
+    action = "show",
+    ...props
+  }: ComponentProps<typeof Button> & {
+    action?: "show" | "close";
+  } = $props();
+
+  const ctx = ModalContext.get();
+</script>
+
+<Button
+  {...props}
+  command={action === "show" ? "show-modal" : "close"}
+  commandfor={ctx.dialog.nodeId}
+  class={modalVariants(ctx.heroui).trigger({ class: props.class?.toString() })}
+>
+  {@render props.children?.()}
+</Button>

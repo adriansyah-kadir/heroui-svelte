@@ -9,7 +9,7 @@
   } from "#lib";
 
   type Props = HTMLAttributes<HTMLElement> &
-    AutocompleteOpts & {
+    Partial<AutocompleteOpts> & {
       onSelected?: (keys: string[]) => any;
     };
 
@@ -23,8 +23,8 @@
     variant,
     invalid,
     onSelected,
-    offset,
-    placement,
+    offset = 8,
+    placement = "bottom",
     ...props
   }: Props = $props();
 

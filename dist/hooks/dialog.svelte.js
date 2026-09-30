@@ -14,6 +14,13 @@ export class DialogState {
     toggle = $derived(this.node ? toggler(this.node) : undefined);
     close = $derived(this.toggle?.bind(this, false));
     show = $derived(this.toggle?.bind(this, true));
+    get nodeId() {
+        if (!this.node)
+            return;
+        if (this.node.id.trim() === "")
+            this.node.id = crypto.randomUUID();
+        return this.node.id;
+    }
     attach() {
         return (node) => {
             const dialog = node.closest("dialog");
