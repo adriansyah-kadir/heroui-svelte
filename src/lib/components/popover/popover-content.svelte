@@ -8,8 +8,6 @@
   const props: Props = $props();
 
   const ctx = PopoverContext.get();
-
-  $inspect(ctx.opts.placement);
 </script>
 
 <div

@@ -29,8 +29,6 @@
     }, debounce);
     return () => clearTimeout(i);
   });
-
-  $inspect(debounced);
 </script>
 
 <InputGroup {...props} bind:value data-empty={empty}>
