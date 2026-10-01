@@ -4,20 +4,17 @@ import {
   type Box,
   isEventTargetInAny,
   ListBoxContext,
-  PopoverState
+  PopoverState,
 } from "#lib"
 import { onMount } from "svelte"
 import type { AutocompleteVariants } from "@heroui/styles"
-import { Context } from "#lib/utils/context.js"
+import { Context } from "#lib/utils/context.svelte.js"
 
 export type AutocompleteOpts = ListBoxOpts & AutocompleteVariants & {
   invalid?: boolean
 } & PopoverOpts
 
-export class AutocompleteContext extends Context {
-  #opts: Box<AutocompleteOpts>
-  get opts() { return this.#opts.current }
-
+export class AutocompleteContext extends Context<AutocompleteOpts> {
   popover = new PopoverState()
   listBox: ListBoxContext
 
@@ -30,9 +27,8 @@ export class AutocompleteContext extends Context {
   }
 
   constructor(opts: Box<AutocompleteOpts>) {
-    super()
+    super(opts)
     this.listBox = new ListBoxContext(opts)
-    this.#opts = opts
     onMount(() => {
       this.autoCloseOnSingleSelect()
       return this.autoCloseOnFocusLost()

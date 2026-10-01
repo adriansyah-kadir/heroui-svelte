@@ -13,17 +13,11 @@ export type ListBoxOpts = {
   selected: Selected;
 }
 
-export class ListBoxContext extends Context {
-  #opts: Box<ListBoxOpts>
-  get opts() {
-    return this.#opts.current
-  }
-
+export class ListBoxContext extends Context<ListBoxOpts> {
   items = new SvelteMap<string, string>()
 
   constructor(opts: Box<ListBoxOpts>) {
-    super()
-    this.#opts = opts
+    super(opts)
 
     const multiple = $derived(this.opts.multiple)
     $effect(() => {
@@ -40,7 +34,7 @@ export class ListBoxContext extends Context {
   }
 
   set selected(selected: Selected) {
-    this.#opts.current = {
+    this.opts = {
       ...this.opts,
       selected
     }

@@ -13,16 +13,13 @@ export type InputOpts = {
   indeterminate?: boolean
 } & InputVariants
 
-export class InputContext extends Context {
-  #opts: Box<InputOpts>
-  get opts() { return this.#opts.current }
-
+export class InputContext extends Context<InputOpts> {
   get value() {
     return this.opts.value
   }
 
   set value(value: any) {
-    this.#opts.current = {
+    this.opts = {
       ...this.opts,
       value
     }
@@ -33,15 +30,14 @@ export class InputContext extends Context {
   }
 
   set checked(checked: boolean | undefined) {
-    this.#opts.current = {
+    this.opts = {
       ...this.opts,
       checked
     }
   }
 
   constructor(opts: Box<InputOpts>) {
-    super()
-    this.#opts = opts
+    super(opts)
   }
 
   get props() {

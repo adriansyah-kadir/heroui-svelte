@@ -10,11 +10,9 @@ export type ButtonOpts = {
   disabled?: boolean,
 } & ButtonVariants
 
-export class ButtonContext extends Context {
-  opts: ButtonOpts
-
+export class ButtonContext extends Context<ButtonOpts> {
   constructor(opts: Box<ButtonOpts>) {
-    super()
+    super(opts)
     this.opts = opts.current
   }
 

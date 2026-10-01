@@ -4,13 +4,9 @@ import type { TableVariants } from "@heroui/styles";
 
 export type TableOpts = TableVariants
 
-export default class TableContext extends Context {
-  #opts: Box<TableOpts>
-  get opts() { return this.#opts.current }
-
+export default class TableContext extends Context<TableOpts> {
   constructor(opts: Box<TableOpts>) {
-    super()
-    this.#opts = opts
+    super(opts)
   }
 
   get heroui() {

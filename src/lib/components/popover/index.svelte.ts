@@ -6,16 +6,12 @@ export type PopoverOpts = {
   offset: number
 }
 
-export default class PopoverContext extends Context {
-  #opts: Box<PopoverOpts>
-  get opts() { return this.#opts.current }
-
+export default class PopoverContext extends Context<PopoverOpts> {
   popover = new PopoverState()
   area = getPopoverArea(this.popover);
 
   constructor(opts: Box<PopoverOpts>) {
-    super()
-    this.#opts = opts
+    super(opts)
   }
 
   get props() {

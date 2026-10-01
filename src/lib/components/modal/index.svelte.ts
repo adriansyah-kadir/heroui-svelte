@@ -6,17 +6,11 @@ export type ModalOpts = ModalVariants & {
   placement?: "top" | "bottom" | "center" | "auto";
 }
 
-export class ModalContext extends Context {
-  #opts: Box<ModalOpts>
-  get opts() {
-    return this.#opts.current
-  }
-
+export class ModalContext extends Context<ModalOpts> {
   dialog = new DialogState()
 
   constructor(opts: Box<ModalOpts>) {
-    super()
-    this.#opts = opts
+    super(opts)
   }
 
   get heroui() {
