@@ -29,6 +29,23 @@ export class Context<T> {
     Args extends unknown[],
   >(
     this: Constructor<C, ContextArgs<T, Args>>,
+  ): C | undefined
+
+  static getOr<
+    T,
+    C extends Context<T>,
+    Args extends unknown[],
+  >(
+    this: Constructor<C, ContextArgs<T, Args>>,
+    ...args: ContextArgs<T, Args>
+  ): C 
+
+  static getOr<
+    T,
+    C extends Context<T>,
+    Args extends unknown[],
+  >(
+    this: Constructor<C, ContextArgs<T, Args>>,
     ...args: ContextArgs<T, Args>
   ): C | undefined {
     // @ts-expect-error
@@ -51,6 +68,7 @@ export class Context<T> {
 
     return new this(...args);
   }
+
   protected static getKey(): symbol {
     return Symbol.for(`heroui-svelte:context:${this.name}`);
   }
