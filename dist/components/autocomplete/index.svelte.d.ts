@@ -1,12 +1,10 @@
 import { type ListBoxOpts, type PopoverOpts, type Box, ListBoxContext, PopoverState } from "#lib";
 import type { AutocompleteVariants } from "@heroui/styles";
-import { Context } from "#lib/utils/context.js";
+import { Context } from "#lib/utils/context.svelte.js";
 export type AutocompleteOpts = ListBoxOpts & AutocompleteVariants & {
     invalid?: boolean;
 } & PopoverOpts;
-export declare class AutocompleteContext extends Context {
-    #private;
-    get opts(): AutocompleteOpts;
+export declare class AutocompleteContext extends Context<AutocompleteOpts> {
     popover: PopoverState;
     listBox: ListBoxContext;
     get empty(): boolean;

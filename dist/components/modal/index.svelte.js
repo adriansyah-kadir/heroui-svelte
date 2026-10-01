@@ -1,14 +1,9 @@
 import { DialogState } from "#lib/hooks/index.js";
 import { Context } from "#lib/utils/index.js";
 export class ModalContext extends Context {
-    #opts;
-    get opts() {
-        return this.#opts.current;
-    }
     dialog = new DialogState();
     constructor(opts) {
-        super();
-        this.#opts = opts;
+        super(opts);
     }
     get heroui() {
         return {

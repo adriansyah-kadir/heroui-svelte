@@ -4,9 +4,7 @@ export type PopoverOpts = {
     placement: "bottom" | "top" | "left" | "right";
     offset: number;
 };
-export default class PopoverContext extends Context {
-    #private;
-    get opts(): PopoverOpts;
+export default class PopoverContext extends Context<PopoverOpts> {
     popover: PopoverState;
     area: {
         readonly current: string | undefined;

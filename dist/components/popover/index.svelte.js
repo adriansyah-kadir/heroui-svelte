@@ -1,13 +1,10 @@
 import { getPopoverArea, PopoverState } from "#lib/hooks/index.js";
 import { Context } from "#lib/utils/index.js";
 export default class PopoverContext extends Context {
-    #opts;
-    get opts() { return this.#opts.current; }
     popover = new PopoverState();
     area = getPopoverArea(this.popover);
     constructor(opts) {
-        super();
-        this.#opts = opts;
+        super(opts);
     }
     get props() {
         return {

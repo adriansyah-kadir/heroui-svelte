@@ -4,9 +4,7 @@ import type { ModalVariants } from "@heroui/styles";
 export type ModalOpts = ModalVariants & {
     placement?: "top" | "bottom" | "center" | "auto";
 };
-export declare class ModalContext extends Context {
-    #private;
-    get opts(): ModalOpts;
+export declare class ModalContext extends Context<ModalOpts> {
     dialog: DialogState;
     constructor(opts: Box<ModalOpts>);
     get heroui(): {

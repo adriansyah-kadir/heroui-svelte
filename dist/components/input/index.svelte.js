@@ -1,12 +1,10 @@
 import { Context } from "#lib/utils/index.js";
 export class InputContext extends Context {
-    #opts;
-    get opts() { return this.#opts.current; }
     get value() {
         return this.opts.value;
     }
     set value(value) {
-        this.#opts.current = {
+        this.opts = {
             ...this.opts,
             value
         };
@@ -15,14 +13,13 @@ export class InputContext extends Context {
         return this.opts.checked;
     }
     set checked(checked) {
-        this.#opts.current = {
+        this.opts = {
             ...this.opts,
             checked
         };
     }
     constructor(opts) {
-        super();
-        this.#opts = opts;
+        super(opts);
     }
     get props() {
         return {

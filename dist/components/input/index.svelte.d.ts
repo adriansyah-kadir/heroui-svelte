@@ -10,9 +10,7 @@ export type InputOpts = {
     checked?: boolean;
     indeterminate?: boolean;
 } & InputVariants;
-export declare class InputContext extends Context {
-    #private;
-    get opts(): InputOpts;
+export declare class InputContext extends Context<InputOpts> {
     get value(): any;
     set value(value: any);
     get checked(): boolean | undefined;

@@ -2,14 +2,9 @@ import { Context } from "#lib/utils/index.js";
 import { untrack } from "svelte";
 import { SvelteMap } from "svelte/reactivity";
 export class ListBoxContext extends Context {
-    #opts;
-    get opts() {
-        return this.#opts.current;
-    }
     items = new SvelteMap();
     constructor(opts) {
-        super();
-        this.#opts = opts;
+        super(opts);
         const multiple = $derived(this.opts.multiple);
         $effect(() => {
             multiple;
@@ -24,7 +19,7 @@ export class ListBoxContext extends Context {
         return this.opts.selected;
     }
     set selected(selected) {
-        this.#opts.current = {
+        this.opts = {
             ...this.opts,
             selected
         };

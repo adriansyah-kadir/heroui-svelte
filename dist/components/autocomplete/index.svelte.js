@@ -1,9 +1,7 @@
-import { isEventTargetInAny, ListBoxContext, PopoverState } from "#lib";
+import { isEventTargetInAny, ListBoxContext, PopoverState, } from "#lib";
 import { onMount } from "svelte";
-import { Context } from "#lib/utils/context.js";
+import { Context } from "#lib/utils/context.svelte.js";
 export class AutocompleteContext extends Context {
-    #opts;
-    get opts() { return this.#opts.current; }
     popover = new PopoverState();
     listBox;
     get empty() {
@@ -13,9 +11,8 @@ export class AutocompleteContext extends Context {
         this.listBox.selected = [];
     }
     constructor(opts) {
-        super();
+        super(opts);
         this.listBox = new ListBoxContext(opts);
-        this.#opts = opts;
         onMount(() => {
             this.autoCloseOnSingleSelect();
             return this.autoCloseOnFocusLost();

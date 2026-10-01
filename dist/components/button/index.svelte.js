@@ -1,8 +1,7 @@
 import { Context } from "#lib/utils/index.js";
 export class ButtonContext extends Context {
-    opts;
     constructor(opts) {
-        super();
+        super(opts);
         this.opts = opts.current;
     }
     get props() {

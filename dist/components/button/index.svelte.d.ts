@@ -8,8 +8,7 @@ export type ButtonOpts = {
     pressed?: boolean;
     disabled?: boolean;
 } & ButtonVariants;
-export declare class ButtonContext extends Context {
-    opts: ButtonOpts;
+export declare class ButtonContext extends Context<ButtonOpts> {
     constructor(opts: Box<ButtonOpts>);
     get props(): {
         "data-pending"?: boolean | undefined;

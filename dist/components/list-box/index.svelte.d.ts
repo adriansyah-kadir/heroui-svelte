@@ -12,9 +12,7 @@ export type ListBoxOpts = {
     name?: string;
     selected: Selected;
 };
-export declare class ListBoxContext extends Context {
-    #private;
-    get opts(): ListBoxOpts;
+export declare class ListBoxContext extends Context<ListBoxOpts> {
     items: SvelteMap<string, string>;
     constructor(opts: Box<ListBoxOpts>);
     get selected(): Selected;
