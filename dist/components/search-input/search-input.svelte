@@ -6,6 +6,8 @@
     InputGroupSuffix,
     SearchIcon,
     CloseButton,
+    InputContext,
+    boxDerived,
   } from "#lib";
   import type { ComponentProps } from "svelte";
 
@@ -21,6 +23,12 @@
   } = $props();
 
   const empty = $derived(value === undefined || value === "");
+  const ctx = InputContext.getOr(
+    boxDerived(
+      () => ({ value }),
+      (v) => ({ value } = v),
+    ),
+  );
 
   $effect(() => {
     value;
@@ -31,12 +39,12 @@
   });
 </script>
 
-<InputGroup {...props} bind:value data-empty={empty}>
+<InputGroup {...props} data-empty={empty}>
   <InputGroupPrefix>
     <SearchIcon />
   </InputGroupPrefix>
   <InputGroupInput {placeholder} />
   <InputGroupSuffix class="px-2 in-data-[empty=true]:opacity-0">
-    <CloseButton disabled={empty} onclick={() => (value = "")} />
+    <CloseButton disabled={empty} onclick={() => (ctx.value = "")} />
   </InputGroupSuffix>
 </InputGroup>

@@ -6,7 +6,8 @@ export declare class Context<T> {
     get opts(): T;
     set opts(value: T);
     static get<C extends Context<any>>(this: abstract new (...args: any[]) => C): C;
-    static getOr<T, C extends Context<T>, Args extends unknown[]>(this: Constructor<C, ContextArgs<T, Args>>, ...args: ContextArgs<T, Args>): C | undefined;
+    static getOr<T, C extends Context<T>, Args extends unknown[]>(this: Constructor<C, ContextArgs<T, Args>>): C | undefined;
+    static getOr<T, C extends Context<T>, Args extends unknown[]>(this: Constructor<C, ContextArgs<T, Args>>, ...args: ContextArgs<T, Args>): C;
     protected static getKey(): symbol;
     constructor(opts: Box<T>);
 }
