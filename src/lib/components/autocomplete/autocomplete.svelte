@@ -7,6 +7,7 @@
     AutocompleteContext,
     type AutocompleteOpts,
   } from "#lib";
+  import { SvelteSet } from "svelte/reactivity";
 
   type Props = HTMLAttributes<HTMLElement> &
     Partial<AutocompleteOpts> & {
@@ -18,7 +19,7 @@
     multiple,
     required,
     name,
-    selected = $bindable([]),
+    selected = new SvelteSet(),
     fullWidth,
     variant,
     invalid,
@@ -29,21 +30,18 @@
   }: Props = $props();
 
   const autocomplete = new AutocompleteContext(
-    boxDerived(
-      () => ({
-        offset,
-        placement,
-        selected,
-        disabled,
-        fullWidth,
-        invalid,
-        multiple,
-        name,
-        required,
-        variant,
-      }),
-      (v) => ({ selected } = v),
-    ),
+    boxDerived(() => ({
+      offset,
+      placement,
+      selected,
+      disabled,
+      fullWidth,
+      invalid,
+      multiple,
+      name,
+      required,
+      variant,
+    })),
   );
 </script>
 

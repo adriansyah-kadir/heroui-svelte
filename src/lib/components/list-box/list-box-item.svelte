@@ -1,43 +1,33 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
   import { listboxItemVariants } from "@heroui/styles";
-  import { untrack } from "svelte";
   import { ListBoxContext } from "#lib";
 
   let {
-    id = crypto.randomUUID(),
     value,
     disabled,
     selected = $bindable(),
     ...props
   }: HTMLAttributes<HTMLLabelElement> & {
-    id?: string;
-    value?: string;
+    value: string;
     selected?: boolean;
     disabled?: boolean;
   } = $props();
 
-  let node = $state<HTMLElement>();
   const listBox = ListBoxContext.get();
-  const textValue = $derived(value ?? node?.textContent.trim() ?? "");
-  const itemSelected = $derived(listBox.itemSelected(id));
+  const itemSelected = $derived(listBox.itemSelected(value));
 
   $effect(() => {
-    itemSelected;
-    return untrack(() => {
-      selected = itemSelected;
-    });
+    selected = itemSelected;
   });
 
   $effect(() => {
-    return listBox.itemAdd(id, textValue);
+    return listBox.itemAdd(value);
   });
 </script>
 
 <label
   {...props}
-  {id}
-  bind:this={node}
   onkeydown={(ev) => {
     if (
       ev.code === "Space" ||
@@ -49,17 +39,18 @@
   }}
   role="checkbox"
   tabindex="0"
+  data-value={value}
   data-disabled={listBox.opts.disabled ?? disabled}
   data-slot="list-box-item"
   class={listboxItemVariants().item({ class: props.class?.toString() })}
 >
   <input
-    bind:checked={() => selected, (v) => listBox.itemToggle(id, v)}
+    bind:checked={() => selected, (v) => listBox.itemToggle(value, v)}
     disabled={listBox.opts.disabled ?? disabled}
     required={listBox.opts.required}
     name={listBox.opts.name}
     type="checkbox"
-    value={textValue}
+    {value}
     hidden
   />
   {@render props.children?.()}

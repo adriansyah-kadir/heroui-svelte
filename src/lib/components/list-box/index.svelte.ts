@@ -1,20 +1,22 @@
 import type { Box } from "#lib/hooks/index.js";
 import { Context } from "#lib/utils/index.js";
 import { untrack } from "svelte";
-import { SvelteMap } from "svelte/reactivity";
+import { SvelteSet } from "svelte/reactivity";
 
-type Selected = { key: string, val: string }[]
 
 export type ListBoxOpts = {
   disabled?: boolean,
   multiple?: boolean;
   required?: boolean;
   name?: string;
-  selected: Selected;
+  selected: SvelteSet<string>;
 }
 
 export class ListBoxContext extends Context<ListBoxOpts> {
-  items = new SvelteMap<string, string>()
+  get selected() { return this.opts.selected }
+  get multiple() { return this.opts.multiple }
+
+  items = new SvelteSet<string>()
 
   constructor(opts: Box<ListBoxOpts>) {
     super(opts)
@@ -24,57 +26,49 @@ export class ListBoxContext extends Context<ListBoxOpts> {
       multiple;
       untrack(() => {
         if (multiple) return;
-        this.selected = [];
+        this.selected.clear();
       })
     })
   }
 
-  get selected() {
-    return this.opts.selected
-  }
-
-  set selected(selected: Selected) {
-    this.opts = {
-      ...this.opts,
-      selected
-    }
-  }
-
-  itemAdd(key: string, val: string) {
-    this.items.set(key, val)
+  itemAdd(val: string) {
+    this.items.add(val)
     return () => {
-      this.itemUnpick(key)
-      this.items.delete(key)
+      const s = this.itemSelected(val)
+      this.itemUnpick(val)
+      if (s) {
+        console.log("removing", val, this.itemSelected(val))
+      }
+      this.items.delete(val)
     }
   }
 
-  itemPick(key: string) {
-    const val = this.items.get(key)
-    if (val === undefined) return;
-    if (!this.opts.multiple) this.opts.selected = [];
-    this.selected = [...this.selected, { key, val }]
+  itemPick(val: string) {
+    if (!this.items.has(val) || this.itemSelected(val)) return;
+    if (!this.multiple) this.selected.clear();
+    this.selected.add(val)
   }
 
-  itemUnpick(key: string) {
-    const i = this.selected.findIndex(e => e.key === key)
-    this.selected = this.selected.toSpliced(i, 1)
+  itemUnpick(val: string) {
+    if (!this.itemSelected(val)) return;
+    this.selected.delete(val)
   }
 
-  itemToggle(key: string, toggle?: boolean) {
-    const pick = toggle ?? !this.itemSelected(key)
-    if (!pick) this.itemUnpick(key);
-    else this.itemPick(key);
-    return this.itemSelected(key)
+  itemToggle(val: string, toggle?: boolean) {
+    const pick = toggle ?? !this.itemSelected(val)
+    if (!pick) this.itemUnpick(val);
+    else this.itemPick(val);
+    return this.itemSelected(val)
   }
 
   itemsToggle(toggle?: boolean) {
-    const pickAll = toggle ?? !this.itemsSelected()
-    if (!pickAll) this.selected = [];
-    else this.items.keys().forEach(this.itemPick)
+    const pickAll = toggle ?? !this.itemsSelected();
+    if (pickAll) this.items.forEach(e => this.itemPick(e));
+    else this.selected.clear();
   }
 
-  itemSelected(key: string) {
-    return this.selected.some(e => e.key === key)
+  itemSelected(val: string) {
+    return this.selected.has(val)
   }
 
   itemsSelected() {

@@ -19,11 +19,11 @@ export class AutocompleteContext extends Context<AutocompleteOpts> {
   listBox: ListBoxContext
 
   get empty() {
-    return this.listBox.opts.selected.length === 0
+    return this.listBox.opts.selected.size === 0
   }
 
   clear() {
-    this.listBox.selected = []
+    this.listBox.selected.clear()
   }
 
   constructor(opts: Box<AutocompleteOpts>) {
