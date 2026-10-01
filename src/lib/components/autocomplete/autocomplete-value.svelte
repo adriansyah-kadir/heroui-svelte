@@ -2,11 +2,14 @@
   import { autocompleteVariants, tagVariants } from "@heroui/styles";
   import type { HTMLAttributes } from "svelte/elements";
   import { CloseIcon, ListBoxContext, AutocompleteContext } from "#lib";
+  import type { Snippet } from "svelte";
 
   const {
+    children,
     placeholder,
     ...props
-  }: HTMLAttributes<HTMLDivElement> & {
+  }: Omit<HTMLAttributes<HTMLDivElement>, "children"> & {
+    children?: Snippet<[AutocompleteContext]>;
     placeholder?: string;
   } = $props();
   const autocomplete = AutocompleteContext.get();
@@ -23,30 +26,40 @@
 
 <div
   class={autocompleteVariants().value({
-    class: ["tag-group", props.class?.toString()],
+    class: props.class?.toString(),
   })}
 >
+  {#if children}
+    {@render children(autocomplete)}
+  {:else}
+    {@render DefaultChildren()}
+  {/if}
+</div>
+
+{#snippet DefaultChildren()}
   {#if listBox.opts.multiple && first !== undefined}
-    <ul class="tag-group__list">
-      {#each listBox.opts.selected?.values() as { key }}
-        <span class={tag.base()}>
-          {listBox.items.get(key)}
-          <button
-            class={tag.removeButton()}
-            onclick={(ev) => {
-              ev.preventDefault();
-              ev.stopPropagation();
-              listBox.itemUnpick(key);
-            }}
-          >
-            <CloseIcon />
-          </button>
-        </span>
-      {/each}
-    </ul>
+    <div class="tag-group">
+      <ul class="tag-group__list">
+        {#each listBox.opts.selected?.values() as { key }}
+          <span class={tag.base()}>
+            {listBox.items.get(key)}
+            <button
+              class={tag.removeButton()}
+              onclick={(ev) => {
+                ev.preventDefault();
+                ev.stopPropagation();
+                listBox.itemUnpick(key);
+              }}
+            >
+              <CloseIcon />
+            </button>
+          </span>
+        {/each}
+      </ul>
+    </div>
   {:else if first}
     {first.val}
   {:else}
     {placeholder ?? "-"}
   {/if}
-</div>
+{/snippet}
