@@ -1,7 +1,6 @@
 import type { HTMLAttributes } from "svelte/elements";
 type $$ComponentProps = HTMLAttributes<HTMLLabelElement> & {
-    id?: string;
-    value?: string;
+    value: string;
     selected?: boolean;
     disabled?: boolean;
 };

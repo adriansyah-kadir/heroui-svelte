@@ -1,28 +1,23 @@
 import type { Box } from "#lib/hooks/index.js";
 import { Context } from "#lib/utils/index.js";
-import { SvelteMap } from "svelte/reactivity";
-type Selected = {
-    key: string;
-    val: string;
-}[];
+import { SvelteSet } from "svelte/reactivity";
 export type ListBoxOpts = {
     disabled?: boolean;
     multiple?: boolean;
     required?: boolean;
     name?: string;
-    selected: Selected;
+    selected: SvelteSet<string>;
 };
 export declare class ListBoxContext extends Context<ListBoxOpts> {
-    items: SvelteMap<string, string>;
+    get selected(): SvelteSet<string>;
+    get multiple(): boolean | undefined;
+    items: SvelteSet<string>;
     constructor(opts: Box<ListBoxOpts>);
-    get selected(): Selected;
-    set selected(selected: Selected);
-    itemAdd(key: string, val: string): () => void;
-    itemPick(key: string): void;
-    itemUnpick(key: string): void;
-    itemToggle(key: string, toggle?: boolean): boolean;
+    itemAdd(val: string): () => void;
+    itemPick(val: string): void;
+    itemUnpick(val: string): void;
+    itemToggle(val: string, toggle?: boolean): boolean;
     itemsToggle(toggle?: boolean): void;
-    itemSelected(key: string): boolean;
+    itemSelected(val: string): boolean;
     itemsSelected(): boolean;
 }
-export {};

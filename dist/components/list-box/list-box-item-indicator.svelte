@@ -12,8 +12,10 @@
 
   let node = $state<HTMLElement>();
   const listBox = ListBoxContext.get();
-  const parent = $derived(node?.closest(".list-box-item"));
-  const parentId = $derived(parent?.id);
+  const parent = $derived<HTMLElement | null | undefined>(
+    node?.closest(".list-box-item"),
+  );
+  const parentId = $derived(parent?.dataset.value);
   const picked = $derived(parentId ? listBox.itemSelected(parentId) : false);
 </script>
 

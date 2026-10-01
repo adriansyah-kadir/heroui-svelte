@@ -1,8 +1,10 @@
 import { Context } from "#lib/utils/index.js";
 import { untrack } from "svelte";
-import { SvelteMap } from "svelte/reactivity";
+import { SvelteSet } from "svelte/reactivity";
 export class ListBoxContext extends Context {
-    items = new SvelteMap();
+    get selected() { return this.opts.selected; }
+    get multiple() { return this.opts.multiple; }
+    items = new SvelteSet();
     constructor(opts) {
         super(opts);
         const multiple = $derived(this.opts.multiple);
@@ -11,55 +13,50 @@ export class ListBoxContext extends Context {
             untrack(() => {
                 if (multiple)
                     return;
-                this.selected = [];
+                this.selected.clear();
             });
         });
     }
-    get selected() {
-        return this.opts.selected;
-    }
-    set selected(selected) {
-        this.opts = {
-            ...this.opts,
-            selected
-        };
-    }
-    itemAdd(key, val) {
-        this.items.set(key, val);
+    itemAdd(val) {
+        this.items.add(val);
         return () => {
-            this.itemUnpick(key);
-            this.items.delete(key);
+            const s = this.itemSelected(val);
+            this.itemUnpick(val);
+            if (s) {
+                console.log("removing", val, this.itemSelected(val));
+            }
+            this.items.delete(val);
         };
     }
-    itemPick(key) {
-        const val = this.items.get(key);
-        if (val === undefined)
+    itemPick(val) {
+        if (!this.items.has(val) || this.itemSelected(val))
             return;
-        if (!this.opts.multiple)
-            this.opts.selected = [];
-        this.selected = [...this.selected, { key, val }];
+        if (!this.multiple)
+            this.selected.clear();
+        this.selected.add(val);
     }
-    itemUnpick(key) {
-        const i = this.selected.findIndex(e => e.key === key);
-        this.selected = this.selected.toSpliced(i, 1);
+    itemUnpick(val) {
+        if (!this.itemSelected(val))
+            return;
+        this.selected.delete(val);
     }
-    itemToggle(key, toggle) {
-        const pick = toggle ?? !this.itemSelected(key);
+    itemToggle(val, toggle) {
+        const pick = toggle ?? !this.itemSelected(val);
         if (!pick)
-            this.itemUnpick(key);
+            this.itemUnpick(val);
         else
-            this.itemPick(key);
-        return this.itemSelected(key);
+            this.itemPick(val);
+        return this.itemSelected(val);
     }
     itemsToggle(toggle) {
         const pickAll = toggle ?? !this.itemsSelected();
-        if (!pickAll)
-            this.selected = [];
+        if (pickAll)
+            this.items.forEach(e => this.itemPick(e));
         else
-            this.items.keys().forEach(this.itemPick);
+            this.selected.clear();
     }
-    itemSelected(key) {
-        return this.selected.some(e => e.key === key);
+    itemSelected(val) {
+        return this.selected.has(val);
     }
     itemsSelected() {
         return this.items.keys().every(e => this.itemSelected(e));

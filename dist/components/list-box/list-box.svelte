@@ -2,6 +2,7 @@
   import type { HTMLAttributes } from "svelte/elements";
   import { listboxVariants } from "@heroui/styles";
   import { type ListBoxOpts, ListBoxContext, boxDerived } from "#lib";
+  import { SvelteSet } from "svelte/reactivity";
 
   type Props = HTMLAttributes<HTMLDivElement> & Partial<ListBoxOpts>;
 
@@ -9,16 +10,13 @@
     multiple,
     name,
     disabled,
-    selected = $bindable([]),
+    selected = new SvelteSet(),
     required,
     ...props
   }: Props = $props();
 
   export const ctx = ListBoxContext.getOr(
-    boxDerived(
-      () => ({ selected, disabled, multiple, name, required }),
-      (v) => ({ selected } = v),
-    ),
+    boxDerived(() => ({ selected, disabled, multiple, name, required })),
   );
 </script>
 
