@@ -47,17 +47,19 @@ export class AutocompleteContext extends Context<AutocompleteOpts> {
     };
 
     const handleEscapeKey = (ev: KeyboardEvent) => {
-      if (ev.code !== "Escape") return;
+      const focused = this.popover.node?.matches(":focus-within") || this.popover.source?.matches(":focus-within")
+      if (ev.code !== "Escape" || !focused) return;
       ev.preventDefault()
-      ev.stopPropagation()
+      ev.stopImmediatePropagation()
       this.close()
+      this.popover.source?.focus()
     }
 
     window.addEventListener("click", handleWindowClick)
-    window.addEventListener("keyup", handleEscapeKey)
+    window.addEventListener("keydown", handleEscapeKey)
     return () => {
       window.removeEventListener("click", handleWindowClick)
-      window.removeEventListener("keyup", handleEscapeKey)
+      window.removeEventListener("keydown", handleEscapeKey)
     }
   }
 

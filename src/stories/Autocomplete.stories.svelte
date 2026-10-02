@@ -41,7 +41,8 @@
     <AutocompleteClearButton />
   </AutocompleteTrigger>
   {@const list = ListBoxContext.get()}
-  <Description>Picked: {list.selected.map((e) => e.val).join(", ")}</Description
+  <Description
+    >Picked: {list.selected.values().toArray().join(", ")}</Description
   >
   <AutocompletePopover>
     <SearchField>
@@ -53,7 +54,7 @@
     </SearchField>
     <ListBox>
       {#each ["Aldi", "Aldo", "All"] as name}
-        <ListBoxItem>
+        <ListBoxItem value={name}>
           {name}
           <ListBoxItemIndicator />
         </ListBoxItem>

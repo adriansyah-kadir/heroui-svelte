@@ -40,15 +40,15 @@
   {#if listBox.opts.multiple && first !== undefined}
     <div class="tag-group">
       <ul class="tag-group__list">
-        {#each listBox.opts.selected?.values() as { key }}
+        {#each listBox.opts.selected?.values().toArray() as value}
           <span class={tag.base()}>
-            {listBox.items.get(key)}
+            {value}
             <button
               class={tag.removeButton()}
               onclick={(ev) => {
                 ev.preventDefault();
                 ev.stopPropagation();
-                listBox.itemUnpick(key);
+                listBox.itemUnpick(value);
               }}
             >
               <CloseIcon />
@@ -58,7 +58,7 @@
       </ul>
     </div>
   {:else if first}
-    {first.val}
+    {first}
   {:else}
     {placeholder ?? "-"}
   {/if}
