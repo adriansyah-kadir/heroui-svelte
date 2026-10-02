@@ -34,6 +34,7 @@ export class AutocompleteContext extends Context {
             ev.preventDefault();
             ev.stopImmediatePropagation();
             this.close();
+            this.popover.source?.focus();
         };
         window.addEventListener("click", handleWindowClick);
         window.addEventListener("keydown", handleEscapeKey);
