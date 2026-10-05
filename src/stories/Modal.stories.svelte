@@ -1,11 +1,14 @@
 <script module>
   import { defineMeta } from "@storybook/addon-svelte-csf";
-  import Modal from "#lib/components/modal/modal.svelte";
-  import ModalBody from "#lib/components/modal/modal-body.svelte";
-  import ModalFooter from "#lib/components/modal/modal-footer.svelte";
-  import ModalHeader from "#lib/components/modal/modal-header.svelte";
-  import ModalHeading from "#lib/components/modal/modal-heading.svelte";
-  import { ModalContentTemplate, ModalTrigger } from "#lib";
+  import {
+    ModalContentTemplate,
+    ModalTrigger,
+    Modal,
+    ModalBody,
+    ModalFooter,
+    ModalHeader,
+    ModalHeading,
+  } from "#lib";
 
   const { Story } = defineMeta({
     component: Modal,

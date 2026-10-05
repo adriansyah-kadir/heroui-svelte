@@ -5,21 +5,25 @@ import { untrack } from "svelte"
 export class PopoverState {
   #node = $state<HTMLElement | null>(null)
   get node() { return this.#node }
+  get nodeId() {
+    const node = this.node
+    if (!node) return;
+    if (node.id === '') node.id = crypto.randomUUID();
+    return node.id
+  }
 
   #source = $state<HTMLElement | null>(null)
   get source() { return this.#source }
+  get sourceId() {
+    const source = this.source;
+    if (!source) return;
+    if (source.id === '') source.id = crypto.randomUUID();
+    return source.id
+  }
 
   #open = $state(false)
   get open() { return this.#open }
   get closed() { return !this.#open }
-
-  constructor() {
-    $effect(() => {
-      const node = this.#node;
-      if (!node || node.id !== '') return;
-      node.id = crypto.randomUUID()
-    })
-  }
 
   attach(): Attachment<HTMLElement> {
     return node => {
@@ -36,7 +40,7 @@ export class PopoverState {
   }
 
   #onToggle = (ev: ToggleEvent) => {
-    this.#source = ev.source as HTMLElement | null
+    this.#source = (ev.source as HTMLElement | null) ?? this.#source
     this.#open = ev.newState === "open"
   }
 }
