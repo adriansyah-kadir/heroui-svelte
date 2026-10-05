@@ -12,6 +12,6 @@
   {...props}
   type="button"
   command="toggle-popover"
-  commandfor={ctx.popover.node?.id}
+  commandfor={ctx.popover.nodeId}
   pressed={ctx.popover.open}
 />
