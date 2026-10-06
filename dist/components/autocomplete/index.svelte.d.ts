@@ -16,12 +16,12 @@ export declare class AutocompleteContext extends Context<AutocompleteOpts> {
     open(source?: HTMLElement): void;
     toggle(source?: HTMLElement): void;
     get props(): {
-        "data-disabled": boolean | undefined;
-        "data-required": boolean | undefined;
-        "data-invalid": boolean | undefined;
+        "data-disabled": any;
+        "data-required": any;
+        "data-invalid": any;
     };
     get heroui(): {
-        variant: "primary" | "secondary" | undefined;
-        fullWidth: boolean | undefined;
+        variant: any;
+        fullWidth: any;
     };
 }

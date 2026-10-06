@@ -1,18 +1,26 @@
 import { Context, getPopoverArea, PopoverState } from "svelte-utils";
 export default class PopoverContext extends Context {
-    #opts;
-    get opts() { return this.#opts.current; }
-    popover = new PopoverState();
-    area = getPopoverArea(this.popover);
-    constructor(opts) {
+    get open() { return this.popover.open; }
+    set open(open) { this.popover.open = open; }
+    popover;
+    placement;
+    position;
+    offset;
+    constructor(opts, open) {
         super();
-        this.#opts = opts;
+        const { fallbackAnchor, offset, placement } = $derived.by(opts);
+        const popover = new PopoverState({ fallbackAnchor: () => fallbackAnchor, open });
+        const area = getPopoverArea(popover);
+        this.popover = popover;
+        this.placement = $derived(placement ?? "bottom");
+        this.position = $derived(area.current ?? this.placement ?? "bottom");
+        this.offset = $derived(offset ?? 5);
     }
     get props() {
         return {
             "data-entering": this.popover.open,
             "data-exiting": !this.popover.open,
-            "data-placement": this.area.current ?? this.opts.placement
+            "data-placement": this.placement
         };
     }
     get fallbackArea() {
@@ -21,7 +29,7 @@ export default class PopoverContext extends Context {
             bottom: "top, right, left",
             left: "right, left, bottom, top",
             right: "left, right, bottom, top",
-        }[this.opts.placement];
+        }[this.position];
     }
     get anchorPoint() {
         return {
@@ -29,15 +37,15 @@ export default class PopoverContext extends Context {
             bottom: "top",
             left: "right",
             right: "left",
-        }[this.area.current ?? this.opts.placement];
+        }[this.position];
     }
     get marginOffset() {
-        const offset = this.opts.offset;
+        const offset = this.offset;
         return {
             top: `${offset}px 0`,
             bottom: `${offset}px 0`,
             left: `0 ${offset}px`,
             right: `0 ${offset}px`,
-        }[this.area.current ?? this.opts.placement];
+        }[this.position];
     }
 }

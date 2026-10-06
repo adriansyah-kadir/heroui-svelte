@@ -1,9 +1,9 @@
 import type { HTMLAttributes } from "svelte/elements";
-import type { PopoverOpts } from "./index.svelte";
+import type { PopoverContextOpts } from "./index.svelte";
 import PopoverContext from "./index.svelte";
-declare const Popover: import("svelte").Component<Partial<HTMLAttributes<HTMLDivElement> & PopoverOpts & {
+declare const Popover: import("svelte").Component<Partial<HTMLAttributes<HTMLDivElement> & Omit<PopoverContextOpts, "open" | "fallbackAnchor"> & {
     open?: boolean;
-    anchor?: HTMLElement;
+    fallbackAnchor?: HTMLElement;
 }>, {
     context: PopoverContext;
 }, "open">;
