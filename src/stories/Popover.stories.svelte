@@ -5,19 +5,19 @@
   import PopoverHeading from "#lib/components/popover/popover-heading.svelte";
   import PopoverArrow from "#lib/components/popover/popover-arrow.svelte";
   import PopoverContent from "#lib/components/popover/popover-content.svelte";
-  import PopoverTrigger from "#lib/components/popover/popover-trigger.svelte";
-  import Modal from "#lib/components/modal/modal.svelte";
-  import { ModalContentTemplate, ModalTrigger } from "#lib";
-  import ModalBody from "#lib/components/modal/modal-body.svelte";
-  import Autocomplete from "#lib/components/autocomplete/autocomplete.svelte";
-  import AutocompleteTrigger from "#lib/components/autocomplete/autocomplete-trigger.svelte";
-  import AutocompleteIndicator from "#lib/components/autocomplete/autocomplete-indicator.svelte";
-  import AutocompletePopover from "#lib/components/autocomplete/autocomplete-popover.svelte";
 
   const { Story } = defineMeta({
     component: Popover,
     tags: ["autodocs"],
   });
+</script>
+
+<script lang="ts">
+  import PopoverTrigger from "#lib/components/popover/popover-trigger.svelte";
+  import { PopoverContext } from "#lib";
+
+  let anchor = $state<HTMLElement>();
+  let open = $state(false);
 </script>
 
 <Story name="Popover">
@@ -33,18 +33,24 @@
   </PopoverContent>
 </Story>
 
-<Story name="Popover in modal">
-  <Modal scroll="outside">
-    <ModalTrigger>Show modal</ModalTrigger>
-    <ModalContentTemplate>
-      <ModalBody>
-        <Autocomplete>
-          <AutocompleteTrigger>
-            <AutocompleteIndicator />
-          </AutocompleteTrigger>
-          <AutocompletePopover></AutocompletePopover>
-        </Autocomplete>
-      </ModalBody>
-    </ModalContentTemplate>
-  </Modal>
+<Story name="Manual anchor">
+  {#snippet template(props)}
+    <Popover {...props} bind:open fallbackAnchor={anchor}>
+      <input
+        class="input input--default"
+        bind:this={anchor}
+        onfocus={() => (open = true)}
+        onfocusout={() => (open = false)}
+      />
+      <PopoverContent popover="manual">
+        <PopoverDialog>
+          <PopoverHeading>Popover Title</PopoverHeading>
+          <p class="mt-2 text-sm text-muted">
+            This is the popover content. You can put any content here.
+          </p>
+        </PopoverDialog>
+        <PopoverArrow />
+      </PopoverContent>
+    </Popover>
+  {/snippet}
 </Story>

@@ -15,7 +15,7 @@
   {...ctx.props}
   popover={props.popover ?? ""}
   {@attach ctx.popover.attach()}
-  style:position-area={ctx.opts.placement}
+  style:position-area={ctx.placement}
   style:position-try-fallbacks={ctx.fallbackArea}
   style:--trigger-anchor-point={ctx.anchorPoint}
   style:margin={ctx.marginOffset}

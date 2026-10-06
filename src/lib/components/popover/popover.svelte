@@ -1,19 +1,34 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
-  import type { PopoverOpts } from "./index.svelte";
+  import type { PopoverContextOpts } from "./index.svelte";
   import PopoverContext from "./index.svelte";
-  import { boxDerived } from "#lib/hooks/index.js";
+  import { box } from "svelte-utils";
 
-  type Props = HTMLAttributes<HTMLDivElement> & PopoverOpts;
-  const {
+  type Props = HTMLAttributes<HTMLDivElement> &
+    Omit<PopoverContextOpts, "open" | "fallbackAnchor"> & {
+      open?: boolean;
+      fallbackAnchor?: HTMLElement;
+    };
+
+  let {
+    open = $bindable(false),
+    fallbackAnchor,
     placement = "bottom",
     offset = 8,
     ...props
   }: Partial<Props> = $props();
 
-  new PopoverContext(boxDerived(() => ({ placement, offset })));
+  export const context = new PopoverContext(
+    () => ({
+      fallbackAnchor,
+      offset,
+      placement,
+    }),
+    box(
+      () => open,
+      (v) => (open = v),
+    ),
+  );
 </script>
 
-<div {...props}>
-  {@render props.children?.()}
-</div>
+{@render props.children?.()}
