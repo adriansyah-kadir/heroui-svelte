@@ -1,10 +1,11 @@
-import { PopoverState, type Box } from "#lib/hooks/index.js";
-import { Context } from "#lib/utils/index.js";
+import { Context, PopoverState, type Box } from "svelte-utils";
 export type PopoverOpts = {
     placement: "bottom" | "top" | "left" | "right";
     offset: number;
 };
-export default class PopoverContext extends Context<PopoverOpts> {
+export default class PopoverContext extends Context {
+    #private;
+    get opts(): PopoverOpts;
     popover: PopoverState;
     area: {
         readonly current: string | undefined;
