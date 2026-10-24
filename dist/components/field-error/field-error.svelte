@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
   import { fieldErrorVariants } from "@heroui/styles";
-  import { InputContext } from "#lib";
+  import { InputContext } from "../../index.js";
 
   type Props = HTMLAttributes<HTMLDivElement>;
 

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { inputGroupVariants } from "@heroui/styles";
   import type { ComponentProps } from "svelte";
-  import { Input, InputContext } from "#lib";
+  import { Input, InputContext } from "../../index.js";
 
   let {
     value = $bindable(),

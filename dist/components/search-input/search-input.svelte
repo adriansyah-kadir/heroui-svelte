@@ -7,7 +7,7 @@
     SearchIcon,
     CloseButton,
     InputContext,
-  } from "#lib";
+  } from "../../index.js";
   import type { ComponentProps } from "svelte";
   import { box } from "svelte-utils";
   import { FilterContext } from "../filter/index.svelte";

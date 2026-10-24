@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from "svelte/elements";
-import { type AutocompleteOpts } from "#lib";
+import { type AutocompleteOpts } from "../../index.js";
 type Props = HTMLAttributes<HTMLElement> & Partial<AutocompleteOpts> & {
     onSelected?: (keys: string[]) => any;
     selected?: string[];

@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { HTMLButtonAttributes } from "svelte/elements";
   import { modalVariants } from "@heroui/styles";
-  import { ModalContext, CloseButton } from "#lib";
+  import { ModalContext, CloseButton } from "../../index.js";
 
   const props: HTMLButtonAttributes = $props();
 

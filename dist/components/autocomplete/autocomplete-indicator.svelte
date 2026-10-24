@@ -1,7 +1,7 @@
 <script lang="ts">
   import { autocompleteVariants } from "@heroui/styles";
   import type { HTMLAttributes } from "svelte/elements";
-  import { ChevronDownIcon } from "#lib";
+  import { ChevronDownIcon } from "../../index.js";
 
   type Props = HTMLAttributes<HTMLDivElement> & {
     open?: boolean;

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import ArrowIcon from "#lib/icons/arrow-icon.svelte";
+  import ArrowIcon from "../../icons/arrow-icon.svelte";
   import type { HTMLAttributes } from "svelte/elements";
   import { PopoverContext } from "./index.svelte";
 

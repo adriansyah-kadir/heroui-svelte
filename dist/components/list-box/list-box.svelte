@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
   import { listboxVariants } from "@heroui/styles";
-  import { type ListBoxOpts, ListBoxContext } from "#lib";
+  import { type ListBoxOpts, ListBoxContext } from "../../index.js";
   import { box } from "svelte-utils";
 
   type Props = HTMLAttributes<HTMLDivElement> &

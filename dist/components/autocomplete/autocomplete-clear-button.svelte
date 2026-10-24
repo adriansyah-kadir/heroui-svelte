@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { CloseIcon, CloseButton, AutocompleteContext } from "#lib";
+  import { CloseIcon, CloseButton, AutocompleteContext } from "../../index.js";
   import { autocompleteVariants } from "@heroui/styles";
   import type { ComponentProps } from "svelte";
 

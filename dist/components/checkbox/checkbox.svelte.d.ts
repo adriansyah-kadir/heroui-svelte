@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from "svelte/elements";
-import { type InputOpts } from "#lib";
+import { type InputOpts } from "../../index.js";
 type Props = InputOpts & HTMLAttributes<HTMLDivElement> & {
     checked?: boolean;
 };

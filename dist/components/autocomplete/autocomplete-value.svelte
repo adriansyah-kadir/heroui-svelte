@@ -1,7 +1,7 @@
 <script lang="ts">
   import { autocompleteVariants, tagVariants } from "@heroui/styles";
   import type { HTMLAttributes } from "svelte/elements";
-  import { CloseIcon, ListBoxContext, AutocompleteContext } from "#lib";
+  import { CloseIcon, ListBoxContext, AutocompleteContext } from "../../index.js";
   import type { Snippet } from "svelte";
 
   const {

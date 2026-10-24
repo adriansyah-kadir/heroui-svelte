@@ -1,7 +1,7 @@
 <script lang="ts">
   import { autocompleteVariants } from "@heroui/styles";
   import type { HTMLAttributes } from "svelte/elements";
-  import { PopoverContent, AutocompleteContext } from "#lib";
+  import { PopoverContent, AutocompleteContext } from "../../index.js";
 
   const props: HTMLAttributes<HTMLDivElement> = $props();
   const autocomplete = AutocompleteContext.get();

@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
-  import { PopoverContext } from "#lib";
+  import { PopoverContext } from "../../index.js";
   import { autocompleteVariants } from "@heroui/styles";
 
   interface Props extends HTMLAttributes<HTMLDivElement> {}

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { buttonVariants } from "@heroui/styles";
   import type { HTMLButtonAttributes } from "svelte/elements";
-  import { type ButtonOpts, ButtonContext, Spinner } from "#lib";
+  import { type ButtonOpts, ButtonContext, Spinner } from "../../index.js";
   import Ripples, {
     createRipple,
     releaseRipples,

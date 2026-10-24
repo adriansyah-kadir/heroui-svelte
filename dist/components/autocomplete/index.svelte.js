@@ -1,5 +1,5 @@
 import { Context, isEventTargetInAny } from "svelte-utils";
-import { ListBoxContext, PopoverContext } from "#lib";
+import { ListBoxContext, PopoverContext } from "../../index.js";
 export class AutocompleteContext extends Context {
     opts;
     popoverCtx;

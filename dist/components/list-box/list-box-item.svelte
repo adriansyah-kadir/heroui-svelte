@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
   import { listboxItemVariants } from "@heroui/styles";
-  import { ListBoxContext } from "#lib";
+  import { ListBoxContext } from "../../index.js";
   import { FilterContext } from "../filter/index.svelte";
   import { watch } from "svelte-utils";
 

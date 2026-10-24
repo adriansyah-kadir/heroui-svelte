@@ -1,4 +1,4 @@
-import { InputGroup } from "#lib";
+import { InputGroup } from "../../index.js";
 import type { ComponentProps } from "svelte";
 type $$ComponentProps = ComponentProps<typeof InputGroup> & {
     debounced?: string;

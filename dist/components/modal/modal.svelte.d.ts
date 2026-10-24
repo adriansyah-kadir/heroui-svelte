@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from "svelte/elements";
-import { type ModalOpts } from "#lib";
+import { type ModalOpts } from "../../index.js";
 type Props = HTMLAttributes<HTMLDivElement> & ModalOpts;
 declare const Modal: import("svelte").Component<Props, {}, "">;
 type Modal = ReturnType<typeof Modal>;

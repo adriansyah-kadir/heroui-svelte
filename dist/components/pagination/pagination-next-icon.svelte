@@ -1,5 +1,5 @@
 <script lang="ts">
-  import ChevronRightIcon from "#lib/icons/chevron-right-icon.svelte";
+  import ChevronRightIcon from "../../icons/chevron-right-icon.svelte";
   import type { HTMLAttributes } from "svelte/elements";
 
   const props: HTMLAttributes<HTMLSpanElement> = $props();

@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from "svelte/elements";
-import { type ListBoxOpts } from "#lib";
+import { type ListBoxOpts } from "../../index.js";
 type Props = HTMLAttributes<HTMLDivElement> & Partial<ListBoxOpts> & {
     selected?: string[];
 };

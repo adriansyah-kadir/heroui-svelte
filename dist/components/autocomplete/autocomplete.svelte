@@ -4,7 +4,7 @@
     Popover,
     AutocompleteContext,
     type AutocompleteOpts,
-  } from "#lib";
+  } from "../../index.js";
   import { box } from "svelte-utils";
 
   type Props = HTMLAttributes<HTMLElement> &
