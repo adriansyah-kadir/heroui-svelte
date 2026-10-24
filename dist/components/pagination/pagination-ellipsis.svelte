@@ -4,7 +4,7 @@
   import { paginationVariants } from "@heroui/styles";
 
   const props: HTMLAttributes<HTMLLIElement> = $props();
-  const pagination = PaginationState.ctx();
+  const pagination = PaginationState.get();
 </script>
 
 <li

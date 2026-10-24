@@ -1,9 +1,14 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
   import { textFieldVariants } from "@heroui/styles";
-  import { type InputOpts, InputContext, boxDerived } from "#lib";
+  import { type InputOpts, InputContext } from "#lib";
+  import { box } from "svelte-utils";
 
-  type Props = InputOpts & HTMLAttributes<HTMLDivElement>;
+  type Props = InputOpts &
+    HTMLAttributes<HTMLDivElement> & {
+      value?: any;
+      checked?: boolean;
+    };
 
   let {
     value = $bindable(),
@@ -18,18 +23,21 @@
   }: Props = $props();
 
   new InputContext(
-    boxDerived(
-      () => ({
-        checked,
-        disabled,
-        fullWidth,
-        invalid,
-        name,
-        required,
-        value,
-        variant,
-      }),
-      (v) => ({ value, checked } = v),
+    () => ({
+      disabled,
+      fullWidth,
+      invalid,
+      name,
+      required,
+      variant,
+    }),
+    box(
+      () => value,
+      (v) => (value = v),
+    ),
+    box(
+      () => !!checked,
+      (v) => (checked = v),
     ),
   );
 </script>

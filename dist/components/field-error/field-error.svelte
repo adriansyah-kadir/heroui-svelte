@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
   import { fieldErrorVariants } from "@heroui/styles";
-  import { boxDerived, InputContext } from "#lib";
+  import { InputContext } from "#lib";
 
   type Props = HTMLAttributes<HTMLDivElement>;
 
@@ -11,7 +11,7 @@
   }: Props & {
     visible?: boolean;
   } = $props();
-  const input = InputContext.getOr(boxDerived(() => ({})));
+  const input = InputContext.getOr([() => ({})]);
   const show = $derived(visible ?? input.opts.invalid);
 </script>
 

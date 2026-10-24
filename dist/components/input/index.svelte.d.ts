@@ -1,21 +1,20 @@
-import type { Box } from "#lib/hooks/index.js";
-import { Context } from "#lib/utils/index.js";
 import type { InputVariants } from "@heroui/styles";
+import { Context, type Getter } from "svelte-utils";
 export type InputOpts = {
     disabled?: boolean;
     required?: boolean;
     invalid?: boolean;
     name?: string;
-    value?: any;
-    checked?: boolean;
     indeterminate?: boolean;
 } & InputVariants;
-export declare class InputContext extends Context<InputOpts> {
-    get value(): any;
-    set value(value: any);
-    get checked(): boolean | undefined;
-    set checked(checked: boolean | undefined);
-    constructor(opts: Box<InputOpts>);
+export declare class InputContext extends Context {
+    #private;
+    readonly opts: InputOpts;
+    get value(): string | number;
+    set value(value: string | number);
+    get checked(): boolean;
+    set checked(checked: boolean);
+    constructor(opts: Getter<InputOpts>, value?: import("svelte-utils").Box<string | number>, checked?: import("svelte-utils").Box<boolean>);
     get props(): {
         indeterminate: boolean | undefined;
         disabled: boolean | undefined;

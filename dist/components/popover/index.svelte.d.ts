@@ -4,7 +4,7 @@ export type PopoverContextOpts = {
     offset?: number;
     fallbackAnchor?: HTMLElement;
 };
-export default class PopoverContext extends Context {
+export declare class PopoverContext extends Context {
     get open(): boolean;
     set open(open: boolean);
     popover: PopoverState;

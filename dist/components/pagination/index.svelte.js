@@ -1,23 +1,12 @@
 import {} from "@heroui/styles";
-import { getContext, setContext } from "svelte";
-export default class PaginationState {
+import { box, Context } from "svelte-utils";
+export default class PaginationState extends Context {
     opts;
-    constructor(opts) {
-        this.opts = opts;
-        setContext("pagination-state", this);
-        this.page = opts.current.page ?? 1;
-        this.pageSize = opts.current.pageSize ?? 10;
-    }
-    static ctx() {
-        return getContext("pagination-state");
-    }
-    set pageSize(pageSize) {
-        if (pageSize < 1)
-            return;
-        this.opts.current = {
-            ...this.opts.current,
-            pageSize
-        };
+    #page;
+    constructor(opts, page = box(1)) {
+        super();
+        this.opts = $derived.by(opts);
+        this.#page = page;
     }
     onNext() {
         if (!this.hasNext)
@@ -36,7 +25,7 @@ export default class PaginationState {
         return this.page < this.pageCount;
     }
     get total() {
-        return this.opts.current.total ?? 0;
+        return this.opts.total ?? 0;
     }
     get start() {
         return (this.page - 1) * this.pageSize + 1;
@@ -45,20 +34,17 @@ export default class PaginationState {
         return Math.min(this.page * this.pageSize, this.total);
     }
     get page() {
-        return Math.max(this.opts.current.page ?? 1, 1);
+        return this.#page.current;
     }
     set page(value) {
         if (!Number.isInteger(value))
             return;
         if (value < 1 || value > this.pageCount)
             return;
-        this.opts.current = {
-            ...this.opts.current,
-            page: value
-        };
+        this.#page.current = value;
     }
     get pageSize() {
-        return this.opts.current.pageSize ?? 10;
+        return Math.min(this.opts.pageSize ?? 1, 1);
     }
     get pageCount() {
         if (this.pageSize <= 0 || this.page <= 0)
@@ -67,7 +53,7 @@ export default class PaginationState {
     }
     get heroui() {
         return {
-            size: this.opts.current.size,
+            size: this.opts.size,
         };
     }
 }

@@ -10,7 +10,7 @@
   }: Omit<HTMLAttributes<HTMLDivElement>, "children"> & {
     children?: Snippet<[PaginationState]>;
   } = $props();
-  const pagination = PaginationState.ctx();
+  const pagination = PaginationState.get();
 </script>
 
 <div

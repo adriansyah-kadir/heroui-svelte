@@ -1,16 +1,14 @@
-import type { Box } from "#lib/hooks/index.js";
 import { type PaginationVariants } from "@heroui/styles";
+import { Context, type Box, type Getter } from "svelte-utils";
 export type PaginationProps = {
     total?: number;
-    page?: number;
     pageSize?: number;
     disabled?: boolean;
 } & PaginationVariants;
-export default class PaginationState {
-    opts: Box<PaginationProps>;
-    constructor(opts: Box<PaginationProps>);
-    static ctx(): PaginationState;
-    set pageSize(pageSize: number);
+export default class PaginationState extends Context {
+    #private;
+    readonly opts: PaginationProps;
+    constructor(opts: Getter<PaginationProps>, page?: Box<number>);
     onNext(): void;
     onPrev(): void;
     get hasPrev(): boolean;

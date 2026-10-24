@@ -5,6 +5,9 @@
   const props: HTMLAttributes<HTMLDivElement> = $props();
 </script>
 
-<div {...props} class={listboxSectionVariants()}>
+<div
+  {...props}
+  class={listboxSectionVariants({ class: props.class?.toString() })}
+>
   {@render props.children?.()}
 </div>

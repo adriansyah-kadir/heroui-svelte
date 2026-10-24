@@ -2,13 +2,12 @@
   import { tableVariants } from "@heroui/styles";
   import type { HTMLAttributes } from "svelte/elements";
   import TableContext, { type TableOpts } from "./index.svelte";
-  import { boxDerived } from "#lib/hooks/index.js";
 
   type Props = HTMLAttributes<HTMLDivElement> & TableOpts;
 
   const { children, variant, ...props }: Props = $props();
 
-  export const state = new TableContext(boxDerived(() => ({ variant })));
+  export const state = new TableContext(() => ({ variant }));
 </script>
 
 <div

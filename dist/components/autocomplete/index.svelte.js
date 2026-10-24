@@ -1,40 +1,32 @@
-import { isEventTargetInAny, ListBoxContext, PopoverState, } from "#lib";
-import { onMount } from "svelte";
-import { Context } from "#lib/utils/context.svelte.js";
+import { Context, isEventTargetInAny } from "svelte-utils";
+import { ListBoxContext, PopoverContext } from "#lib";
 export class AutocompleteContext extends Context {
-    popover = new PopoverState();
-    listBox;
-    get empty() {
-        return this.listBox.opts.selected.size === 0;
-    }
-    clear() {
-        this.listBox.selected.clear();
-    }
-    constructor(opts) {
-        super(opts);
-        this.listBox = new ListBoxContext(opts);
-        onMount(() => {
-            this.autoCloseOnSingleSelect();
-            return this.autoCloseOnFocusLost();
-        });
+    opts;
+    popoverCtx;
+    listboxCtx;
+    constructor(opts, selected) {
+        super();
+        this.opts = $derived.by(opts);
+        this.popoverCtx = new PopoverContext(opts);
+        this.listboxCtx = new ListBoxContext(opts, selected);
     }
     autoCloseOnFocusLost() {
         const handleWindowClick = (ev) => {
-            if (!this.popover.node?.matches(":popover-open"))
+            if (!this.popoverCtx.popover.node?.matches(":popover-open"))
                 return;
-            if (isEventTargetInAny(ev, this.popover.source, this.popover.node)) {
+            if (isEventTargetInAny(ev, this.popoverCtx.popover.anchor, this.popoverCtx.popover.node)) {
                 return;
             }
             this.close();
         };
         const handleEscapeKey = (ev) => {
-            const focused = this.popover.node?.matches(":focus-within") || this.popover.source?.matches(":focus-within");
+            const focused = this.popoverCtx.popover.node?.matches(":focus-within") || this.popoverCtx.popover.anchor?.matches(":focus-within");
             if (ev.code !== "Escape" || !focused)
                 return;
             ev.preventDefault();
             ev.stopImmediatePropagation();
             this.close();
-            this.popover.source?.focus();
+            this.popoverCtx.popover.anchor?.focus();
         };
         window.addEventListener("click", handleWindowClick);
         window.addEventListener("keydown", handleEscapeKey);
@@ -47,18 +39,18 @@ export class AutocompleteContext extends Context {
         $effect(() => {
             if (this.opts.multiple)
                 return;
-            this.opts.selected;
+            this.listboxCtx.selected;
             this.close();
         });
     }
     close() {
-        this.popover.node?.hidePopover();
+        this.popoverCtx.popover.node?.hidePopover();
     }
     open(source) {
-        this.popover.node?.showPopover({ source });
+        this.popoverCtx.popover.node?.showPopover({ source });
     }
     toggle(source) {
-        this.popover.node?.togglePopover({ source });
+        this.popoverCtx.popover.node?.togglePopover({ source });
     }
     get props() {
         return {

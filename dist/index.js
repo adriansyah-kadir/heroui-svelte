@@ -1,4 +1,3 @@
-// Reexport your entry components here
 export * from "./components/autocomplete";
 export * from "./components/button";
 export * from "./components/checkbox";
@@ -14,13 +13,12 @@ export * from "./components/list-box";
 export * from "./components/modal";
 export * from "./components/pagination";
 export * from "./components/popover";
-export * from "./components/search-field";
 export * from "./components/spinner";
 export * from "./components/table";
 export * from "./components/text-field";
 export * from "./components/surface";
 export * from "./components/fieldset";
 export * from "./components/search-input";
+export * from "./components/collection";
+export * from "./components/filter";
 export * from "./icons";
-export * from "./utils";
-export * from "./hooks";

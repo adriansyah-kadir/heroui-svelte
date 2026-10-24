@@ -1,5 +1,5 @@
 import { Context, getPopoverArea, PopoverState } from "svelte-utils";
-export default class PopoverContext extends Context {
+export class PopoverContext extends Context {
     get open() { return this.popover.open; }
     set open(open) { this.popover.open = open; }
     popover;

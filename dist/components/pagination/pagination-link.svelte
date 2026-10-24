@@ -9,7 +9,7 @@
   }: HTMLButtonAttributes & {
     page?: number;
   } = $props();
-  const pagination = PaginationState.ctx();
+  const pagination = PaginationState.get();
 </script>
 
 <button

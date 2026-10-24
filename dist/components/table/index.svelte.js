@@ -1,7 +1,9 @@
-import { Context } from "#lib/utils/index.js";
+import { Context } from "svelte-utils";
 export default class TableContext extends Context {
+    opts;
     constructor(opts) {
-        super(opts);
+        super();
+        this.opts = $derived.by(opts);
     }
     get heroui() {
         return {

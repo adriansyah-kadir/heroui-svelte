@@ -1,7 +1,4 @@
 import type { HTMLAttributes } from "svelte/elements";
-type $$ComponentProps = HTMLAttributes<HTMLDivElement> & {
-    selected?: boolean;
-};
-declare const ListBoxItemIndicator: import("svelte").Component<$$ComponentProps, {}, "">;
+declare const ListBoxItemIndicator: import("svelte").Component<HTMLAttributes<HTMLDivElement>, {}, "">;
 type ListBoxItemIndicator = ReturnType<typeof ListBoxItemIndicator>;
 export default ListBoxItemIndicator;

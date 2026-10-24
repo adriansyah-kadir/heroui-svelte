@@ -1,9 +1,10 @@
-import { DialogState } from "#lib/hooks/index.js";
-import { Context } from "#lib/utils/index.js";
+import { Context, DialogState } from "svelte-utils";
 export class ModalContext extends Context {
+    opts;
     dialog = new DialogState();
     constructor(opts) {
-        super(opts);
+        super();
+        this.opts = $derived.by(opts);
     }
     get heroui() {
         return {

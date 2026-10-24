@@ -1,8 +1,7 @@
 import type { HTMLAttributes } from "svelte/elements";
-import { AutocompleteContext } from "#lib";
 import type { Snippet } from "svelte";
 type $$ComponentProps = Omit<HTMLAttributes<HTMLDivElement>, "children"> & {
-    children?: Snippet<[AutocompleteContext]>;
+    children?: Snippet<[string[]]>;
     placeholder?: string;
 };
 declare const AutocompleteValue: import("svelte").Component<$$ComponentProps, {}, "">;

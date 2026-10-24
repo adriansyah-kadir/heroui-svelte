@@ -7,28 +7,46 @@
     SearchIcon,
     CloseButton,
     InputContext,
-    boxDerived,
   } from "#lib";
   import type { ComponentProps } from "svelte";
+  import { box } from "svelte-utils";
+  import { FilterContext } from "../filter/index.svelte";
 
   let {
     value = $bindable(),
     debounced = $bindable(),
     debounce = 300,
     placeholder,
+    fullWidth,
+    variant,
+    disabled,
+    indeterminate,
+    invalid,
+    name,
+    required,
     ...props
   }: ComponentProps<typeof InputGroup> & {
     debounced?: string;
     debounce?: number;
   } = $props();
 
+  const filter = FilterContext.getOr();
   const empty = $derived(value === undefined || value === "");
-  const ctx = InputContext.getOr(
-    boxDerived(
-      () => ({ value }),
-      (v) => ({ value } = v),
+  const ctx = InputContext.getOr([
+    () => ({
+      disabled,
+      fullWidth,
+      indeterminate,
+      invalid,
+      name,
+      required,
+      variant,
+    }),
+    box(
+      () => value,
+      (v) => (value = v),
     ),
-  );
+  ]);
 
   $effect(() => {
     value;
@@ -37,9 +55,16 @@
     }, debounce);
     return () => clearTimeout(i);
   });
+
+  filter?.sync(
+    box(
+      () => debounced ?? "",
+      (v) => (value = v),
+    ),
+  );
 </script>
 
-<InputGroup {...props} data-empty={empty}>
+<InputGroup {...props} {fullWidth} data-empty={empty}>
   <InputGroupPrefix>
     <SearchIcon />
   </InputGroupPrefix>

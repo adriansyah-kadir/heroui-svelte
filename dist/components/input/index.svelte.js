@@ -1,25 +1,25 @@
-import { Context } from "#lib/utils/index.js";
+import { box, Context } from "svelte-utils";
 export class InputContext extends Context {
+    opts;
+    #value;
+    #checked;
     get value() {
-        return this.opts.value;
+        return this.#value.current;
     }
     set value(value) {
-        this.opts = {
-            ...this.opts,
-            value
-        };
+        this.#value.current = value;
     }
     get checked() {
-        return this.opts.checked;
+        return this.#checked.current;
     }
     set checked(checked) {
-        this.opts = {
-            ...this.opts,
-            checked
-        };
+        this.#checked.current = checked;
     }
-    constructor(opts) {
-        super(opts);
+    constructor(opts, value = box(""), checked = box(false)) {
+        super();
+        this.opts = $derived.by(opts);
+        this.#value = value;
+        this.#checked = checked;
     }
     get props() {
         return {
@@ -38,6 +38,6 @@ export class InputContext extends Context {
         };
     }
     get empty() {
-        return this.opts.value === undefined || this.opts.value === "";
+        return this.value === undefined || this.value === "";
     }
 }

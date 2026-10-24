@@ -1,12 +1,12 @@
-import { DialogState, type Box } from "#lib/hooks/index.js";
-import { Context } from "#lib/utils/index.js";
 import type { ModalVariants } from "@heroui/styles";
+import { Context, DialogState, type Getter } from "svelte-utils";
 export type ModalOpts = ModalVariants & {
     placement?: "top" | "bottom" | "center" | "auto";
 };
-export declare class ModalContext extends Context<ModalOpts> {
+export declare class ModalContext extends Context {
+    readonly opts: ModalOpts;
     dialog: DialogState;
-    constructor(opts: Box<ModalOpts>);
+    constructor(opts: Getter<ModalOpts>);
     get heroui(): {
         scroll: "inside" | "outside" | undefined;
         size: "lg" | "md" | "sm" | "cover" | "full" | "xs" | undefined;

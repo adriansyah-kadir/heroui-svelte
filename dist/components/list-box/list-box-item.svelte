@@ -2,6 +2,8 @@
   import type { HTMLAttributes } from "svelte/elements";
   import { listboxItemVariants } from "@heroui/styles";
   import { ListBoxContext } from "#lib";
+  import { FilterContext } from "../filter/index.svelte";
+  import { watch } from "svelte-utils";
 
   let {
     value,
@@ -14,44 +16,58 @@
     disabled?: boolean;
   } = $props();
 
-  const listBox = ListBoxContext.get();
-  const itemSelected = $derived(listBox.itemSelected(value));
+  const filter = FilterContext.getOr();
+  const ctx = ListBoxContext.get();
+  const hidden = $derived(filter && !filter.matches(value));
 
-  $effect(() => {
-    selected = itemSelected;
-  });
+  watch(
+    () => selected,
+    (curr) => {
+      if (curr === ctx.isSelected(value)) return;
+      ctx.setSelected(value, curr ?? ctx.isSelected(value));
+    },
+  );
 
-  $effect(() => {
-    return listBox.itemAdd(value);
-  });
+  watch(
+    () => ctx.isSelected(value),
+    (curr) => {
+      if (curr === selected) return;
+      selected = curr;
+    },
+  );
+
+  $effect(() => () => ctx.setSelected(value, false));
 </script>
 
-<label
-  {...props}
-  onkeydown={(ev) => {
-    if (
-      ev.code === "Space" ||
-      (ev.code === "Enter" && ev.target === ev.currentTarget)
-    ) {
-      ev.preventDefault();
-      ev.currentTarget.querySelector("input")?.click();
-    }
-  }}
-  role="checkbox"
-  tabindex="0"
-  data-value={value}
-  data-disabled={listBox.opts.disabled ?? disabled}
-  data-slot="list-box-item"
-  class={listboxItemVariants().item({ class: props.class?.toString() })}
->
-  <input
-    bind:checked={() => selected, (v) => listBox.itemToggle(value, v)}
-    disabled={listBox.opts.disabled ?? disabled}
-    required={listBox.opts.required}
-    name={listBox.opts.name}
-    type="checkbox"
-    {value}
-    hidden
-  />
-  {@render props.children?.()}
-</label>
+{#if !hidden}
+  <label
+    {...props}
+    onkeydown={(ev) => {
+      if (
+        ev.code === "Space" ||
+        (ev.code === "Enter" && ev.target === ev.currentTarget)
+      ) {
+        ev.preventDefault();
+        ev.currentTarget.querySelector("input")?.click();
+      }
+    }}
+    role="checkbox"
+    tabindex="0"
+    data-value={value}
+    data-disabled={ctx.opts.disabled ?? disabled}
+    data-slot="list-box-item"
+    class={listboxItemVariants().item({ class: props.class?.toString() })}
+  >
+    <input
+      checked={ctx.isSelected(value)}
+      onchange={(ev) => ctx.setSelected(value, ev.currentTarget.checked)}
+      disabled={ctx.opts.disabled ?? disabled}
+      required={ctx.opts.required}
+      name={ctx.opts.name}
+      type={"checkbox"}
+      {value}
+      hidden
+    />
+    {@render props.children?.()}
+  </label>
+{/if}

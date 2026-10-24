@@ -1,12 +1,16 @@
 <script lang="ts">
   import { checkboxVariants } from "@heroui/styles";
   import type { HTMLAttributes } from "svelte/elements";
-  import { type InputOpts, InputContext, boxDerived } from "#lib";
+  import { type InputOpts, InputContext } from "#lib";
+  import { box } from "svelte-utils";
 
-  type Props = InputOpts & HTMLAttributes<HTMLDivElement>;
+  type Props = InputOpts &
+    HTMLAttributes<HTMLDivElement> & {
+      checked?: boolean;
+    };
 
   let {
-    checked = $bindable(),
+    checked = $bindable(false),
     indeterminate,
     invalid,
     disabled,
@@ -17,21 +21,22 @@
     ...props
   }: Props = $props();
 
-  InputContext.getOr(
-    boxDerived(
-      () => ({
-        checked,
-        disabled,
-        fullWidth,
-        invalid,
-        name,
-        required,
-        variant,
-        indeterminate,
-      }),
-      (v) => ({ checked } = v),
+  InputContext.getOr([
+    () => ({
+      disabled,
+      fullWidth,
+      invalid,
+      name,
+      required,
+      variant,
+      indeterminate,
+    }),
+    undefined,
+    box(
+      () => checked,
+      (v) => (checked = v),
     ),
-  );
+  ]);
 </script>
 
 <div

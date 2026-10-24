@@ -1,8 +1,9 @@
-import { Context } from "#lib/utils/index.js";
+import { Context } from "svelte-utils";
 export class ButtonContext extends Context {
+    opts;
     constructor(opts) {
-        super(opts);
-        this.opts = opts.current;
+        super();
+        this.opts = $derived.by(opts);
     }
     get props() {
         return {

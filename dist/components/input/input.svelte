@@ -1,7 +1,8 @@
 <script lang="ts">
   import { inputVariants } from "@heroui/styles";
   import type { HTMLInputAttributes } from "svelte/elements";
-  import { type InputOpts, InputContext, boxDerived } from "#lib";
+  import { type InputOpts, InputContext } from "#lib";
+  import { box } from "svelte-utils";
 
   type Props = {
     headless?: boolean;
@@ -22,22 +23,25 @@
     ...props
   }: Props = $props();
 
-  const input = InputContext.getOr(
-    boxDerived(
-      () => ({
-        checked,
-        disabled,
-        fullWidth,
-        indeterminate,
-        invalid,
-        name,
-        required,
-        value,
-        variant,
-      }),
-      (v) => ({ checked, value } = v),
+  const input = InputContext.getOr([
+    () => ({
+      disabled,
+      fullWidth,
+      indeterminate,
+      invalid,
+      name,
+      required,
+      variant,
+    }),
+    box(
+      () => value,
+      (v) => (value = v),
     ),
-  );
+    box(
+      () => !!checked,
+      (v) => (checked = v),
+    ),
+  ]);
 
   const className = $derived(
     headless
