@@ -12,6 +12,11 @@
   import { box, watch } from "svelte-utils";
   import { FilterContext } from "../filter/index.svelte";
 
+  type Props = ComponentProps<typeof InputGroup> & {
+    debounced?: string;
+    debounce?: number;
+  };
+
   let {
     value = $bindable(),
     debounced = $bindable(),
@@ -25,10 +30,7 @@
     name,
     required,
     ...props
-  }: ComponentProps<typeof InputGroup> & {
-    debounced?: string;
-    debounce?: number;
-  } = $props();
+  }: Props = $props();
 
   const filter = FilterContext.getOr();
   const empty = $derived(value === undefined || value === "");
