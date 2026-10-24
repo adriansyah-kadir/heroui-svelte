@@ -1,15 +1,16 @@
 <script lang="ts">
+  import type { ComponentProps } from "svelte";
   import FilterProvider from "../filter/filter-provider.svelte";
   import { PopoverContext } from "../popover";
 
-  const { children } = $props();
+  let { query = $bindable(""), ...props }: ComponentProps<typeof FilterProvider> =
+    $props();
   const popover = PopoverContext.get();
-  let query = $state("")
 
   $effect(() => {
     if (popover.open) return;
-    query = ""
-  })
+    query = "";
+  });
 </script>
 
-<FilterProvider bind:query {children} />
+<FilterProvider bind:query {...props} />
