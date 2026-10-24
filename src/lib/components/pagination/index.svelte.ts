@@ -58,7 +58,7 @@ export default class PaginationState extends Context {
   }
 
   get pageSize() {
-    return Math.min(this.opts.pageSize ?? 1, 1)
+    return Math.max(this.opts.pageSize ?? 1, 1)
   }
 
   get pageCount() {
