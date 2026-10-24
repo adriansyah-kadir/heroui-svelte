@@ -1,45 +1,28 @@
-import {
-  type ListBoxOpts,
-  type PopoverOpts,
-  type Box,
-  isEventTargetInAny,
-  ListBoxContext,
-  PopoverState,
-} from "#lib"
-import { onMount } from "svelte"
 import type { AutocompleteVariants } from "@heroui/styles"
-import { Context } from "#lib/utils/context.svelte.js"
+import { Context, type Box, type Getter, isEventTargetInAny } from "svelte-utils"
+import { ListBoxContext, PopoverContext, type ListBoxOpts, type PopoverContextOpts } from "#lib"
 
-export type AutocompleteOpts = ListBoxOpts & AutocompleteVariants & {
+export type AutocompleteOpts = ListBoxOpts & AutocompleteVariants & PopoverContextOpts & {
   invalid?: boolean
-} & PopoverOpts
+}
 
-export class AutocompleteContext extends Context<AutocompleteOpts> {
-  popover = new PopoverState()
-  listBox: ListBoxContext
+export class AutocompleteContext extends Context {
+  opts: AutocompleteOpts
+  popoverCtx: PopoverContext
+  listboxCtx: ListBoxContext
 
-  get empty() {
-    return this.listBox.opts.selected.size === 0
-  }
-
-  clear() {
-    this.listBox.selected.clear()
-  }
-
-  constructor(opts: Box<AutocompleteOpts>) {
-    super(opts)
-    this.listBox = new ListBoxContext(opts)
-    onMount(() => {
-      this.autoCloseOnSingleSelect()
-      return this.autoCloseOnFocusLost()
-    })
+  constructor(opts: Getter<AutocompleteOpts>, selected: Box<string[]>) {
+    super()
+    this.opts = $derived.by(opts)
+    this.popoverCtx = new PopoverContext(opts)
+    this.listboxCtx = new ListBoxContext(opts, selected)
   }
 
   autoCloseOnFocusLost() {
     const handleWindowClick = (ev: MouseEvent) => {
-      if (!this.popover.node?.matches(":popover-open")) return;
+      if (!this.popoverCtx.popover.node?.matches(":popover-open")) return;
 
-      if (isEventTargetInAny(ev, this.popover.source, this.popover.node)) {
+      if (isEventTargetInAny(ev, this.popoverCtx.popover.anchor, this.popoverCtx.popover.node)) {
         return;
       }
 
@@ -47,12 +30,12 @@ export class AutocompleteContext extends Context<AutocompleteOpts> {
     };
 
     const handleEscapeKey = (ev: KeyboardEvent) => {
-      const focused = this.popover.node?.matches(":focus-within") || this.popover.source?.matches(":focus-within")
+      const focused = this.popoverCtx.popover.node?.matches(":focus-within") || this.popoverCtx.popover.anchor?.matches(":focus-within")
       if (ev.code !== "Escape" || !focused) return;
       ev.preventDefault()
       ev.stopImmediatePropagation()
       this.close()
-      this.popover.source?.focus()
+      this.popoverCtx.popover.anchor?.focus()
     }
 
     window.addEventListener("click", handleWindowClick)
@@ -66,21 +49,21 @@ export class AutocompleteContext extends Context<AutocompleteOpts> {
   autoCloseOnSingleSelect() {
     $effect(() => {
       if (this.opts.multiple) return;
-      this.opts.selected;
+      this.listboxCtx.selected
       this.close()
     })
   }
 
   close() {
-    this.popover.node?.hidePopover()
+    this.popoverCtx.popover.node?.hidePopover()
   }
 
   open(source?: HTMLElement) {
-    this.popover.node?.showPopover({ source })
+    this.popoverCtx.popover.node?.showPopover({ source })
   }
 
   toggle(source?: HTMLElement) {
-    this.popover.node?.togglePopover({ source })
+    this.popoverCtx.popover.node?.togglePopover({ source })
   }
 
   get props() {

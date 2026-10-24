@@ -1,9 +1,14 @@
 <script lang="ts">
   import { inputGroupVariants } from "@heroui/styles";
   import type { HTMLAttributes } from "svelte/elements";
-  import { type InputOpts, InputContext, boxDerived } from "#lib";
+  import { type InputOpts, InputContext } from "#lib";
+  import { box } from "svelte-utils";
 
-  type Props = InputOpts & HTMLAttributes<HTMLDivElement>;
+  type Props = InputOpts &
+    HTMLAttributes<HTMLDivElement> & {
+      value?: any;
+      checked?: boolean;
+    };
 
   let {
     value = $bindable(),
@@ -14,24 +19,29 @@
     name,
     fullWidth,
     variant,
+    indeterminate,
     ...props
   }: Props = $props();
 
-  const input = InputContext.getOr(
-    boxDerived(
-      () => ({
-        checked,
-        disabled,
-        fullWidth,
-        invalid,
-        name,
-        required,
-        value,
-        variant,
-      }),
-      (v) => ({ value, checked } = v),
+  const input = InputContext.getOr([
+    () => ({
+      disabled,
+      fullWidth,
+      indeterminate,
+      invalid,
+      name,
+      required,
+      variant,
+    }),
+    box(
+      () => value,
+      (v) => (value = v),
     ),
-  );
+    box(
+      () => !!checked,
+      (v) => (checked = v),
+    ),
+  ]);
 </script>
 
 <div
@@ -39,7 +49,8 @@
   data-disabled={disabled}
   data-required={required}
   data-invalid={invalid}
-  class={inputGroupVariants(input.heroui).base({
+  class={inputGroupVariants().base({
+    ...input.heroui,
     class: props.class?.toString(),
   })}
 >

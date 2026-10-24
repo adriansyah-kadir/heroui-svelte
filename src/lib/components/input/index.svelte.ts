@@ -1,6 +1,5 @@
-import type { Box } from "#lib/hooks/index.js";
-import { Context } from "#lib/utils/index.js";
 import type { InputVariants } from "@heroui/styles";
+import { box, Context, type Box, type Getter } from "svelte-utils";
 import type { HTMLInputAttributes } from "svelte/elements";
 
 export type InputOpts = {
@@ -8,36 +7,35 @@ export type InputOpts = {
   required?: boolean,
   invalid?: boolean,
   name?: string,
-  value?: any,
-  checked?: boolean,
   indeterminate?: boolean
 } & InputVariants
 
-export class InputContext extends Context<InputOpts> {
+export class InputContext extends Context {
+  readonly opts: InputOpts
+  #value: Box<string | number | undefined>
+  #checked: Box<boolean>
+
   get value() {
-    return this.opts.value
+    return this.#value.current
   }
 
-  set value(value: any) {
-    this.opts = {
-      ...this.opts,
-      value
-    }
+  set value(value: string | number | undefined) {
+    this.#value.current = value
   }
 
   get checked() {
-    return this.opts.checked
+    return this.#checked.current
   }
 
-  set checked(checked: boolean | undefined) {
-    this.opts = {
-      ...this.opts,
-      checked
-    }
+  set checked(checked: boolean) {
+    this.#checked.current = checked
   }
 
-  constructor(opts: Box<InputOpts>) {
-    super(opts)
+  constructor(opts: Getter<InputOpts>, value = box<string | number>(""), checked = box(false)) {
+    super()
+    this.opts = $derived.by(opts)
+    this.#value = value
+    this.#checked = checked
   }
 
   get props() {
@@ -59,6 +57,6 @@ export class InputContext extends Context<InputOpts> {
   }
 
   get empty() {
-    return this.opts.value === undefined || this.opts.value === ""
+    return this.value === undefined || this.value === ""
   }
 }

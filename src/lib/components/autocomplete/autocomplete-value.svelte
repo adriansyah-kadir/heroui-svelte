@@ -9,12 +9,12 @@
     placeholder,
     ...props
   }: Omit<HTMLAttributes<HTMLDivElement>, "children"> & {
-    children?: Snippet<[AutocompleteContext]>;
+    children?: Snippet<[string[]]>;
     placeholder?: string;
   } = $props();
   const autocomplete = AutocompleteContext.get();
   const listBox = ListBoxContext.get();
-  const first = $derived(listBox.opts.selected.values().next().value);
+  const first = $derived(listBox.selected.at(0));
   const tag = $derived(
     tagVariants({
       size: "sm",
@@ -30,7 +30,7 @@
   })}
 >
   {#if children}
-    {@render children(autocomplete)}
+    {@render children(autocomplete.listboxCtx.selected)}
   {:else}
     {@render DefaultChildren()}
   {/if}
@@ -40,7 +40,7 @@
   {#if listBox.opts.multiple && first !== undefined}
     <div class="tag-group">
       <ul class="tag-group__list">
-        {#each listBox.opts.selected?.values().toArray() as value}
+        {#each listBox.selected as value}
           <span class={tag.base()}>
             {value}
             <button
@@ -48,7 +48,7 @@
               onclick={(ev) => {
                 ev.preventDefault();
                 ev.stopPropagation();
-                listBox.itemUnpick(value);
+                listBox.setSelected(value, !listBox.isSelected(value));
               }}
             >
               <CloseIcon />

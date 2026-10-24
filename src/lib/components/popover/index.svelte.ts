@@ -6,7 +6,7 @@ export type PopoverContextOpts = {
   fallbackAnchor?: HTMLElement
 }
 
-export default class PopoverContext extends Context {
+export class PopoverContext extends Context {
   get open() { return this.popover.open }
   set open(open: boolean) { this.popover.open = open }
 

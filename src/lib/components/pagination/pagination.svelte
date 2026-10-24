@@ -2,8 +2,8 @@
   import { paginationVariants } from "@heroui/styles";
   import type { PaginationProps } from "./index.svelte";
   import type { HTMLAttributes } from "svelte/elements";
-  import { boxDerived } from "#lib/hooks/index.js";
   import PaginationState from "./index.svelte";
+  import { box } from "svelte-utils";
 
   let {
     page = $bindable(1),
@@ -12,25 +12,27 @@
     disabled,
     size,
     ...props
-  }: PaginationProps & HTMLAttributes<HTMLDivElement> = $props();
+  }: PaginationProps &
+    HTMLAttributes<HTMLDivElement> & { page?: number } = $props();
 
-  export const pagination = new PaginationState(
-    boxDerived(
-      () => ({
-        page,
-        total,
-        pageSize,
-        disabled,
-        size,
-      }),
-      (v) => ({ page } = v),
+  const ctx = new PaginationState(
+    () => ({
+      page,
+      total,
+      pageSize,
+      disabled,
+      size,
+    }),
+    box(
+      () => page,
+      (v) => (page = v),
     ),
   );
 </script>
 
 <div
   {...props}
-  class={paginationVariants(pagination.heroui).base({
+  class={paginationVariants(ctx.heroui).base({
     class: props.class?.toString(),
   })}
 >

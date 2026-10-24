@@ -5,18 +5,18 @@
 
   const props: ComponentProps<typeof CloseButton> = $props();
   const autocomplete = AutocompleteContext.get();
-  const combobox = autocomplete.listBox;
+  const list = autocomplete.listboxCtx;
 </script>
 
 <button
   {...props}
-  disabled={autocomplete.empty}
-  data-empty={autocomplete.empty}
+  disabled={list.noSelected}
+  data-empty={list.noSelected}
   onclick={(ev) => {
     ev.preventDefault();
     ev.stopPropagation();
     props.onclick?.(ev);
-    combobox.itemsToggle(false);
+    list.selected = [];
   }}
   class={autocompleteVariants().clearButton({ class: props.class?.toString() })}
 >

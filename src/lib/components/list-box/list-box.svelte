@@ -1,23 +1,31 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
   import { listboxVariants } from "@heroui/styles";
-  import { type ListBoxOpts, ListBoxContext, boxDerived } from "#lib";
-  import { SvelteSet } from "svelte/reactivity";
+  import { type ListBoxOpts, ListBoxContext } from "#lib";
+  import { box } from "svelte-utils";
 
-  type Props = HTMLAttributes<HTMLDivElement> & Partial<ListBoxOpts>;
+  type Props = HTMLAttributes<HTMLDivElement> &
+    Partial<ListBoxOpts> & {
+      selected?: string[];
+    };
 
+  const id = $props.id();
   let {
     multiple,
-    name,
+    selected = $bindable([]),
+    name = id,
     disabled,
-    selected = new SvelteSet(),
     required,
     ...props
   }: Props = $props();
 
-  export const ctx = ListBoxContext.getOr(
-    boxDerived(() => ({ selected, disabled, multiple, name, required })),
-  );
+  ListBoxContext.getOr([
+    () => ({ disabled, multiple, name, required }),
+    box(
+      () => selected,
+      (v) => (selected = v),
+    ),
+  ]);
 </script>
 
 <div

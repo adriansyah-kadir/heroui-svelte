@@ -1,6 +1,5 @@
-import type { Box } from "#lib/hooks/index.js";
-import { Context } from "#lib/utils/index.js";
 import type { ButtonVariants } from "@heroui/styles";
+import { Context, type Getter } from "svelte-utils";
 
 export type ButtonOpts = {
   focused?: boolean,
@@ -10,10 +9,12 @@ export type ButtonOpts = {
   disabled?: boolean,
 } & ButtonVariants
 
-export class ButtonContext extends Context<ButtonOpts> {
-  constructor(opts: Box<ButtonOpts>) {
-    super(opts)
-    this.opts = opts.current
+export class ButtonContext extends Context {
+  readonly opts: ButtonOpts
+
+  constructor(opts: Getter<ButtonOpts>) {
+    super()
+    this.opts = $derived.by(opts)
   }
 
   get props() {

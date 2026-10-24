@@ -1,31 +1,20 @@
-import type { Box } from "#lib/hooks/index.js";
 import { type PaginationVariants } from "@heroui/styles";
-import { getContext, setContext } from "svelte";
+import { box, Context, type Box, type Getter } from "svelte-utils";
 
 export type PaginationProps = {
   total?: number,
-  page?: number,
   pageSize?: number,
   disabled?: boolean,
 } & PaginationVariants
 
-export default class PaginationState {
-  constructor(public opts: Box<PaginationProps>) {
-    setContext("pagination-state", this)
-    this.page = opts.current.page ?? 1
-    this.pageSize = opts.current.pageSize ?? 10
-  }
+export default class PaginationState extends Context {
+  readonly opts: PaginationProps
+  #page: Box<number>
 
-  static ctx() {
-    return getContext<PaginationState>("pagination-state")
-  }
-
-  set pageSize(pageSize: number) {
-    if (pageSize < 1) return;
-    this.opts.current = {
-      ...this.opts.current,
-      pageSize
-    }
+  constructor(opts: Getter<PaginationProps>, page = box(1)) {
+    super()
+    this.opts = $derived.by(opts)
+    this.#page = page
   }
 
   onNext() {
@@ -47,7 +36,7 @@ export default class PaginationState {
   }
 
   get total() {
-    return this.opts.current.total ?? 0
+    return this.opts.total ?? 0
   }
 
   get start() {
@@ -59,20 +48,17 @@ export default class PaginationState {
   }
 
   get page() {
-    return Math.max(this.opts.current.page ?? 1, 1)
+    return this.#page.current
   }
 
   set page(value: number) {
     if (!Number.isInteger(value)) return;
     if (value < 1 || value > this.pageCount) return;
-    this.opts.current = {
-      ...this.opts.current,
-      page: value
-    }
+    this.#page.current = value
   }
 
   get pageSize() {
-    return this.opts.current.pageSize ?? 10
+    return Math.min(this.opts.pageSize ?? 1, 1)
   }
 
   get pageCount() {
@@ -82,7 +68,7 @@ export default class PaginationState {
 
   get heroui() {
     return {
-      size: this.opts.current.size,
+      size: this.opts.size,
     }
   }
 }

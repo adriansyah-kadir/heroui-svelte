@@ -13,12 +13,7 @@
   import CheckboxControl from "#lib/components/checkbox/checkbox-control.svelte";
   import CheckboxIndicator from "#lib/components/checkbox/checkbox-indicator.svelte";
   import TableEmptyState from "#lib/components/table/table-empty-state.svelte";
-  import SearchField from "#lib/components/search-field/search-field.svelte";
-  import SearchFieldGroup from "#lib/components/search-field/search-field-group.svelte";
-  import SearchFieldInput from "#lib/components/search-field/search-field-input.svelte";
   import Label from "#lib/components/label/label.svelte";
-  import SearchFieldSearchIcon from "#lib/components/search-field/search-field-search-icon.svelte";
-  import SearchFieldClearButton from "#lib/components/search-field/search-field-clear-button.svelte";
   import TableFooter from "#lib/components/table/table-footer.svelte";
   import Pagination from "#lib/components/pagination/pagination.svelte";
   import PaginationContent from "#lib/components/pagination/pagination-content.svelte";
@@ -31,7 +26,7 @@
   import Input from "#lib/components/input/input.svelte";
   import TextField from "#lib/components/text-field/text-field.svelte";
   import PaginationLink from "#lib/components/pagination/pagination-link.svelte";
-  import ComboboxState from "#lib/hooks/combobox.svelte.ts";
+  import { PaginationState, Selectable } from "svelte-utils";
 
   const { Story } = defineMeta({
     component: Table as any,
@@ -42,7 +37,6 @@
   });
 
   let search = $state("");
-  let page = $state<Pagination>();
   let pageSize = $state(10);
   const users = Array(100)
     .fill(0)
@@ -53,6 +47,7 @@
       role: crypto.randomUUID().slice(0, 3),
       status: crypto.randomUUID().slice(0, 5),
     }));
+  let page = new PaginationState({ total: () => users.length });
 
   const filtered = $derived(
     users.filter((user) =>
@@ -60,27 +55,23 @@
     ),
   );
 
-  const paginated = $derived(
-    filtered.slice((page?.pagination.start ?? 1) - 1, page?.pagination.end),
-  );
+  const paginated = $derived(filtered.slice(page.start - 1, page.end));
+</script>
 
-  const list = $derived(
-    new ComboboxState({
-      initial: users.map((e) => [e.id.toString(), e] as const),
-      multiple: true
-    }),
-  );
+<script>
+  import SearchInput from "#lib/components/search-input/search-input.svelte";
+
+  const list = new Selectable({
+    initialOptions: users.map((e) => [e.id.toString(), e] as const),
+    multiple: () => true,
+  });
 </script>
 
 <div class="flex items-end gap-2">
-  <SearchField class="mb-4 w-xs" bind:debounced={search}>
+  <TextField class="mb-4 w-xs">
     <Label>Search</Label>
-    <SearchFieldGroup>
-      <SearchFieldSearchIcon />
-      <SearchFieldInput placeholder="search name" />
-      <SearchFieldClearButton />
-    </SearchFieldGroup>
-  </SearchField>
+    <SearchInput bind:debounced={search} />
+  </TextField>
   <TextField bind:value={pageSize}>
     <Label>Page size</Label>
     <Input class="mb-4" placeholder="Page size" type="number" />
@@ -95,11 +86,11 @@
       <TableHeader>
         <TableColumn>
           <Checkbox
-            checked={list.pickedall}
+            checked={list.isAllSelected}
             onclick={(ev) => {
               ev.preventDefault();
               ev.stopPropagation();
-              list.toggleall();
+              list.toggleAll();
             }}
             disabled={!list.multiple}
           >
@@ -117,9 +108,12 @@
       <TableBody>
         {#each paginated as user}
           {@const id = user.id.toString()}
-          <TableRow onclick={() => list.toggle(id)} selected={list.picked(id)}>
+          <TableRow
+            onclick={() => list.toggle(id)}
+            selected={list.isSelected(id)}
+          >
             <TableCell>
-              <Checkbox checked={list.picked(id)}>
+              <Checkbox checked={list.isSelected(id)}>
                 <CheckboxContent>
                   <CheckboxControl>
                     <CheckboxIndicator />
@@ -140,10 +134,13 @@
     </TableContent>
   </TableScrollContainer>
   <TableFooter>
-    <Pagination bind:this={page} {pageSize} total={filtered.length}>
+    <Pagination
+      bind:page={page.page}
+      pageSize={page.pageSize}
+      total={page.total}
+    >
       <PaginationSummary>
-        Showing {page?.pagination.start}-{page?.pagination.end} of {page
-          ?.pagination.total} results
+        Showing {page.start}-{page.end} of {page.total} results
       </PaginationSummary>
       <PaginationContent>
         <PaginationItem>
@@ -154,7 +151,7 @@
         </PaginationItem>
         <PaginationItem>
           <PaginationLink>
-            {page?.pagination.page}
+            {page.page}
           </PaginationLink>
         </PaginationItem>
         <PaginationItem>

@@ -10,7 +10,7 @@
   }: Omit<HTMLAttributes<HTMLLIElement>, "children"> & {
     children?: Snippet<[PaginationState]>;
   } = $props();
-  const pagination = PaginationState.ctx();
+  const pagination = PaginationState.get();
 </script>
 
 <li

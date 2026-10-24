@@ -4,11 +4,6 @@
     Autocomplete,
     AutocompleteTrigger,
     AutocompletePopover,
-    SearchField,
-    SearchFieldGroup,
-    SearchFieldSearchIcon,
-    SearchFieldInput,
-    SearchFieldClearButton,
     ListBox,
     ListBoxItem,
     ListBoxItemIndicator,
@@ -17,9 +12,11 @@
     AutocompleteClearButton,
     Label,
     Description,
-    EmptyState,
-    ListBoxContext,
   } from "#lib";
+  import { box, Selectable } from "svelte-utils";
+  import AutocompleteFilter from "#lib/components/autocomplete/autocomplete-filter.svelte";
+  import Collection from "#lib/components/collection/collection.svelte";
+  import SearchInput from "#lib/components/search-input/search-input.svelte";
 
   const { Story } = defineMeta({
     component: Autocomplete,
@@ -27,40 +24,50 @@
   });
 </script>
 
-<Story
-  name="Autocomplete"
-  args={{
-    class: "min-w-60",
-    name: "aldo",
-  }}
->
-  <Label>Users</Label>
-  <AutocompleteTrigger>
-    <AutocompleteValue placeholder="Select user" />
-    <AutocompleteIndicator />
-    <AutocompleteClearButton />
-  </AutocompleteTrigger>
-  {@const list = ListBoxContext.get()}
-  <Description
-    >Picked: {list.selected.values().toArray().join(", ")}</Description
-  >
-  <AutocompletePopover>
-    <SearchField>
-      <SearchFieldGroup data-focus-within={true}>
-        <SearchFieldSearchIcon />
-        <SearchFieldInput placeholder="Search..." />
-        <SearchFieldClearButton />
-      </SearchFieldGroup>
-    </SearchField>
-    <ListBox>
-      {#each ["Aldi", "Aldo", "All"] as name}
-        <ListBoxItem value={name}>
-          {name}
-          <ListBoxItemIndicator />
-        </ListBoxItem>
-      {:else}
-        <EmptyState>Empty</EmptyState>
-      {/each}
-    </ListBox>
-  </AutocompletePopover>
+<script lang="ts">
+</script>
+
+<Story name="Autocomplete">
+  {#snippet template(props)}
+    {@const selectable = new Selectable<string>({
+      initialOptions: ["Aldi", "Aldo", "All"].map(
+        (e, i) => [i.toString(), e] as const,
+      ),
+      multiple: () => !!props.multiple,
+    })}
+    <Autocomplete {...props}>
+      <Label>Users</Label>
+      <AutocompleteTrigger class="w-60">
+        <AutocompleteValue placeholder="Select user" />
+        <AutocompleteIndicator />
+        <AutocompleteClearButton />
+      </AutocompleteTrigger>
+      <Description
+        >Picked: {selectable.selected.map(([, v]) => v).join(", ")}</Description
+      >
+      <AutocompletePopover>
+        <AutocompleteFilter>
+          <div data-slot="search-field">
+            <SearchInput />
+          </div>
+          <ListBox>
+            <Collection items={selectable.all} key={(t) => t[0]}>
+              {#snippet child({ key, item })}
+                <ListBoxItem
+                  bind:selected={
+                    () => selectable.isSelected(key),
+                    (v) => selectable.toggle(key, v)
+                  }
+                  value={key}
+                >
+                  {item[1]}
+                  <ListBoxItemIndicator />
+                </ListBoxItem>
+              {/snippet}
+            </Collection>
+          </ListBox>
+        </AutocompleteFilter>
+      </AutocompletePopover>
+    </Autocomplete>
+  {/snippet}
 </Story>

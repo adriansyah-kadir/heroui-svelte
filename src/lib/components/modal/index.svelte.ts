@@ -1,16 +1,17 @@
-import { DialogState, type Box } from "#lib/hooks/index.js";
-import { Context } from "#lib/utils/index.js";
 import type { ModalVariants } from "@heroui/styles";
+import { Context, DialogState, type Getter } from "svelte-utils";
 
 export type ModalOpts = ModalVariants & {
   placement?: "top" | "bottom" | "center" | "auto";
 }
 
-export class ModalContext extends Context<ModalOpts> {
+export class ModalContext extends Context {
+  readonly opts: ModalOpts
   dialog = new DialogState()
 
-  constructor(opts: Box<ModalOpts>) {
-    super(opts)
+  constructor(opts: Getter<ModalOpts>) {
+    super()
+    this.opts = $derived.by(opts)
   }
 
   get heroui() {
