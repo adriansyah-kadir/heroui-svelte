@@ -9,7 +9,7 @@
     InputContext,
   } from "../../index.js";
   import type { ComponentProps } from "svelte";
-  import { box } from "svelte-utils";
+  import { box, watch } from "svelte-utils";
   import { FilterContext } from "../filter/index.svelte";
 
   let {
@@ -48,13 +48,13 @@
     ),
   ]);
 
-  $effect(() => {
-    value;
-    const i = setTimeout(() => {
-      debounced = value;
-    }, debounce);
-    return () => clearTimeout(i);
-  });
+  watch(
+    () => ctx.value?.toString() ?? "",
+    (v) => {
+      const i = setTimeout(() => (debounced = v), debounce);
+      return () => clearTimeout(i);
+    },
+  );
 
   filter?.sync(
     box(
