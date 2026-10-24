@@ -13,7 +13,7 @@
     Label,
     Description,
   } from "#lib";
-  import { box, Selectable } from "svelte-utils";
+  import { Selectable } from "svelte-utils";
   import AutocompleteFilter from "#lib/components/autocomplete/autocomplete-filter.svelte";
   import Collection from "#lib/components/collection/collection.svelte";
   import SearchInput from "#lib/components/search-input/search-input.svelte";
@@ -25,42 +25,29 @@
 </script>
 
 <script lang="ts">
+  let selected = $state([] as string[]);
 </script>
 
 <Story name="Autocomplete">
   {#snippet template(props)}
-    {@const selectable = new Selectable<string>({
-      initialOptions: ["Aldi", "Aldo", "All"].map(
-        (e, i) => [i.toString(), e] as const,
-      ),
-      multiple: () => !!props.multiple,
-    })}
-    <Autocomplete {...props}>
+    <Autocomplete {...props} bind:selected>
       <Label>Users</Label>
       <AutocompleteTrigger class="w-60">
         <AutocompleteValue placeholder="Select user" />
         <AutocompleteIndicator />
         <AutocompleteClearButton />
       </AutocompleteTrigger>
-      <Description
-        >Picked: {selectable.selected.map(([, v]) => v).join(", ")}</Description
-      >
+      <Description>Picked: {selected}</Description>
       <AutocompletePopover>
         <AutocompleteFilter>
           <div data-slot="search-field">
             <SearchInput />
           </div>
           <ListBox>
-            <Collection items={selectable.all} key={(t) => t[0]}>
+            <Collection items={["Aldi", "Aldo", "All"]} key={(t) => t}>
               {#snippet child({ key, item })}
-                <ListBoxItem
-                  bind:selected={
-                    () => selectable.isSelected(key),
-                    (v) => selectable.toggle(key, v)
-                  }
-                  value={key}
-                >
-                  {item[1]}
+                <ListBoxItem value={key}>
+                  {item}
                   <ListBoxItemIndicator />
                 </ListBoxItem>
               {/snippet}

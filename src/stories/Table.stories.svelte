@@ -47,7 +47,10 @@
       role: crypto.randomUUID().slice(0, 3),
       status: crypto.randomUUID().slice(0, 5),
     }));
-  let page = new PaginationState({ total: () => users.length });
+  let page = new PaginationState({
+    total: () => users.length,
+    pageSize: () => pageSize,
+  });
 
   const filtered = $derived(
     users.filter((user) =>

@@ -5,6 +5,9 @@
   const { Story } = defineMeta({
     component: SearchInput,
     tags: ["autodocs"],
+    args: {
+      variant: "primary"
+    }
   });
 </script>
 
