@@ -14,8 +14,8 @@ export class FilterContext extends Context {
   set query(value: string) { this.#query.current = value }
 
   matches(text: string) {
-    const q = this.#opts.caseSensitive ? this.query.toLowerCase() : this.query
-    const t = this.#opts.caseSensitive ? text.toLowerCase() : text
+    const q = this.#opts.caseSensitive ? this.query : this.query.toLowerCase()
+    const t = this.#opts.caseSensitive ? text : text.toLowerCase()
     return this.filter(q, t)
   }
 
