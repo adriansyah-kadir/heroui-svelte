@@ -59,6 +59,13 @@
     class={listboxItemVariants().item({ class: props.class?.toString() })}
   >
     <input
+      {@attach (node) => {
+        const form = node.form;
+        if (!form) return;
+        const reset = () => ctx.setSelected(value, false);
+        form.addEventListener("reset", reset);
+        return () => form.removeEventListener("reset", reset);
+      }}
       checked={ctx.isSelected(value)}
       onchange={(ev) => ctx.setSelected(value, ev.currentTarget.checked)}
       disabled={ctx.opts.disabled ?? disabled}

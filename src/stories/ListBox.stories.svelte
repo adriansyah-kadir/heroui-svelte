@@ -149,3 +149,27 @@
     </Collection>
   </ListBoxSection>
 </Story>
+
+<Story name="In form">
+  {#snippet template(props)}
+    <form>
+      <ListBox {...props}>
+        {#each users as user}
+          <ListBoxItem value={user.name}>
+            <img
+              alt="User"
+              src={user.avatar}
+              class="aspect-square rounded-full w-8"
+            />
+            <div class="flex flex-col">
+              <Label>{user.name}</Label>
+              <Description>{user.email}</Description>
+            </div>
+            <ListBoxItemIndicator />
+          </ListBoxItem>
+        {/each}
+      </ListBox>
+      <Button type="reset">reset</Button>
+    </form>
+  {/snippet}
+</Story>
