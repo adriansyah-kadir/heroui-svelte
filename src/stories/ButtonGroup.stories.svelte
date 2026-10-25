@@ -21,3 +21,15 @@
     Un
   </Button>
 </Story>
+
+<Story name="Button group separate variant">
+  <Button variant="primary">Yes</Button>
+  <Button variant="danger-soft">
+    <ButtonGroupSeparator />
+    No
+  </Button>
+  <Button variant="tertiary">
+    <ButtonGroupSeparator />
+    Un
+  </Button>
+</Story>
