@@ -7,7 +7,6 @@
     type MaybePromise,
   } from "svelte-utils";
   import type { Attachment } from "svelte/attachments";
-  import { FilterContext } from "../filter/index.svelte";
 
   type ChildProps = {
     item: T;
@@ -30,6 +29,7 @@
     loadMore?: Fn<MaybePromise<T[]>, [{ offset: number }]>;
     child: Snippet<[ChildProps]>;
     sentinel?: Snippet<[LoaderProps]>;
+    empty?: Snippet;
   };
 
   let {
@@ -38,6 +38,7 @@
     loadMore,
     child,
     sentinel,
+    empty,
   }: Props = $props();
 
   let hasMore = $state(true);
@@ -60,6 +61,8 @@
     index,
     key: key(item),
   })}
+{:else}
+  {@render empty?.()}
 {/each}
 
 {#if hasMore && loadMore}

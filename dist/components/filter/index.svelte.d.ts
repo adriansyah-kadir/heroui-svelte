@@ -7,8 +7,11 @@ export declare class FilterContext extends Context {
     #private;
     get query(): string;
     set query(value: string);
-    matches(text: string): boolean;
-    filter(query: string, text: string): boolean;
+    get total(): number;
+    get visible(): number;
+    register: (item: string) => () => void;
+    matches: (text: string) => boolean;
+    filter: (query: string, text: string) => boolean;
     constructor(opts: Getter<FilterOpts>, query?: Box<string>);
     sync(box: Box<string>): void;
 }

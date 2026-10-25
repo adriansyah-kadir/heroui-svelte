@@ -21,6 +21,7 @@ declare function $$render<T>(): {
             loadingMore: boolean;
             loadMore: Fn;
         }]>;
+        empty?: Snippet;
     };
     exports: {};
     bindings: "items";

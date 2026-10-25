@@ -37,6 +37,7 @@
   );
 
   $effect(() => () => ctx.setSelected(value, false));
+  $effect(() => filter?.register(value))
 </script>
 
 {#if !hidden}
