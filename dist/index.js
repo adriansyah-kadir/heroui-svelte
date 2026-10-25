@@ -23,4 +23,5 @@ export * from "./components/collection";
 export * from "./components/filter";
 export * from "./components/avatar";
 export * from "./components/textarea";
+export * from "./components/separator";
 export * from "./icons";
