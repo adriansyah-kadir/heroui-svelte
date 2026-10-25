@@ -37,6 +37,13 @@
       (v) => (checked = v),
     ),
   ]);
+
+  const checkboxClass = $derived(
+    checkboxVariants().base({
+      variant,
+      class: props.class?.toString(),
+    }),
+  );
 </script>
 
 <div
@@ -47,7 +54,7 @@
   data-disabled={disabled}
   data-required={required}
   data-indeterminate={indeterminate}
-  class={checkboxVariants().base({ variant, class: props.class?.toString() })}
+  class={checkboxClass}
 >
   {@render props.children?.()}
 </div>

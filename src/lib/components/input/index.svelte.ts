@@ -2,18 +2,20 @@ import type { InputVariants } from "@heroui/styles";
 import { box, Context, type Box, type Getter } from "svelte-utils";
 import type { HTMLInputAttributes } from "svelte/elements";
 
-export type InputOpts = {
-  disabled?: boolean,
-  required?: boolean,
-  invalid?: boolean,
-  name?: string,
-  indeterminate?: boolean
-} & InputVariants
+export type InputValue = string | number | undefined;
+
+export type InputOpts = InputVariants & {
+  disabled?: boolean;
+  required?: boolean;
+  invalid?: boolean;
+  name?: string;
+  indeterminate?: boolean;
+};
 
 export class InputContext extends Context {
-  readonly opts: InputOpts
-  #value: Box<string | number | undefined>
-  #checked: Box<boolean>
+  readonly opts: InputOpts;
+  #value: Box<InputValue>;
+  #checked: Box<boolean>;
 
   get value() {
     return this.#value.current
@@ -31,11 +33,15 @@ export class InputContext extends Context {
     this.#checked.current = checked
   }
 
-  constructor(opts: Getter<InputOpts>, value = box<string | number>(""), checked = box(false)) {
-    super()
-    this.opts = $derived.by(opts)
-    this.#value = value
-    this.#checked = checked
+  constructor(
+    opts: Getter<InputOpts>,
+    value: Box<InputValue> = box<InputValue>(""),
+    checked: Box<boolean> = box(false),
+  ) {
+    super();
+    this.opts = $derived.by(opts);
+    this.#value = value;
+    this.#checked = checked;
   }
 
   get props() {
@@ -46,17 +52,17 @@ export class InputContext extends Context {
       "data-invalid": this.opts.invalid,
       "data-empty": this.empty,
       name: this.opts.name,
-    } satisfies HTMLInputAttributes
+    } satisfies Partial<HTMLInputAttributes> & Record<string, unknown>;
   }
 
   get heroui() {
     return {
       variant: this.opts.variant,
-      fullWidth: this.opts.fullWidth
-    }
+      fullWidth: this.opts.fullWidth,
+    } satisfies InputVariants;
   }
 
   get empty() {
-    return this.value === undefined || this.value === ""
+    return this.value === undefined || this.value === "";
   }
 }

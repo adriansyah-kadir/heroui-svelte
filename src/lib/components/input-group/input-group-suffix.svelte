@@ -7,14 +7,18 @@
 
   const props: Props = $props();
   const input = InputContext.get();
+
+  const className = $derived(
+    inputGroupVariants(input.heroui).suffix({
+      class: props.class?.toString(),
+    }),
+  );
 </script>
 
 <div
   {...props}
   data-slot="input-group-suffix"
-  class={inputGroupVariants(input.heroui).suffix({
-    class: props.class?.toString(),
-  })}
+  class={className}
 >
   {@render props.children?.()}
 </div>

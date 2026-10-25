@@ -8,6 +8,12 @@
     ...props
   }: ComponentProps<typeof Input> = $props();
   const input = InputContext.get();
+
+  const className = $derived(
+    inputGroupVariants(input.heroui).input({
+      class: props.class?.toString(),
+    }),
+  );
 </script>
 
 <Input
@@ -15,7 +21,5 @@
   bind:value
   headless
   data-slot="input-group-input"
-  class={inputGroupVariants(input.heroui).input({
-    class: props.class?.toString(),
-  })}
+  class={className}
 />

@@ -1,12 +1,12 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
   import { textFieldVariants } from "@heroui/styles";
-  import { type InputOpts, InputContext } from "#lib";
+  import { type InputOpts, type InputValue, InputContext } from "#lib";
   import { box } from "svelte-utils";
 
   type Props = InputOpts &
     HTMLAttributes<HTMLDivElement> & {
-      value?: any;
+      value?: InputValue;
       checked?: boolean;
     };
 
@@ -22,7 +22,7 @@
     ...props
   }: Props = $props();
 
-  new InputContext(
+  const input = new InputContext(
     () => ({
       disabled,
       fullWidth,
@@ -40,14 +40,21 @@
       (v) => (checked = v),
     ),
   );
+
+  const className = $derived(
+    textFieldVariants({
+      fullWidth: input.opts.fullWidth,
+      class: props.class?.toString(),
+    }),
+  );
 </script>
 
 <div
   {...props}
-  data-disabled={disabled}
-  data-required={required}
-  data-invalid={invalid}
-  class={textFieldVariants({ fullWidth, class: props.class?.toString() })}
+  data-disabled={input.opts.disabled}
+  data-required={input.opts.required}
+  data-invalid={input.opts.invalid}
+  class={className}
 >
   {@render props.children?.()}
 </div>
