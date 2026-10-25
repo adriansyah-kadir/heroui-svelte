@@ -23,7 +23,7 @@
     ...props
   }: Props = $props();
 
-  const input = InputContext.getOr([
+  const input = new InputContext(
     () => ({
       disabled,
       fullWidth,
@@ -41,14 +41,22 @@
       () => !!checked,
       (v) => (checked = v),
     ),
-  ]);
-
-  const className = $derived(
-    headless
-      ? props.class
-      : inputVariants({ ...input.heroui, class: props.class?.toString() }),
   );
-  const mergedProps = $derived({ ...props, ...input.props, class: className });
+
+  const className = $derived.by(() => {
+    if (headless) return props.class;
+
+    return inputVariants({
+      ...input.heroui,
+      class: props.class?.toString(),
+    });
+  });
+
+  const mergedProps = $derived({
+    ...props,
+    ...input.props,
+    class: className,
+  });
 </script>
 
 {#if props.type === "checkbox"}

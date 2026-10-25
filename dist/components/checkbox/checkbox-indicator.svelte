@@ -7,15 +7,19 @@
 
   const { ...props }: Props = $props();
   const input = InputContext.get();
+  const indicatorClass = $derived(
+    checkboxVariants().indicator({
+      variant: input.heroui.variant,
+      class: props.class?.toString(),
+    }),
+  );
 </script>
 
 <span
   {...props}
   data-slot="checkbox-indicator"
-  class={checkboxVariants().indicator({
-    variant: input.heroui.variant,
-    class: props.class?.toString(),
-  })}
+  aria-hidden="true"
+  class={indicatorClass}
 >
   {#if input.opts.indeterminate}
     <svg

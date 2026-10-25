@@ -3,18 +3,22 @@
   import { inputGroupVariants } from "@heroui/styles";
   import { InputContext } from "../../index.js";
 
-  interface Props extends HTMLAttributes<HTMLElement> {}
+  type Props = HTMLAttributes<HTMLElement>;
 
-  const { ...props }: Props = $props();
+  const props: Props = $props();
   const input = InputContext.get();
+
+  const className = $derived(
+    inputGroupVariants(input.heroui).prefix({
+      class: props.class?.toString(),
+    }),
+  );
 </script>
 
 <div
   {...props}
   data-slot="input-group-prefix"
-  class={inputGroupVariants(input.heroui).prefix({
-    class: props.class?.toString(),
-  })}
+  class={className}
 >
   {@render props.children?.()}
 </div>

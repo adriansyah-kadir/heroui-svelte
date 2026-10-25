@@ -1,7 +1,7 @@
 import type { HTMLAttributes } from "svelte/elements";
-import { type InputOpts } from "../../index.js";
+import { type InputOpts, type InputValue } from "../../index.js";
 type Props = InputOpts & HTMLAttributes<HTMLDivElement> & {
-    value?: any;
+    value?: InputValue;
     checked?: boolean;
 };
 declare const InputGroup: import("svelte").Component<Props, {}, "checked" | "value">;

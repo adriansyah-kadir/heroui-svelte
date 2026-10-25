@@ -1,4 +1,4 @@
-import { box, Context } from "svelte-utils";
+import { box, boxLink, coalesce, Context } from "svelte-utils";
 export class InputContext extends Context {
     opts;
     #value;
@@ -16,10 +16,15 @@ export class InputContext extends Context {
         this.#checked.current = checked;
     }
     constructor(opts, value = box(""), checked = box(false)) {
+        const parent = InputContext.getOr();
         super();
-        this.opts = $derived.by(opts);
+        this.opts = $derived.by(() => coalesce(parent?.opts, opts()));
         this.#value = value;
         this.#checked = checked;
+        if (!parent)
+            return;
+        boxLink(parent.#value, value);
+        boxLink(parent.#checked, checked);
     }
     get props() {
         return {
@@ -34,7 +39,7 @@ export class InputContext extends Context {
     get heroui() {
         return {
             variant: this.opts.variant,
-            fullWidth: this.opts.fullWidth
+            fullWidth: this.opts.fullWidth,
         };
     }
     get empty() {

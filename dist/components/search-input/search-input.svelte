@@ -18,7 +18,7 @@
   };
 
   let {
-    value = $bindable(),
+    value = $bindable<string | undefined>(""),
     debounced = $bindable(),
     debounce = 300,
     placeholder,
@@ -34,7 +34,7 @@
 
   const filter = FilterContext.getOr();
   const empty = $derived(value === undefined || value === "");
-  const ctx = InputContext.getOr([
+  InputContext.getOr([
     () => ({
       disabled,
       fullWidth,
@@ -51,19 +51,34 @@
   ]);
 
   watch(
-    () => ctx.value?.toString() ?? "",
-    (v) => {
-      const i = setTimeout(() => (debounced = v), debounce);
-      return () => clearTimeout(i);
+    () => value ?? "",
+    (currentValue) => {
+      const timeout = setTimeout(
+        () => (debounced = currentValue),
+        Math.max(0, debounce),
+      );
+      return () => clearTimeout(timeout);
+    },
+  );
+
+  watch(
+    () => debounced ?? "",
+    (currentValue) => {
+      if (value !== currentValue) value = currentValue;
     },
   );
 
   filter?.sync(
     box(
       () => debounced ?? "",
-      (v) => (value = v),
+      (currentValue) => (debounced = currentValue),
     ),
   );
+
+  function clear() {
+    value = "";
+    debounced = "";
+  }
 </script>
 
 <InputGroup {...props} {fullWidth} data-empty={empty}>
@@ -72,6 +87,6 @@
   </InputGroupPrefix>
   <InputGroupInput {placeholder} />
   <InputGroupSuffix class="px-2 in-data-[empty=true]:opacity-0">
-    <CloseButton disabled={empty} onclick={() => (ctx.value = "")} />
+    <CloseButton disabled={empty || disabled} onclick={clear} />
   </InputGroupSuffix>
 </InputGroup>

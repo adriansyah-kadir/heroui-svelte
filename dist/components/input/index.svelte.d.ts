@@ -1,12 +1,13 @@
 import type { InputVariants } from "@heroui/styles";
 import { Context, type Box, type Getter } from "svelte-utils";
-export type InputOpts = {
+export type InputValue = string | number | undefined;
+export type InputOpts = InputVariants & {
     disabled?: boolean;
     required?: boolean;
     invalid?: boolean;
     name?: string;
     indeterminate?: boolean;
-} & InputVariants;
+};
 export declare class InputContext extends Context {
     #private;
     readonly opts: InputOpts;
@@ -14,7 +15,7 @@ export declare class InputContext extends Context {
     set value(value: string | number | undefined);
     get checked(): boolean;
     set checked(checked: boolean);
-    constructor(opts: Getter<InputOpts>, value?: Box<string | number>, checked?: Box<boolean>);
+    constructor(opts: Getter<InputOpts>, value?: Box<InputValue>, checked?: Box<boolean>);
     get props(): {
         indeterminate: boolean | undefined;
         disabled: boolean | undefined;
