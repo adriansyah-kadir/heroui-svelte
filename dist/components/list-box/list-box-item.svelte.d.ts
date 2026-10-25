@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from "svelte/elements";
-type $$ComponentProps = HTMLAttributes<HTMLLabelElement> & {
+type $$ComponentProps = HTMLAttributes<HTMLDivElement> & {
     value: string;
     selected?: boolean;
     disabled?: boolean;

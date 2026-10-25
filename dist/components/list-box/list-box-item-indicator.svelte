@@ -7,10 +7,10 @@
 
   let node = $state<HTMLElement>();
   const ctx = ListBoxContext.get();
-  const input = $derived(
-    node?.closest(".list-box-item")?.querySelector("input"),
+  const value = $derived(
+    node?.closest(".list-box-item")?.getAttribute("data-value"),
   );
-  const selected = $derived(input && ctx.isSelected(input.value));
+  const selected = $derived(value && ctx.isSelected(value));
 </script>
 
 <div
