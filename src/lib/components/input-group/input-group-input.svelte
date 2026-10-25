@@ -2,12 +2,25 @@
   import { inputGroupVariants } from "@heroui/styles";
   import type { ComponentProps } from "svelte";
   import { Input, InputContext } from "#lib";
+  import { box } from "svelte-utils";
 
   let {
     value = $bindable(),
+    checked = $bindable(),
     ...props
   }: ComponentProps<typeof Input> = $props();
-  const input = InputContext.get();
+
+  const input = new InputContext(
+    () => props,
+    box(
+      () => value,
+      (v) => (value = v),
+    ),
+    box(
+      () => !!checked,
+      (v) => (checked = v),
+    ),
+  );
 
   const className = $derived(
     inputGroupVariants(input.heroui).input({
@@ -16,10 +29,4 @@
   );
 </script>
 
-<Input
-  {...props}
-  bind:value
-  headless
-  data-slot="input-group-input"
-  class={className}
-/>
+<Input {...props} headless data-slot="input-group-input" class={className} />

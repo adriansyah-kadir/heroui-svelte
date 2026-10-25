@@ -21,7 +21,7 @@
     ...props
   }: Props = $props();
 
-  InputContext.getOr([
+  new InputContext(
     () => ({
       disabled,
       fullWidth,
@@ -36,7 +36,7 @@
       () => checked,
       (v) => (checked = v),
     ),
-  ]);
+  );
 
   const checkboxClass = $derived(
     checkboxVariants().base({

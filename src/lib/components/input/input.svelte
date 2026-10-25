@@ -23,7 +23,7 @@
     ...props
   }: Props = $props();
 
-  const input = InputContext.getOr([
+  const input = new InputContext(
     () => ({
       disabled,
       fullWidth,
@@ -41,7 +41,7 @@
       () => !!checked,
       (v) => (checked = v),
     ),
-  ]);
+  );
 
   const className = $derived.by(() => {
     if (headless) return props.class;
@@ -51,6 +51,7 @@
       class: props.class?.toString(),
     });
   });
+
   const mergedProps = $derived({
     ...props,
     ...input.props,

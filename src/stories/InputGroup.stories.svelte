@@ -22,3 +22,21 @@
     <CloseButton />
   </InputGroupSuffix>
 </Story>
+
+<Story name="Input Controlled">
+  {#snippet template(props)}
+    {let outer = $state("ok")}
+    {let inner = $state("")}
+    <InputGroup {...props} bind:value={outer}>
+      <InputGroupPrefix onclick={() => outer = "alright"}>
+        <SearchIcon />
+      </InputGroupPrefix>
+      <InputGroupInput bind:value={inner} placeholder="Username" />
+      <InputGroupSuffix onclick={() => inner = "Ok"}>
+        <CloseButton />
+      </InputGroupSuffix>
+    </InputGroup>
+    <input placeholder="outer" bind:value={outer}/>
+    <input placeholder="inner" bind:value={inner}/>
+  {/snippet}
+</Story>

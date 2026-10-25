@@ -1,5 +1,5 @@
 import type { InputVariants } from "@heroui/styles";
-import { box, Context, type Box, type Getter } from "svelte-utils";
+import { box, boxLink, coalesce, Context, type Box, type Getter } from "svelte-utils";
 import type { HTMLInputAttributes } from "svelte/elements";
 
 export type InputValue = string | number | undefined;
@@ -38,10 +38,15 @@ export class InputContext extends Context {
     value: Box<InputValue> = box<InputValue>(""),
     checked: Box<boolean> = box(false),
   ) {
+    const parent = InputContext.getOr()
     super();
-    this.opts = $derived.by(opts);
+    this.opts = $derived.by(() => coalesce(parent?.opts, opts()));
     this.#value = value;
     this.#checked = checked;
+
+    if (!parent) return;
+    boxLink(parent.#value, value)
+    boxLink(parent.#checked, checked)
   }
 
   get props() {
