@@ -1,5 +1,6 @@
 import type { ButtonVariants } from "@heroui/styles";
-import { Context, type Getter } from "svelte-utils";
+import { coalesce, Context, type Getter } from "svelte-utils";
+import { ButtonGroupContext } from "../button-group/context.svelte";
 
 export type ButtonOpts = {
   focused?: boolean,
@@ -14,7 +15,8 @@ export class ButtonContext extends Context {
 
   constructor(opts: Getter<ButtonOpts>) {
     super()
-    this.opts = $derived.by(opts)
+    const group = ButtonGroupContext.getOr()
+    this.opts = $derived.by(() => coalesce(group?.opts, opts()))
   }
 
   get props() {
