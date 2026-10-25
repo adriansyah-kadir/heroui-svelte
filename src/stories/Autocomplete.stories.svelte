@@ -41,7 +41,7 @@
       <AutocompletePopover>
         <AutocompleteFilter>
           <div data-slot="search-field">
-            <SearchInput />
+            <SearchInput class="status-focused-field" />
           </div>
           <ListBox>
             <Collection items={["Aldi", "Aldo", "All"]} key={(t) => t}>

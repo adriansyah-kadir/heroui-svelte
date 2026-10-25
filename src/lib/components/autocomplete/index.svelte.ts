@@ -1,5 +1,5 @@
 import type { AutocompleteVariants } from "@heroui/styles"
-import { Context, type Box, type Getter, isEventTargetInAny } from "svelte-utils"
+import { Context, type Box, type Getter, isEventTargetInAny, watch } from "svelte-utils"
 import { ListBoxContext, PopoverContext, type ListBoxOpts, type PopoverContextOpts } from "#lib"
 
 export type AutocompleteOpts = ListBoxOpts & AutocompleteVariants & PopoverContextOpts & {
@@ -16,6 +16,8 @@ export class AutocompleteContext extends Context {
     this.opts = $derived.by(opts)
     this.popoverCtx = new PopoverContext(opts)
     this.listboxCtx = new ListBoxContext(opts, selected)
+    this.autoCloseOnFocusLost()
+    this.autoCloseOnSingleSelect()
   }
 
   autoCloseOnFocusLost() {
@@ -47,15 +49,14 @@ export class AutocompleteContext extends Context {
   }
 
   autoCloseOnSingleSelect() {
-    $effect(() => {
+    watch(() => this.listboxCtx.selected, () => {
       if (this.opts.multiple) return;
-      this.listboxCtx.selected
       this.close()
     })
   }
 
   close() {
-    this.popoverCtx.popover.node?.hidePopover()
+    this.popoverCtx.popover.hide()
   }
 
   open(source?: HTMLElement) {
