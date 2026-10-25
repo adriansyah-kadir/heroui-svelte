@@ -25,4 +25,5 @@ export * from "./components/avatar";
 export * from "./components/textarea";
 export * from "./components/separator";
 export * from "./components/button-group";
+export * from "./components/card";
 export * from "./icons";
