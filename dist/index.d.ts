@@ -21,5 +21,6 @@ export * from "./components/fieldset";
 export * from "./components/search-input";
 export * from "./components/collection";
 export * from "./components/filter";
+export * from "./components/avatar";
 export * from "./components/textarea";
 export * from "./icons";
