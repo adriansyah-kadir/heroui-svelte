@@ -1,4 +1,4 @@
-import { Context, isEventTargetInAny } from "svelte-utils";
+import { Context, isEventTargetInAny, watch } from "svelte-utils";
 import { ListBoxContext, PopoverContext } from "../../index.js";
 export class AutocompleteContext extends Context {
     opts;
@@ -9,6 +9,8 @@ export class AutocompleteContext extends Context {
         this.opts = $derived.by(opts);
         this.popoverCtx = new PopoverContext(opts);
         this.listboxCtx = new ListBoxContext(opts, selected);
+        this.autoCloseOnFocusLost();
+        this.autoCloseOnSingleSelect();
     }
     autoCloseOnFocusLost() {
         const handleWindowClick = (ev) => {
@@ -36,15 +38,14 @@ export class AutocompleteContext extends Context {
         };
     }
     autoCloseOnSingleSelect() {
-        $effect(() => {
+        watch(() => this.listboxCtx.selected, () => {
             if (this.opts.multiple)
                 return;
-            this.listboxCtx.selected;
             this.close();
         });
     }
     close() {
-        this.popoverCtx.popover.node?.hidePopover();
+        this.popoverCtx.popover.hide();
     }
     open(source) {
         this.popoverCtx.popover.node?.showPopover({ source });

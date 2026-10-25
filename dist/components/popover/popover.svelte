@@ -17,7 +17,7 @@
     children,
   }: Partial<Props> = $props();
 
-  export const context = new PopoverContext(
+  export const context = PopoverContext.getOr([
     () => ({
       fallbackAnchor,
       offset,
@@ -27,7 +27,7 @@
       () => open,
       (v) => (open = v),
     ),
-  );
+  ]);
 </script>
 
 {@render children?.()}
