@@ -6,6 +6,7 @@
   import SearchIcon from "#lib/icons/search-icon.svelte";
   import InputGroupSuffix from "#lib/components/input-group/input-group-suffix.svelte";
   import CloseButton from "#lib/components/close-button/close-button.svelte";
+    import InputGroupTextarea from "#lib/components/input-group/input-group-textarea.svelte";
 
   const { Story } = defineMeta({
     component: InputGroup,
@@ -18,6 +19,16 @@
     <SearchIcon />
   </InputGroupPrefix>
   <InputGroupInput placeholder="Username" />
+  <InputGroupSuffix>
+    <CloseButton />
+  </InputGroupSuffix>
+</Story>
+
+<Story name="InputGroup Textarea">
+  <InputGroupPrefix>
+    <SearchIcon />
+  </InputGroupPrefix>
+  <InputGroupTextarea placeholder="Username" />
   <InputGroupSuffix>
     <CloseButton />
   </InputGroupSuffix>
