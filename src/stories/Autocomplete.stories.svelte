@@ -25,20 +25,16 @@
   });
 </script>
 
-<script lang="ts">
-  let selected = $state([] as string[]);
-</script>
-
 <Story name="Autocomplete">
   {#snippet template(props)}
-    <Autocomplete {...props} bind:selected>
+    <Autocomplete {...props} bind:selected={props.selected}>
       <Label>Users</Label>
       <AutocompleteTrigger class="w-60">
         <AutocompleteValue placeholder="Select user" />
         <AutocompleteIndicator />
         <AutocompleteClearButton />
       </AutocompleteTrigger>
-      <Description>Picked: {selected}</Description>
+      <Description>Picked: {props.selected}</Description>
       <AutocompletePopover>
         <AutocompleteFilter>
           <div data-slot="search-field">

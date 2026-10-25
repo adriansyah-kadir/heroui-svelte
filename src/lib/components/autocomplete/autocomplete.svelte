@@ -14,7 +14,7 @@
     };
 
   let {
-    selected = $bindable([]),
+    selected = $bindable(),
     disabled,
     multiple,
     required,
@@ -41,7 +41,7 @@
       variant,
     }),
     box(
-      () => selected,
+      () => selected ?? [],
       (v) => (selected = v),
     ),
   );
