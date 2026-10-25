@@ -2,11 +2,7 @@
   import { buttonVariants } from "@heroui/styles";
   import type { HTMLButtonAttributes } from "svelte/elements";
   import { type ButtonOpts, ButtonContext, Spinner } from "../../index.js";
-  import Ripples, {
-    createRipple,
-    releaseRipples,
-    type RippleItem,
-  } from "../ripples.svelte";
+  import { useRipples } from "svelte-utils";
 
   const {
     focused,
@@ -21,7 +17,6 @@
     ...props
   }: ButtonOpts & HTMLButtonAttributes = $props();
 
-  let ripples = $state<RippleItem[]>([]);
   const btn = new ButtonContext(() => ({
     disabled,
     focused,
@@ -38,20 +33,14 @@
 <button
   {...props}
   {...btn.props}
-  onpointerdown={(ev) => {
-    ripples.push(createRipple(ev));
-  }}
-  onpointerup={() => {
-    releaseRipples(ripples);
-  }}
+  {@attach useRipples()}
   disabled={disabled ?? pending}
   class={buttonVariants({
     ...btn.heroui,
-    class: [props.class?.toString(), "overflow-hidden"],
+    class: props.class?.toString(),
   })}
 >
   {@render Children()}
-  <Ripples bind:items={ripples} />
 </button>
 
 {#snippet Children()}

@@ -1,9 +1,11 @@
-import { Context } from "svelte-utils";
+import { coalesce, Context } from "svelte-utils";
+import { ButtonGroupContext } from "../button-group/context.svelte";
 export class ButtonContext extends Context {
     opts;
     constructor(opts) {
         super();
-        this.opts = $derived.by(opts);
+        const group = ButtonGroupContext.getOr();
+        this.opts = $derived.by(() => coalesce(group?.opts, opts()));
     }
     get props() {
         return {
