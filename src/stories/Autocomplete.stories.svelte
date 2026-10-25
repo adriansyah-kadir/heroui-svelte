@@ -13,10 +13,11 @@
     Label,
     Description,
   } from "#lib";
-  import { Selectable } from "svelte-utils";
   import AutocompleteFilter from "#lib/components/autocomplete/autocomplete-filter.svelte";
   import Collection from "#lib/components/collection/collection.svelte";
   import SearchInput from "#lib/components/search-input/search-input.svelte";
+  import EmptyState from "#lib/components/empty-state/empty-state.svelte";
+  import FilterEmpty from "#lib/components/filter/filter-not-found.svelte";
 
   const { Story } = defineMeta({
     component: Autocomplete,
@@ -51,7 +52,13 @@
                   <ListBoxItemIndicator />
                 </ListBoxItem>
               {/snippet}
+              {#snippet empty()}
+                <EmptyState>Empty</EmptyState>
+              {/snippet}
             </Collection>
+            <FilterEmpty>
+              <EmptyState>Not Found</EmptyState>
+            </FilterEmpty>
           </ListBox>
         </AutocompleteFilter>
       </AutocompletePopover>
