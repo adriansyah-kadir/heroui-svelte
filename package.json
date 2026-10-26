@@ -1,6 +1,6 @@
 {
   "name": "@adriansyah/heroui-svelte",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "peerDependencies": {
     "svelte": "^5.0.0"
   },
