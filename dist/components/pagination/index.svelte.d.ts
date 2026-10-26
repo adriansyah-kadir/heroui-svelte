@@ -1,5 +1,5 @@
 import { type PaginationVariants } from "@heroui/styles";
-import { Context, type Box, type Getter } from "svelte-utils";
+import { Context, type Getter } from "svelte-utils";
 export type PaginationProps = {
     total?: number;
     pageSize?: number;
@@ -8,7 +8,7 @@ export type PaginationProps = {
 export default class PaginationState extends Context {
     #private;
     readonly opts: PaginationProps;
-    constructor(opts: Getter<PaginationProps>, page?: Box<number>);
+    constructor(opts: Getter<PaginationProps>, page?: any);
     onNext(): void;
     onPrev(): void;
     get hasPrev(): boolean;

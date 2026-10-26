@@ -12,6 +12,6 @@ export declare class FilterContext extends Context {
     register: (item: string) => () => void;
     matches: (text: string) => boolean;
     filter: (query: string, text: string) => boolean;
-    constructor(opts: Getter<FilterOpts>, query?: Box<string>);
+    constructor(opts: Getter<FilterOpts>, query?: any);
     sync(box: Box<string>): void;
 }

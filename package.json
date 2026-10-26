@@ -27,6 +27,6 @@
   "type": "module",
   "types": "./dist/index.d.ts",
   "dependencies": {
-    "svelte-utils": "github:adriansyah-kadir/svelte-utils#release"
+    "@adriansyah/svelte-utils": "^0.0.1"
   }
 }

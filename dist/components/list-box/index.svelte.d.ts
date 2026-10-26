@@ -11,7 +11,7 @@ export declare class ListBoxContext extends Context {
     get selected(): string[];
     set selected(values: string[]);
     get noSelected(): boolean;
-    isSelected(value: string): boolean;
+    isSelected(value: string): any;
     setSelected(value: string, checked: boolean): void;
     constructor(opts: Getter<ListBoxOpts>, selected?: Box<string[]>);
 }

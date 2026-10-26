@@ -13,7 +13,7 @@ export declare class PopoverContext extends Context {
     offset: number;
     constructor(opts: Getter<PopoverContextOpts>, open?: Box<boolean>);
     get props(): {
-        "data-entering": boolean;
+        "data-entering": any;
         "data-exiting": boolean;
         "data-placement": "bottom" | "top" | "left" | "right";
     };
