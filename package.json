@@ -1,5 +1,5 @@
 {
-	"name": "heroui-svelte",
+	"name": "@adriansyah/heroui-svelte",
 	"version": "0.0.1",
 	"devDependencies": {
 		"@chromatic-com/storybook": "latest",
