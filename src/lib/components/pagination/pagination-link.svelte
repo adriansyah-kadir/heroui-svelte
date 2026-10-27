@@ -22,5 +22,9 @@
     class: props.class?.toString(),
   })}
 >
-  {@render props.children?.()}
+  {#if props.children}
+    {@render props.children()}
+  {:else}
+    {page}
+  {/if}
 </button>

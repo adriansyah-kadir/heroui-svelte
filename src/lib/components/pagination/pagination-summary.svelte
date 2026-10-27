@@ -19,5 +19,11 @@
     class: props.class?.toString(),
   })}
 >
-  {@render children?.(pagination)}
+  {#if children}
+    {@render children(pagination)}
+  {:else if pagination.total === 0}
+    Showing empty
+  {:else}
+    Showing {pagination.start} ~ {pagination.end} of {pagination.total}
+  {/if}
 </div>

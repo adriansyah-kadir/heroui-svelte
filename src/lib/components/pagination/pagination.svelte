@@ -4,6 +4,8 @@
   import type { HTMLAttributes } from "svelte/elements";
   import PaginationState from "./index.svelte";
   import { box } from "svelte-utils";
+  import PaginationSummary from "./pagination-summary.svelte";
+  import PaginationContent from "./pagination-content.svelte";
 
   let {
     page = $bindable(1),
@@ -36,5 +38,10 @@
     class: props.class?.toString(),
   })}
 >
-  {@render props.children?.()}
+  {#if props.children}
+    {@render props.children()}
+  {:else}
+    <PaginationSummary />
+    <PaginationContent />
+  {/if}
 </div>

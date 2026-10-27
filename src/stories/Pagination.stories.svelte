@@ -42,7 +42,7 @@
     <PaginationItem>
       {#snippet children(p)}
         {@const n = Math.min(p.page + 1, p.pageCount)}
-        <PaginationLink page={n}>{n}</PaginationLink>
+        <PaginationLink  page={n}>{n}</PaginationLink>
       {/snippet}
     </PaginationItem>
     <PaginationItem>
@@ -52,4 +52,8 @@
       </PaginationNext>
     </PaginationItem>
   </PaginationContent>
+</Story>
+
+<Story name="Default">
+  <Pagination total={120} />
 </Story>

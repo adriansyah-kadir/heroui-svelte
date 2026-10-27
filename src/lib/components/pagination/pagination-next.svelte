@@ -2,6 +2,7 @@
   import type { HTMLButtonAttributes } from "svelte/elements";
   import PaginationState from "./index.svelte";
   import { paginationVariants } from "@heroui/styles";
+  import { PaginationNextIcon } from ".";
 
   const props: HTMLButtonAttributes = $props();
   const pagination = PaginationState.get();
@@ -19,5 +20,10 @@
     class: ["pagination__link--nav"],
   })}
 >
-  {@render props.children?.()}
+  {#if props.children}
+    {@render props.children()}
+  {:else}
+    Next
+    <PaginationNextIcon />
+  {/if}
 </button>
