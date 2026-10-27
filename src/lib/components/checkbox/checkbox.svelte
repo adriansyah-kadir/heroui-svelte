@@ -3,6 +3,7 @@
   import type { HTMLAttributes } from "svelte/elements";
   import { type InputOpts, InputContext } from "#lib";
   import { box } from "svelte-utils";
+  import CheckboxContent from "./checkbox-content.svelte";
 
   type Props = InputOpts &
     HTMLAttributes<HTMLDivElement> & {
@@ -56,5 +57,9 @@
   data-indeterminate={indeterminate}
   class={checkboxClass}
 >
-  {@render props.children?.()}
+  {#if props.children}
+    {@render props.children()}
+  {:else}
+    <CheckboxContent />
+  {/if}
 </div>

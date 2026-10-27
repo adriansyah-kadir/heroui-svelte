@@ -2,6 +2,7 @@
   import { checkboxVariants } from "@heroui/styles";
   import type { HTMLAttributes } from "svelte/elements";
   import { InputContext } from "#lib";
+  import CheckboxIndicator from "./checkbox-indicator.svelte";
 
   type Props = HTMLAttributes<HTMLSpanElement>;
 
@@ -16,10 +17,10 @@
   );
 </script>
 
-<span
-  {...props}
-  data-slot="checkbox-control"
-  class={controlClass}
->
-  {@render props.children?.()}
+<span {...props} data-slot="checkbox-control" class={controlClass}>
+  {#if props.children}
+    {@render props.children()}
+  {:else}
+    <CheckboxIndicator />
+  {/if}
 </span>

@@ -2,6 +2,7 @@
   import { checkboxVariants } from "@heroui/styles";
   import type { HTMLLabelAttributes } from "svelte/elements";
   import { InputContext, Input } from "#lib";
+  import CheckboxControl from "./checkbox-control.svelte";
 
   type Props = HTMLLabelAttributes;
 
@@ -16,11 +17,11 @@
   );
 </script>
 
-<label
-  {...props}
-  data-slot="checkbox-content"
-  class={contentClass}
->
+<label {...props} data-slot="checkbox-content" class={contentClass}>
   <Input headless hidden type="checkbox" />
-  {@render props.children?.()}
+  {#if props.children}
+    {@render props.children()}
+  {:else}
+    <CheckboxControl />
+  {/if}
 </label>

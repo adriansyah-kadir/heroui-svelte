@@ -22,3 +22,5 @@
     <Label>Accept terms and conditions</Label>
   </CheckboxContent>
 </Story>
+
+<Story name="Checkbox default" />
