@@ -77,3 +77,22 @@
     </ModalFooter>
   </ModalContentTemplate>
 </Story>
+
+<Story name="custom trigger">
+  <ModalTrigger>
+    {#snippet child({ props })}
+      <div {...props} class="list-box-item min-w-40"> Open </div>
+    {/snippet}
+  </ModalTrigger>
+  <ModalContentTemplate>
+    <ModalHeader>
+      <ModalHeading>Heading</ModalHeading>
+    </ModalHeader>
+    <ModalBody>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, mollitia.
+    </ModalBody>
+    <ModalFooter>
+      <ModalTrigger onclick={console.log} action="close">Submit</ModalTrigger>
+    </ModalFooter>
+  </ModalContentTemplate>
+</Story>
