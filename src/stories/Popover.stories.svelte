@@ -14,7 +14,6 @@
 
 <script lang="ts">
   import PopoverTrigger from "#lib/components/popover/popover-trigger.svelte";
-  import { PopoverContext } from "#lib";
 
   let anchor = $state<HTMLElement>();
   let open = $state(false);
@@ -53,4 +52,29 @@
       </PopoverContent>
     </Popover>
   {/snippet}
+</Story>
+
+<Story name="Popover in Popover">
+  <PopoverTrigger>Show popover</PopoverTrigger>
+  <PopoverContent>
+    <PopoverDialog>
+      <PopoverHeading>Popover Title</PopoverHeading>
+      <p class="mt-2 text-sm text-muted">
+        This is the popover content. You can put any content here.
+      </p>
+      <Popover>
+        <PopoverTrigger>Show popover</PopoverTrigger>
+        <PopoverContent>
+          <PopoverDialog>
+            <PopoverHeading>Popover Title</PopoverHeading>
+            <p class="mt-2 text-sm text-muted">
+              This is the popover content. You can put any content here.
+            </p>
+          </PopoverDialog>
+          <PopoverArrow />
+        </PopoverContent>
+      </Popover>
+    </PopoverDialog>
+    <PopoverArrow />
+  </PopoverContent>
 </Story>

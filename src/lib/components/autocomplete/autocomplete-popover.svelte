@@ -7,7 +7,7 @@
   const autocomplete = AutocompleteContext.get();
 </script>
 
-<PopoverContent popover="manual">
+<PopoverContent {@attach autocomplete.popover.attach()} popover="manual">
   <div
     {...props}
     class={autocompleteVariants(autocomplete.heroui).popover({
