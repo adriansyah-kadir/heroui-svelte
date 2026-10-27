@@ -1,5 +1,5 @@
 import { untrack } from "svelte";
-import { box, Context, type Box, type Fn, type Getter } from "svelte-utils";
+import { box, boxLink, Context, type Box, type Fn, type Getter } from "svelte-utils";
 
 export type FilterOpts = {
   caseSensitive?: boolean;
@@ -44,19 +44,6 @@ export class FilterContext extends Context {
   }
 
   sync(box: Box<string>) {
-    $effect(() => {
-      box.current
-      untrack(() => {
-        if (box.current === this.query) return;
-        this.query = box.current
-      })
-    })
-    $effect(() => {
-      this.query
-      untrack(() => {
-        if (box.current === this.query) return;
-        box.current = this.query
-      })
-    })
+    boxLink(box, this.#query)
   }
 }
