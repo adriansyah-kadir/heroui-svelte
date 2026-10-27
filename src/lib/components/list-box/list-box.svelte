@@ -9,11 +9,10 @@
       selected?: string[];
     };
 
-  const id = $props.id();
   let {
     multiple,
     selected = $bindable([]),
-    name = id,
+    name,
     disabled,
     required,
     ...props

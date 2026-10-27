@@ -1,78 +1,53 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
   import { listboxItemVariants } from "@heroui/styles";
-  import { ListBoxContext } from "#lib";
-  import { FilterContext } from "../filter/index.svelte";
-  import { watch } from "svelte-utils";
+  import { ListBoxItemContext } from "#lib";
+  import { box } from "svelte-utils";
+  import type { Snippet } from "svelte";
 
   let {
-    value,
+    value = crypto.randomUUID(),
     disabled,
     selected = $bindable(),
+    child,
     ...props
   }: HTMLAttributes<HTMLDivElement> & {
-    value: string;
+    value?: string;
     selected?: boolean;
     disabled?: boolean;
+    child?: Snippet<[ListBoxItemContext]>;
   } = $props();
 
-  const filter = FilterContext.getOr();
-  const ctx = ListBoxContext.get();
-  const hidden = $derived(filter && !filter.matches(value));
-
-  watch(
-    () => selected,
-    (curr) => {
-      if (curr === ctx.isSelected(value)) return;
-      ctx.setSelected(value, curr ?? ctx.isSelected(value));
-    },
+  const ctx = new ListBoxItemContext(
+    () => ({ value, disabled }),
+    box(
+      () => !!selected,
+      (v) => (selected = v),
+    ),
   );
-
-  watch(
-    () => ctx.isSelected(value),
-    (curr) => {
-      if (curr === selected) return;
-      selected = curr;
-    },
-  );
-
-  $effect(() => () => ctx.setSelected(value, false));
-  $effect(() => filter?.register(value));
 </script>
 
-{#if !hidden}
+{#if child}
+  {@render child(ctx)}
+{:else if ctx.visible}
   <div
-    {...props}
-    onkeydown={(ev) => {
-      if (
-        ev.code === "Space" ||
-        (ev.code === "Enter" && ev.target === ev.currentTarget)
-      ) {
-        ev.preventDefault();
-        ctx.setSelected(value, !selected);
-      }
-    }}
-    onclick={() => ctx.setSelected(value, !selected)}
-    role="checkbox"
-    tabindex="0"
-    data-value={value}
-    data-disabled={ctx.opts.disabled ?? disabled}
+    {...ctx.props(props)}
     data-slot="list-box-item"
     class={listboxItemVariants().item({ class: props.class?.toString() })}
   >
-    {#if ctx.opts.name}
+    {#if ctx.listbox.opts.name}
       <input
         {@attach (node) => {
           const form = node.form;
           if (!form) return;
-          const reset = () => ctx.setSelected(value, false);
+          const reset = () => (ctx.selected = false);
           form.addEventListener("reset", reset);
           return () => form.removeEventListener("reset", reset);
         }}
-        checked={ctx.isSelected(value)}
-        disabled={ctx.opts.disabled ?? disabled}
-        required={ctx.opts.required}
-        name={ctx.opts.name}
+        checked={ctx.selected}
+        disabled={ctx.disabled}
+        required={ctx.listbox.opts.required}
+        name={ctx.listbox.opts.name}
         type={"checkbox"}
         {value}
         hidden

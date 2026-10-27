@@ -10,7 +10,7 @@
   import Collection from "#lib/components/collection/collection.svelte";
   import { randomInt } from "svelte-utils";
   import { Spinner } from "#lib";
-    import Button from "#lib/components/button/button.svelte";
+  import Button from "#lib/components/button/button.svelte";
 
   const { Story } = defineMeta({
     component: ListBox,
@@ -75,11 +75,11 @@
   ];
 </script>
 
-<Story name="ListBox" args={{ class: "min-w-60", selected:["Fred"] }}>
+<Story name="ListBox" args={{ class: "min-w-60" }}>
   <ListBoxSection>
     <Header>Users</Header>
     {#each users as user, i}
-      <ListBoxItem disabled={i===0} value={user.name}>
+      <ListBoxItem disabled={i === 0} value={user.name}>
         <img
           alt="User"
           src={user.avatar}
@@ -96,9 +96,7 @@
   <ListBoxSection>
     <Header>Admins</Header>
     {#each admins as user}
-      {let selected = $state(false)}
-      <Button onclick={() => selected = !selected}>Toggle: {selected}</Button>
-      <ListBoxItem bind:selected value={user.name}>
+      <ListBoxItem value={user.name}>
         <img
           alt="User"
           src={user.avatar}
@@ -153,7 +151,7 @@
 <Story name="In form">
   {#snippet template(props)}
     <form>
-      <ListBox {...props}>
+      <ListBox name="listbox-form" {...props}>
         {#each users as user}
           <ListBoxItem value={user.name}>
             <img

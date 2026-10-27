@@ -1,21 +1,15 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
   import { listboxItemVariants } from "@heroui/styles";
-  import { ListBoxContext } from "./index.svelte";
+  import { ListBoxItemContext } from "./index.svelte";
 
   let { ...props }: HTMLAttributes<HTMLDivElement> = $props();
 
-  let node = $state<HTMLElement>();
-  const ctx = ListBoxContext.get();
-  const value = $derived(
-    node?.closest(".list-box-item")?.getAttribute("data-value"),
-  );
-  const selected = $derived(value && ctx.isSelected(value));
+  const ctx = ListBoxItemContext.get();
 </script>
 
 <div
   {...props}
-  bind:this={node}
   data-slot="list-box-item-indicator"
   class={listboxItemVariants().indicator({ class: props.class?.toString() })}
 >
@@ -26,7 +20,7 @@
     role="presentation"
     stroke="currentColor"
     stroke-dasharray={22}
-    stroke-dashoffset={selected ? 44 : 66}
+    stroke-dashoffset={ctx.selected ? 44 : 66}
     stroke-linecap="round"
     stroke-linejoin="round"
     stroke-width={2}
