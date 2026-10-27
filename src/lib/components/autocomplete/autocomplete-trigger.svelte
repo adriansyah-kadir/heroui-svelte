@@ -1,28 +1,52 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
-  import { PopoverContext } from "#lib";
+  import { AutocompleteContext } from "#lib";
   import { autocompleteVariants } from "@heroui/styles";
+  import AutocompleteClearButton from "./autocomplete-clear-button.svelte";
+  import AutocompleteIndicator from "./autocomplete-indicator.svelte";
+  import AutocompleteValue from "./autocomplete-value.svelte";
+  import type { Snippet } from "svelte";
 
-  interface Props extends HTMLAttributes<HTMLDivElement> {}
+  type Props = HTMLAttributes<HTMLDivElement> & {
+    child?: Snippet<[{ props: HTMLAttributes<any>; ctx: AutocompleteContext }]>;
+  };
 
-  const { children, ...props }: Props = $props();
-  const { popover } = PopoverContext.get();
+  const { children, child, ...props }: Props = $props();
+  const ctx = AutocompleteContext.get();
+  const popover = ctx.popover;
+  const merged: HTMLAttributes<any> = $derived({
+    ...props,
+    tabindex: 0,
+    role: "button",
+    "data-open": popover.open,
+    "data-popover": popover.node?.popover,
+    onclick: (ev) => {
+      props.onclick?.(ev);
+      popover.toggle(undefined, ev.currentTarget);
+    },
+  });
 </script>
 
-<div
-  {...props}
-  role="button"
-  tabindex="0"
-  data-slot="autocomplete-trigger"
-  data-open={popover.open}
-  data-popover={popover.node?.popover}
-  class={autocompleteVariants().trigger({
-    class: [
-      props?.class?.toString(),
-      "data-[open=true]:[[data-popover=''],[data-popover='auto']]:pointer-events-none",
-    ],
-  })}
-  onclick={(ev) => popover.toggle(undefined, ev.currentTarget)}
->
-  {@render children?.()}
-</div>
+{#if child}
+  {@render child({ props: merged, ctx })}
+{:else}
+  <div
+    {...merged}
+    data-slot="autocomplete-trigger"
+    class={autocompleteVariants().trigger({
+      ...ctx.heroui,
+      class: [
+        props?.class?.toString(),
+        "data-[open=true]:[[data-popover=''],[data-popover='auto']]:pointer-events-none",
+      ],
+    })}
+  >
+    {#if children}
+      {@render children()}
+    {:else}
+      <AutocompleteValue placeholder={props.placeholder ?? undefined} />
+      <AutocompleteIndicator />
+      <AutocompleteClearButton />
+    {/if}
+  </div>
+{/if}

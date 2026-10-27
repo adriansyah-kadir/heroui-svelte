@@ -1,11 +1,8 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
-  import {
-    Popover,
-    AutocompleteContext,
-    type AutocompleteOpts,
-  } from "#lib";
+  import { Popover, AutocompleteContext, type AutocompleteOpts } from "#lib";
   import { box } from "svelte-utils";
+  import { autocompleteVariants } from "@heroui/styles";
 
   type Props = HTMLAttributes<HTMLElement> &
     Partial<AutocompleteOpts> & {
@@ -48,5 +45,14 @@
 </script>
 
 <Popover {offset} {placement}>
-  {@render props.children?.()}
+  <div
+    {...props}
+    class={autocompleteVariants().base({
+      fullWidth,
+      variant,
+      class: props.class?.toString(),
+    })}
+  >
+    {@render props.children?.()}
+  </div>
 </Popover>
