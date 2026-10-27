@@ -9,23 +9,12 @@
   import TableRow from "#lib/components/table/table-row.svelte";
   import TableCell from "#lib/components/table/table-cell.svelte";
   import Checkbox from "#lib/components/checkbox/checkbox.svelte";
-  import CheckboxContent from "#lib/components/checkbox/checkbox-content.svelte";
-  import CheckboxControl from "#lib/components/checkbox/checkbox-control.svelte";
-  import CheckboxIndicator from "#lib/components/checkbox/checkbox-indicator.svelte";
   import TableEmptyState from "#lib/components/table/table-empty-state.svelte";
   import Label from "#lib/components/label/label.svelte";
   import TableFooter from "#lib/components/table/table-footer.svelte";
   import Pagination from "#lib/components/pagination/pagination.svelte";
-  import PaginationContent from "#lib/components/pagination/pagination-content.svelte";
-  import PaginationItem from "#lib/components/pagination/pagination-item.svelte";
-  import PaginationPrevious from "#lib/components/pagination/pagination-previous.svelte";
-  import PaginationNext from "#lib/components/pagination/pagination-next.svelte";
-  import PaginationPreviousIcon from "#lib/components/pagination/pagination-previous-icon.svelte";
-  import PaginationNextIcon from "#lib/components/pagination/pagination-next-icon.svelte";
-  import PaginationSummary from "#lib/components/pagination/pagination-summary.svelte";
   import Input from "#lib/components/input/input.svelte";
   import TextField from "#lib/components/text-field/text-field.svelte";
-  import PaginationLink from "#lib/components/pagination/pagination-link.svelte";
   import { PaginationState, Selectable } from "svelte-utils";
 
   const { Story } = defineMeta({
@@ -81,12 +70,12 @@
   </TextField>
 </div>
 
-<Story name="Table" args={{}}>
+<Story name="Table">
   <TableScrollContainer
     class="max-h-80 in-data-[empty=true]:min-h-30 overflow-y-auto"
   >
-    <TableContent class="in-data-[empty=true]:h-full">
-      <TableHeader>
+    <TableContent class="in-data-[empty=true]:h-full relative">
+      <TableHeader class="sticky top-0 z-999">
         <TableColumn>
           <Checkbox
             checked={list.isAllSelected}
@@ -96,13 +85,7 @@
               list.toggleAll();
             }}
             disabled={!list.multiple}
-          >
-            <CheckboxContent>
-              <CheckboxControl>
-                <CheckboxIndicator />
-              </CheckboxControl>
-            </CheckboxContent>
-          </Checkbox>
+          />
         </TableColumn>
         {#each ["ID", "Name", "Email", "Role", "Status"] as col}
           <TableColumn>{col}</TableColumn>
@@ -116,13 +99,7 @@
             selected={list.isSelected(id)}
           >
             <TableCell>
-              <Checkbox checked={list.isSelected(id)}>
-                <CheckboxContent>
-                  <CheckboxControl>
-                    <CheckboxIndicator />
-                  </CheckboxControl>
-                </CheckboxContent>
-              </Checkbox>
+              <Checkbox checked={list.isSelected(id)} />
             </TableCell>
             <TableCell>{user.id}</TableCell>
             <TableCell>{user.name}</TableCell>
@@ -141,29 +118,6 @@
       bind:page={page.page}
       pageSize={page.pageSize}
       total={page.total}
-    >
-      <PaginationSummary>
-        Showing {page.start}-{page.end} of {page.total} results
-      </PaginationSummary>
-      <PaginationContent>
-        <PaginationItem>
-          <PaginationPrevious>
-            <PaginationPreviousIcon />
-            Prev
-          </PaginationPrevious>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink>
-            {page.page}
-          </PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationNext>
-            Next
-            <PaginationNextIcon />
-          </PaginationNext>
-        </PaginationItem>
-      </PaginationContent>
-    </Pagination>
+    />
   </TableFooter>
 </Story>
