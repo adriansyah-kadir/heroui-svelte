@@ -1,4 +1,4 @@
-import { Context, getPopoverArea, PopoverState, type Box, type Getter } from "svelte-utils";
+import { Context, getPopoverArea, PopoverState, type Box, type Getter } from "@adriansyah/svelte-utils";
 
 export type PopoverContextOpts = {
   placement?: "bottom" | "top" | "left" | "right",
