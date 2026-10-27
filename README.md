@@ -5,7 +5,7 @@ A Svelte 5 wrapper for [HeroUI](https://heroui.com), bringing HeroUI's styling a
 ## Installation
 
 ```sh
-bun add github:adriansyah-kadir/heroui-svelte#release @heroui/styles
+bun add @adriansyah/heroui-svelte @heroui/styles
 ```
 
 ## Setup
@@ -16,7 +16,7 @@ Import Tailwind CSS and HeroUI styles in your main CSS file:
 @import "tailwindcss";
 @import "@heroui/styles";
 
-@source "../../node_modules/heroui-svelte/dist";
+@source "../../node_modules/@adriansyah/heroui-svelte/dist";
 ```
 
 Adjust the `@source` path to match your project structure.
@@ -27,7 +27,7 @@ Import components from `heroui-svelte` and use them in your Svelte 5 components.
 
 ```svelte
 <script lang="ts">
-  import { Button } from "heroui-svelte";
+  import { Button } from "@adriansyah/heroui-svelte";
 </script>
 
 <Button>Get started</Button>
