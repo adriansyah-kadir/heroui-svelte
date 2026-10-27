@@ -34,7 +34,7 @@
 
   const filter = FilterContext.getOr();
   const empty = $derived(value === undefined || value === "");
-  InputContext.getOr([
+  new InputContext(
     () => ({
       disabled,
       fullWidth,
@@ -48,13 +48,14 @@
       () => value,
       (v) => (value = v),
     ),
-  ]);
+  );
 
   watch(
     () => value ?? "",
     (currentValue) => {
+      if (currentValue === value) return;
       const timeout = setTimeout(
-        () => (debounced = currentValue),
+        () => (debounced = String(currentValue)),
         Math.max(0, debounce),
       );
       return () => clearTimeout(timeout);
