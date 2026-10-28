@@ -1,4 +1,4 @@
-import { box, boxArray, boxLink, Context, type Box, type Getter } from "svelte-utils";
+import { box, Context, type Box, type Getter } from "@adriansyah/svelte-utils";
 import { FilterContext } from "../filter";
 import { onDestroy } from "svelte";
 import type { HTMLAttributes } from "svelte/elements";
@@ -16,7 +16,7 @@ export class ListBoxContext extends Context {
   get opts() { return this.#opts }
 
   #selected: Box<string[]>
-  get selected() { return boxArray(this.#selected) }
+  get selected() { return box.array(this.#selected) }
   set selected(values: string[]) { this.#selected.current = values }
 
   get noSelected() { return this.selected.length === 0 }
@@ -67,7 +67,7 @@ export class ListBoxItemContext extends Context {
       this.listbox.setSelected(this.value, false)
     })
 
-    boxLink(box(
+    box.link(box(
       () => this.listbox.isSelected(this.value),
       v => this.listbox.setSelected(this.value, v)
     ), selected)

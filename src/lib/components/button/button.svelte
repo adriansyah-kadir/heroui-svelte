@@ -2,7 +2,7 @@
   import { buttonVariants } from "@heroui/styles";
   import type { HTMLButtonAttributes } from "svelte/elements";
   import { type ButtonOpts, ButtonContext, Spinner } from "#lib";
-  import { useRipples } from "svelte-utils";
+  import { useRipples } from "@adriansyah/svelte-utils";
 
   const {
     focused,

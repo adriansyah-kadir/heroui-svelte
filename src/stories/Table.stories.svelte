@@ -15,7 +15,7 @@
   import Pagination from "#lib/components/pagination/pagination.svelte";
   import Input from "#lib/components/input/input.svelte";
   import TextField from "#lib/components/text-field/text-field.svelte";
-  import { PaginationState, Selectable } from "svelte-utils";
+  import { PaginationState, Selectable } from "@adriansyah/svelte-utils";
 
   const { Story } = defineMeta({
     component: Table as any,

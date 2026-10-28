@@ -2,7 +2,7 @@
   import { inputGroupVariants } from "@heroui/styles";
   import type { HTMLAttributes } from "svelte/elements";
   import { type InputOpts, type InputValue, InputContext } from "#lib";
-  import { box } from "svelte-utils";
+  import { box } from "@adriansyah/svelte-utils";
 
   type Props = InputOpts &
     HTMLAttributes<HTMLDivElement> & {

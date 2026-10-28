@@ -5,7 +5,7 @@
     "": {
       "name": "heroui-svelte",
       "dependencies": {
-        "@adriansyah/svelte-utils": "^0.0.1",
+        "@adriansyah/svelte-utils": "^0.0.2",
       },
       "devDependencies": {
         "@chromatic-com/storybook": "latest",
@@ -41,7 +41,7 @@
   "packages": {
     "@adobe/css-tools": ["@adobe/css-tools@4.5.0", "", {}, "sha512-6OzddxPio9UiWTCemp4N8cYLV2ZN1ncRnV1cVGtve7dhPOtRkleRyx32GQCYSwDYgaHU3USMm84tNsvKzRCa1Q=="],
 
-    "@adriansyah/svelte-utils": ["@adriansyah/svelte-utils@0.0.1", "", { "peerDependencies": { "svelte": "^5.0.0" } }, "sha512-OBik1NRvkaKsWFz0A3grnC1hAKmAZAGGwFjZm2FOV2xvKFzBoqQLrbMSBNsLYDtAfpBt8EXKsLS73pbIuci/Eg=="],
+    "@adriansyah/svelte-utils": ["@adriansyah/svelte-utils@0.0.2", "", { "peerDependencies": { "svelte": "^5.0.0" } }, "sha512-zo81pu9sJ6lrHGLGHs4QoxNRTCCo7rRYAkN1+9c8ueuxcUJ/gJB2cFr1VnlrDSttI0Jui7n/JiQ1FgR9pIaD4A=="],
 
     "@babel/code-frame": ["@babel/code-frame@7.29.7", "", { "dependencies": { "@babel/helper-validator-identifier": "^7.29.7", "js-tokens": "^4.0.0", "picocolors": "^1.1.1" } }, "sha512-Aup7aUOfpbAUg2ROOJN6Iw5f9DMBlzu0mIkm/malLQFN/YQgO48wCj0Kxa3sEHJvPVFg7siR+qRInwXd2qhQKw=="],
 

@@ -2,7 +2,7 @@
   import type { HTMLAttributes } from "svelte/elements";
   import { textFieldVariants } from "@heroui/styles";
   import { type InputOpts, type InputValue, InputContext } from "#lib";
-  import { box } from "svelte-utils";
+  import { box } from "@adriansyah/svelte-utils";
 
   type Props = InputOpts &
     HTMLAttributes<HTMLDivElement> & {

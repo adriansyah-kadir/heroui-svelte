@@ -1,9 +1,9 @@
 import { untrack } from "svelte";
-import { box, boxLink, Context, type Box, type Fn, type Getter } from "svelte-utils";
+import { box, Context, type Box, type Fn, type Getter } from "@adriansyah/svelte-utils";
 
 export type FilterOpts = {
   caseSensitive?: boolean;
-  filter?: Fn<boolean, [string, string]>
+  filter?: Fn<[string, string], boolean>
 }
 
 export class FilterContext extends Context {
@@ -43,7 +43,7 @@ export class FilterContext extends Context {
     this.#query = query
   }
 
-  sync(box: Box<string>) {
-    boxLink(box, this.#query)
+  sync(value: Box<string>) {
+    box.link(value, this.#query)
   }
 }

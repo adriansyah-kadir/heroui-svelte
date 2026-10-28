@@ -9,7 +9,7 @@
     InputContext,
   } from "#lib";
   import type { ComponentProps } from "svelte";
-  import { box, watch } from "svelte-utils";
+  import { box, watch } from "@adriansyah/svelte-utils";
   import { FilterContext } from "../filter/index.svelte";
 
   type Props = ComponentProps<typeof InputGroup> & {

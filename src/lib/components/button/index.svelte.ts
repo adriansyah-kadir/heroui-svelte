@@ -1,5 +1,5 @@
 import type { ButtonVariants } from "@heroui/styles";
-import { coalesce, Context, type Getter } from "svelte-utils";
+import { coalesce, Context, type Getter } from "@adriansyah/svelte-utils";
 import { ButtonGroupContext } from "../button-group/context.svelte";
 
 export type ButtonOpts = {

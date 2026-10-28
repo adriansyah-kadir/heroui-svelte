@@ -1,6 +1,6 @@
 {
 	"name": "@adriansyah/heroui-svelte",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"devDependencies": {
 		"@chromatic-com/storybook": "latest",
 		"@heroui/styles": "^3.2.6",
@@ -66,6 +66,6 @@
 	"type": "module",
 	"types": "./dist/index.d.ts",
 	"dependencies": {
-		"@adriansyah/svelte-utils": "^0.0.1"
+		"@adriansyah/svelte-utils": "^0.0.2"
 	}
 }

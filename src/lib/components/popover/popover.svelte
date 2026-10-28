@@ -1,6 +1,6 @@
 <script lang="ts">
   import { PopoverContext, type PopoverContextOpts } from "./index.svelte";
-  import { box } from "svelte-utils";
+  import { box } from "@adriansyah/svelte-utils";
   import type { Snippet } from "svelte";
 
   type Props = Omit<PopoverContextOpts, "open" | "fallbackAnchor"> & {

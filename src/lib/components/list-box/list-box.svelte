@@ -2,7 +2,7 @@
   import type { HTMLAttributes } from "svelte/elements";
   import { listboxVariants } from "@heroui/styles";
   import { type ListBoxOpts, ListBoxContext } from "#lib";
-  import { box } from "svelte-utils";
+  import { box } from "@adriansyah/svelte-utils";
 
   type Props = HTMLAttributes<HTMLDivElement> &
     Partial<ListBoxOpts> & {

@@ -2,7 +2,7 @@
   import { inputGroupVariants } from "@heroui/styles";
   import type { ComponentProps } from "svelte";
   import { Input, InputContext } from "#lib";
-  import { box } from "svelte-utils";
+  import { box } from "@adriansyah/svelte-utils";
 
   let {
     value = $bindable(),

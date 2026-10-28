@@ -1,5 +1,5 @@
 import type { TableVariants } from "@heroui/styles";
-import { Context, type Getter } from "svelte-utils";
+import { Context, type Getter } from "@adriansyah/svelte-utils";
 
 export type TableOpts = TableVariants
 

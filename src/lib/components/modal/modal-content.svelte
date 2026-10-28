@@ -2,7 +2,7 @@
   import type { HTMLDialogAttributes } from "svelte/elements";
   import { modalVariants } from "@heroui/styles";
   import { ModalContext } from "#lib";
-  import { getViewport } from "svelte-utils";
+  import { getViewport } from "@adriansyah/svelte-utils";
 
   type Props = HTMLDialogAttributes;
 

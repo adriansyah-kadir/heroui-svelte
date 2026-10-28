@@ -1,7 +1,7 @@
 <script lang="ts">
   import { inputGroupVariants } from "@heroui/styles";
   import { InputContext, type InputOpts } from "#lib";
-  import { box, coalesce } from "svelte-utils";
+  import { box, coalesce } from "@adriansyah/svelte-utils";
   import type { HTMLAttributes } from "svelte/elements";
 
   let {

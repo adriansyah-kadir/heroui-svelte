@@ -2,7 +2,7 @@
   import type { ComponentProps, Snippet } from "svelte";
   import Button from "../button/button.svelte";
   import { PopoverContext } from "./index.svelte";
-  import type { PopoverState } from "@adriansyah/svelte-utils";
+  import type { PopoverState } from "@adriansyah/@adriansyah/svelte-utils";
 
   type Props = ComponentProps<typeof Button> & {
     child?: Snippet<

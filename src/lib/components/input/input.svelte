@@ -2,7 +2,7 @@
   import { inputVariants } from "@heroui/styles";
   import type { HTMLInputAttributes } from "svelte/elements";
   import { type InputOpts, InputContext } from "#lib";
-  import { box } from "svelte-utils";
+  import { box } from "@adriansyah/svelte-utils";
 
   type Props = {
     headless?: boolean;

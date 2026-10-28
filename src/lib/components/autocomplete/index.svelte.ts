@@ -1,5 +1,5 @@
 import type { AutocompleteVariants } from "@heroui/styles"
-import { Context, type Box, type Getter, isEventTargetInAny, watch, PopoverState } from "svelte-utils"
+import { Context, type Box, type Getter, isEventTargetInAny, watch, PopoverState } from "@adriansyah/svelte-utils"
 import { ListBoxContext, type ListBoxOpts, type PopoverContextOpts } from "#lib"
 
 export type AutocompleteOpts = ListBoxOpts & AutocompleteVariants & PopoverContextOpts & {

@@ -5,7 +5,7 @@
     useResource,
     type Fn,
     type MaybePromise,
-  } from "svelte-utils";
+  } from "@adriansyah/svelte-utils";
   import type { Attachment } from "svelte/attachments";
 
   type ChildProps = {

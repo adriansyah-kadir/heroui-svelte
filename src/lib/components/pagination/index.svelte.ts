@@ -1,5 +1,5 @@
 import { type PaginationVariants } from "@heroui/styles";
-import { box, Context, type Box, type Getter } from "svelte-utils";
+import { box, Context, type Box, type Getter } from "@adriansyah/svelte-utils";
 
 export type PaginationProps = {
   total?: number,

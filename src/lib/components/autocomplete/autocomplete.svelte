@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
   import { Popover, AutocompleteContext, type AutocompleteOpts } from "#lib";
-  import { box } from "svelte-utils";
+  import { box } from "@adriansyah/svelte-utils";
   import { autocompleteVariants } from "@heroui/styles";
 
   type Props = HTMLAttributes<HTMLElement> &

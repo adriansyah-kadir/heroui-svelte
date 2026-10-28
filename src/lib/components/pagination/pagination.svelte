@@ -3,7 +3,7 @@
   import type { PaginationProps } from "./index.svelte";
   import type { HTMLAttributes } from "svelte/elements";
   import PaginationState from "./index.svelte";
-  import { box } from "svelte-utils";
+  import { box } from "@adriansyah/svelte-utils";
   import PaginationSummary from "./pagination-summary.svelte";
   import PaginationContent from "./pagination-content.svelte";
 

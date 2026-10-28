@@ -2,7 +2,7 @@
   import type { HTMLAttributes } from "svelte/elements";
   import { listboxItemVariants } from "@heroui/styles";
   import { ListBoxItemContext } from "#lib";
-  import { box } from "svelte-utils";
+  import { box } from "@adriansyah/svelte-utils";
   import type { Snippet } from "svelte";
 
   let {

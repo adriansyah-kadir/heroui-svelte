@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { HTMLAttributes } from "svelte/elements";
   import { InputContext, type InputOpts } from "../input";
-  import { box, coalesce } from "svelte-utils";
+  import { box, coalesce } from "@adriansyah/svelte-utils";
   import { textAreaVariants } from "@heroui/styles";
 
   type Props = InputOpts &

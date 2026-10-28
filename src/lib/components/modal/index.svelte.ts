@@ -1,5 +1,5 @@
 import type { ModalVariants } from "@heroui/styles";
-import { Context, DialogState, type Getter } from "svelte-utils";
+import { Context, DialogState, type Getter } from "@adriansyah/svelte-utils";
 
 export type ModalOpts = ModalVariants & {
   placement?: "top" | "bottom" | "center" | "auto";
