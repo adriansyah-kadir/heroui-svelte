@@ -2,7 +2,7 @@
   import type { HTMLDialogAttributes } from "svelte/elements";
   import { modalVariants } from "@heroui/styles";
   import { ModalContext } from "#lib";
-  import { getViewport } from "@adriansyah/svelte-utils";
+  import { useViewport } from "@adriansyah/svelte-utils";
 
   type Props = HTMLDialogAttributes;
 
@@ -10,7 +10,7 @@
 
   const ctx = ModalContext.get();
 
-  const viewport = getViewport();
+  const viewport = useViewport();
 </script>
 
 <dialog

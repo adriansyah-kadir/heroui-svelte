@@ -16,7 +16,7 @@ export class ListBoxContext extends Context {
   get opts() { return this.#opts }
 
   #selected: Box<string[]>
-  get selected() { return box.array(this.#selected) }
+  get selected() { return this.#selected.current }
   set selected(values: string[]) { this.#selected.current = values }
 
   get noSelected() { return this.selected.length === 0 }

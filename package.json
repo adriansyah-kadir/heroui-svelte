@@ -66,6 +66,6 @@
 	"type": "module",
 	"types": "./dist/index.d.ts",
 	"dependencies": {
-		"@adriansyah/svelte-utils": "^0.0.2"
+		"@adriansyah/svelte-utils": "^0.0.9"
 	}
 }

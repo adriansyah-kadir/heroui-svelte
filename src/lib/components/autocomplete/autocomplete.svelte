@@ -25,7 +25,7 @@
     ...props
   }: Props = $props();
 
-  new AutocompleteContext(
+  const ctx = new AutocompleteContext(
     () => ({
       offset,
       placement,
@@ -47,6 +47,7 @@
 <Popover {offset} {placement}>
   <div
     {...props}
+    {...ctx.props}
     class={autocompleteVariants().base({
       fullWidth,
       variant,

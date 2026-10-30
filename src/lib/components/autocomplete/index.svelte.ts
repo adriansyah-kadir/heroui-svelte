@@ -1,6 +1,13 @@
 import type { AutocompleteVariants } from "@heroui/styles"
-import { Context, type Box, type Getter, isEventTargetInAny, watch, PopoverState } from "@adriansyah/svelte-utils"
+import { Context, type Box, type Getter, watch, PopoverState } from "@adriansyah/svelte-utils"
 import { ListBoxContext, type ListBoxOpts, type PopoverContextOpts } from "#lib"
+
+function isEventTargetInAny(ev: Event, ...nodes: (Node | undefined)[]): boolean {
+  const target = ev.target
+  if (!(target instanceof HTMLElement)) return false;
+  let children = nodes.filter(node => node !== undefined)
+  return children.some(node => node.contains(target))
+}
 
 export type AutocompleteOpts = ListBoxOpts & AutocompleteVariants & PopoverContextOpts & {
   invalid?: boolean

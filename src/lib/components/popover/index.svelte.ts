@@ -1,4 +1,4 @@
-import { Context, getPopoverArea, PopoverState, type Box, type Getter } from "@adriansyah/svelte-utils";
+import { Context, usePopoverArea, PopoverState, type Box, type Getter } from "@adriansyah/svelte-utils";
 
 export type PopoverContextOpts = {
   placement?: "bottom" | "top" | "left" | "right",
@@ -19,7 +19,7 @@ export class PopoverContext extends Context {
     super()
     const { fallbackAnchor, offset, placement } = $derived.by(opts)
     const popover = new PopoverState({ fallbackAnchor: () => fallbackAnchor, open })
-    const area = getPopoverArea(popover)
+    const area = usePopoverArea(popover)
     this.popover = popover
     this.placement = $derived(placement ?? "bottom")
     this.position = $derived((area.current as any) ?? this.placement ?? "bottom")

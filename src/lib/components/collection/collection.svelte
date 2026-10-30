@@ -1,8 +1,8 @@
 <script lang="ts" generics="T">
   import type { Snippet } from "svelte";
   import {
-    onView,
-    useResource,
+    observeIntersection,
+    useAction,
     type Fn,
     type MaybePromise,
   } from "@adriansyah/svelte-utils";
@@ -26,7 +26,7 @@
   type Props = {
     items: T[];
     key?: (item: T) => string;
-    loadMore?: Fn<MaybePromise<T[]>, [{ offset: number }]>;
+    loadMore?: Fn<[{ offset: number }], MaybePromise<T[]>>;
     child: Snippet<[ChildProps]>;
     sentinel?: Snippet<[LoaderProps]>;
     empty?: Snippet;
@@ -42,8 +42,8 @@
   }: Props = $props();
 
   let hasMore = $state(true);
-  const more = useResource(async () => {
-    if (!loadMore || more.fetching) return;
+  const more = useAction(async () => {
+    if (!loadMore || more.loading) return;
     const offset = items.length;
     const values = await loadMore({ offset });
     hasMore = values.length > 0;
@@ -56,8 +56,8 @@
   {@render child({
     item,
     isLast,
-    loadMore: more.refetch,
-    loadingMore: more.fetching,
+    loadMore: more.run,
+    loadingMore: more.loading,
     index,
     key: key(item),
   })}
@@ -67,11 +67,16 @@
 
 {#if hasMore && loadMore}
   {@render sentinel?.({
-    loadMore: more.refetch,
-    loadingMore: more.fetching,
-    attach: onView(({ isIntersecting }) => isIntersecting && more.refetch(), {
-      enabled:
-        !more.fetching && loadMore !== undefined && hasMore && !more.failed(),
+    loadMore: more.run,
+    loadingMore: more.loading,
+    attach: observeIntersection(({ isIntersecting }) => {
+      if (
+        isIntersecting &&
+        !more.loading &&
+        loadMore !== undefined &&
+        hasMore &&
+        !more.failed()
+      ) more.run();
     }),
   })}
 {/if}

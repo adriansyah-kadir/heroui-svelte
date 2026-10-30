@@ -8,9 +8,11 @@
   import ListBoxSection from "#lib/components/list-box/list-box-section.svelte";
   import Header from "#lib/components/header/header.svelte";
   import Collection from "#lib/components/collection/collection.svelte";
-  import { randomInt } from "@adriansyah/svelte-utils";
   import { Spinner } from "#lib";
   import Button from "#lib/components/button/button.svelte";
+
+  const randomInt = (min: number, max: number) =>
+    Math.floor(Math.random() * (max - min + 1) + min);
 
   const { Story } = defineMeta({
     component: ListBox,
