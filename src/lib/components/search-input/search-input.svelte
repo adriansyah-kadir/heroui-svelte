@@ -52,10 +52,10 @@
 
   watch(
     () => value ?? "",
-    (currentValue) => {
-      if (currentValue === value) return;
+    () => {
+      if (debounced === value) return;
       const timeout = setTimeout(
-        () => (debounced = String(currentValue)),
+        () => (debounced = String(value)),
         Math.max(0, debounce),
       );
       return () => clearTimeout(timeout);
@@ -64,8 +64,8 @@
 
   watch(
     () => debounced ?? "",
-    (currentValue) => {
-      if (value !== currentValue) value = currentValue;
+    () => {
+      if (value !== debounced) value = debounced;
     },
   );
 
