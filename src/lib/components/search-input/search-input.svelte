@@ -52,8 +52,8 @@
 
   watch(
     () => value ?? "",
-    () => {
-      if (debounced === value) return;
+    (v) => {
+      if (debounced === v) return;
       const timeout = setTimeout(
         () => (debounced = String(value)),
         Math.max(0, debounce),
@@ -64,8 +64,8 @@
 
   watch(
     () => debounced ?? "",
-    () => {
-      if (value !== debounced) value = debounced;
+    (d) => {
+      if (value !== d) value = d;
     },
   );
 
