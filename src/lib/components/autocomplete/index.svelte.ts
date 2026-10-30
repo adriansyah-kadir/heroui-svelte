@@ -27,31 +27,33 @@ export class AutocompleteContext extends Context {
   }
 
   autoCloseOnFocusLost() {
-    const handleWindowClick = (ev: MouseEvent) => {
-      if (!this.popover.node?.matches(":popover-open")) return;
+    $effect(() => {
+      const handleWindowClick = (ev: MouseEvent) => {
+        if (!this.popover.node?.matches(":popover-open")) return;
 
-      if (isEventTargetInAny(ev, this.popover.anchor, this.popover.node)) {
-        return;
+        if (isEventTargetInAny(ev, this.popover.anchor, this.popover.node)) {
+          return;
+        }
+
+        this.close();
+      };
+
+      const handleEscapeKey = (ev: KeyboardEvent) => {
+        const focused = this.popover.node?.matches(":focus-within") || this.popover.anchor?.matches(":focus-within")
+        if (ev.code !== "Escape" || !focused) return;
+        ev.preventDefault()
+        ev.stopImmediatePropagation()
+        this.close()
+        this.popover.anchor?.focus()
       }
 
-      this.close();
-    };
-
-    const handleEscapeKey = (ev: KeyboardEvent) => {
-      const focused = this.popover.node?.matches(":focus-within") || this.popover.anchor?.matches(":focus-within")
-      if (ev.code !== "Escape" || !focused) return;
-      ev.preventDefault()
-      ev.stopImmediatePropagation()
-      this.close()
-      this.popover.anchor?.focus()
-    }
-
-    window.addEventListener("click", handleWindowClick)
-    window.addEventListener("keydown", handleEscapeKey)
-    return () => {
-      window.removeEventListener("click", handleWindowClick)
-      window.removeEventListener("keydown", handleEscapeKey)
-    }
+      window.addEventListener("click", handleWindowClick)
+      window.addEventListener("keydown", handleEscapeKey)
+      return () => {
+        window.removeEventListener("click", handleWindowClick)
+        window.removeEventListener("keydown", handleEscapeKey)
+      }
+    })
   }
 
   autoCloseOnSingleSelect() {
